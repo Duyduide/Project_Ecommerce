@@ -6,7 +6,7 @@ const initRoutes = (app) => {
 
 
 
-
+    
     app.use(notFound);
     app.use(errorHandler);
 }
