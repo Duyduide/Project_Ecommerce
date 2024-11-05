@@ -30,11 +30,6 @@ const orderSchema = new mongoose.Schema({
         required: true,
         trim: true
     },
-    quantity: {
-        type: Number,
-        required: true,
-        min: 1
-    },
     voucherUsed:{
         type: String,
         trim: true
