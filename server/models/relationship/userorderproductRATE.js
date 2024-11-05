@@ -1,12 +1,16 @@
 const mongoose = require('mongoose');
 
-const userRATEproductSchema = new mongoose.Schema({
+const userorderproductRATE = new mongoose.Schema({
     userId: {
         type: { type: Schema.Types.ObjectId, ref: 'User' },
         required: true
     },
     productId: {
         type: { type: Schema.Types.ObjectId, ref: 'Product' },
+        required: true
+    },
+    orderId: {
+        type: { type: Schema.Types.ObjectId, ref: 'Order' },
         required: true
     },
     rating: {
@@ -36,6 +40,6 @@ const userRATEproductSchema = new mongoose.Schema({
     }
 }); 
 
-const UserRATEproduct = mongoose.model('UserRATEproduct', userRATEproductSchema);
+const UserorderproductRATE = mongoose.model('UserRATEproduct', userorderproductRATE);
 
-module.exports = {UserRATEproduct};
+module.exports = {userorderproductRATE};

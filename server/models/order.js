@@ -1,10 +1,6 @@
 const mongoose = require('mongoose');
 
 const orderSchema = new mongoose.Schema({
-    productId: {
-        type: { type: Schema.Types.ObjectId, ref: 'Product' },
-        required: true
-    },
     totalPrice: {
         type: Number,
         required: true,
@@ -40,8 +36,8 @@ const orderSchema = new mongoose.Schema({
         min: 1
     },
     voucherUsed:{
-        type: { type: Schema.Types.ObjectId, ref: 'Voucher' },
-        required: true
+        type: String,
+        trim: true
     },
     createdBy: {
         type: { type: Schema.Types.ObjectId, ref: 'User' },

@@ -29,6 +29,11 @@ const voucherSchema=new mongoose.Schema({
         required:true,
         min:1
     },
+    voucherCode:{
+        type:String,
+        required:true,
+        trim:true
+    }
 });
 
 const Voucher=mongoose.model('Voucher',voucherSchema);
