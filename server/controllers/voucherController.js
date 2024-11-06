@@ -75,9 +75,56 @@ const findVoucherByCode = async (req, res) => {
     }
 };
 
+const queryAllVouchers = async (req, res) => {
+    try {
+        const vouchers = await Voucher.find().sort({ createdAt: -1 });
+        res.status(200).json(vouchers);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+const queryPublicVouchers = async (req, res) => {
+    try {
+        const vouchers = await Voucher.find({ isHidden: false }).sort({ createdAt: -1 });
+        res.status(200).json(vouchers);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+const queryAvailablePublicVouchers = async (req, res) => {// sẽ thêm tính toán sao cho giá được giảm là cao nhất
+    try {
+        const { membership } = req.body;
+
+        const vouchers = await Voucher.find({ isHidden: false, membership }).sort({ createdAt: -1 });
+        res.status(200).json(vouchers);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+// const queryVoucherByDiscount = async (req, res) => {
+//     try {
+//         const { discount } = req.params;
+
+//         const vouchers = await Voucher.find({ discount });
+//         if (!vouchers.length) {
+//             return res.status(404).json({ message: 'No vouchers found' });
+//         }
+
+//         res.status(200).json(vouchers);
+//     } catch (error) {
+//         res.status(500).json({ message: error.message });
+//     }
+// };
+
 module.exports = {
     createVoucher,
     updateVoucher,
     deleteVoucher,
-    findVoucherByCode
+    findVoucherByCode,
+    queryAllVouchers,
+    queryPublicVouchers,
+    queryAvailablePublicVouchers,
 }

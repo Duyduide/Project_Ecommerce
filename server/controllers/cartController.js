@@ -1,5 +1,4 @@
 const Cart = require('../models/cart');
-const Order = require('../models/order');
 
 const addToCart = async (req, res) => {
     try {
@@ -43,20 +42,8 @@ const deleteProductFromCart = async (req, res) => {
     }
 }
 
-const createOrder = async (req, res) => {
-    try {
-        const { orderData } = req.body;
-
-        const order = new Order(orderData);
-        await order.save();
-        res.status(201).json(order);
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-}
-
 module.exports = {
     addToCart,
     queryCartOfUser,
-    createOrder
+    deleteProductFromCart
 }

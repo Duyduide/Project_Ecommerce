@@ -29,10 +29,19 @@ const voucherSchema=new mongoose.Schema({
         required:true,
         min:1
     },
+    maxPriceDiscount:{
+        type:Number,
+        required:true,
+        min:0
+    },
     voucherCode:{
         type:String,
         required:true,
         trim:true
+    },
+    isHidden:{
+        type:Boolean,
+        default:false
     }
 });
 

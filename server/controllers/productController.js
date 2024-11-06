@@ -172,9 +172,30 @@ const deleteProductByName = async (req, res) => {
     }
 };
 
-const updateProduct = async (req, res) => {
+// const updateProductByID = async (req, res) => {
+//     try {
+//         const { userID, name, updateData } = req.body;
+
+//         // Verify if the user is an admin
+//         const user = await User.findById(userID);
+//         if (!user || !user.isAdmin) {
+//             return res.status(403).json({ message: 'Access denied' });
+//         }
+
+//         const product = await Product.findOneAndUpdate({ name: name }, updateData, { new: true });
+//         if (!product) {
+//             return res.status(404).json({ message: 'Product not found' });
+//         }
+
+//         res.status(200).json(product);
+//     } catch (error) {
+//         res.status(500).json({ message: error.message });
+//     }
+// };
+
+const updateProductByID = async (req, res) => {
     try {
-        const { userID, name, updateData } = req.body;
+        const { userID, productType, productID, updateData } = req.body;
 
         // Verify if the user is an admin
         const user = await User.findById(userID);
@@ -182,7 +203,43 @@ const updateProduct = async (req, res) => {
             return res.status(403).json({ message: 'Access denied' });
         }
 
-        const product = await Product.findOneAndUpdate({ name: name }, updateData, { new: true });
+        let productModel;
+        switch (productType) {
+            case 'Phone':
+                productModel = Phone;
+                break;
+            case 'Laptop':
+                productModel = Laptop;
+                break;
+            case 'Tablet':
+                productModel = Tablet;
+                break;
+            case 'SmartWatch':
+                productModel = SmartWatch;
+                break;
+            case 'PowerBank':
+                productModel = PowerBank;
+                break;
+            case 'Headphone':
+                productModel = Headphone;
+                break;
+            case 'Charger':
+                productModel = Charger;
+                break;
+            case 'Case':
+                productModel = Case;
+                break;
+            case 'Mouse':
+                productModel = Mouse;
+                break;
+            case 'Keyboard':
+                productModel = Keyboard;
+                break;
+            default:
+                return res.status(400).json({ message: 'Invalid product type' });
+        }
+
+        const product = await productModel.findByIdAndUpdate(productID, updateData, { new: true });
         if (!product) {
             return res.status(404).json({ message: 'Product not found' });
         }
@@ -191,7 +248,7 @@ const updateProduct = async (req, res) => {
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
-};
+}
 
 module.exports = { createProduct, deleteProductByName, 
-    updateProduct, deleteProductById };
+    updateProductByID, deleteProductById };
