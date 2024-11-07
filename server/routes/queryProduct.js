@@ -2,7 +2,7 @@ const router = require('express').Router();
 const queryProductController = require('../controllers/queryProductController');
 
 router.get('/getAllProduct', queryProductController.queryAllProducts);
-router.get('/getProductById', queryProductController.queryProductByID);
+router.get('/getProductById/:productID', queryProductController.queryProductByID);
 router.get('/getProductByType', queryProductController.queryProductByType);
 router.get('/getProductByManufacturer', queryProductController.queryProductByManufacturer);
 // router.get('/getProductByPrice', queryProductController.queryProductByPrice);

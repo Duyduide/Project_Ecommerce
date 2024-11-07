@@ -2,11 +2,13 @@ const mongoose = require('mongoose');
 
 const orderINCLUDEproductSchema = new mongoose.Schema({
     orderId: {
-        type: { type: Schema.Types.ObjectId, ref: 'Order' },
+        type: Schema.Types.ObjectId, 
+        ref: 'Order',
         required: true
     },
     productId: {
-        type: { type: Schema.Types.ObjectId, ref: 'Product' },
+        type: Schema.Types.ObjectId, 
+        ref: 'Product' ,
         required: true
     },
     quantity: {

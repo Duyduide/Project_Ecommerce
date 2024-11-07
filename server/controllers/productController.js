@@ -1,5 +1,5 @@
 const { Product, Phone, Laptop, Tablet, SmartWatch, PowerBank, Headphone, Charger, Case, Mouse, Keyboard } = require('../models/product');
-const { Cart } = require('./cart');
+const Cart = require('../models/cart');
 const { Voucher } = require('../models/voucher');
 const { Order } = require('../models/order');
 const { User } = require('../models/user');
@@ -7,12 +7,6 @@ const { User } = require('../models/user');
 const createProduct = async (req, res) => {
     try {
         const { userID, productType, productData } = req.body;
-
-        // Verify if the user is an admin
-        const user = await User.findById(userID);
-        if (!user || !user.isAdmin) {
-            return res.status(403).json({ message: 'Access denied' });
-        }
 
         let product;
         switch (productType) {
@@ -60,12 +54,6 @@ const createProduct = async (req, res) => {
 const deleteProductById = async (req, res) => {
     try {
         const { userID, productType, productID } = req.body;
-        
-        // Verify if the user is an admin
-        const user = await User.findById(userID);
-        if (!user || !user.isAdmin) {
-            return res.status(403).json({ message: 'Access denied' });
-        }
 
         let productModel;
         switch (productType) {
@@ -118,12 +106,6 @@ const deleteProductById = async (req, res) => {
 const deleteProductByName = async (req, res) => {
     try {
         const { userID, productType, productName } = req.body;
-
-        // Verify if the user is an admin
-        const user = await User.findById(userID);
-        if (!user || !user.isAdmin) {
-            return res.status(403).json({ message: 'Access denied' });
-        }
 
         let productModel;
         switch (productType) {
@@ -197,11 +179,6 @@ const updateProductByID = async (req, res) => {
     try {
         const { userID, productType, productID, updateData } = req.body;
 
-        // Verify if the user is an admin
-        const user = await User.findById(userID);
-        if (!user || !user.isAdmin) {
-            return res.status(403).json({ message: 'Access denied' });
-        }
 
         let productModel;
         switch (productType) {

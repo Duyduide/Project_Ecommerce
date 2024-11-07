@@ -1,14 +1,8 @@
-const Voucher = require('../models/voucherModel');
+const Voucher = require('../models/voucher');
 
 const createVoucher = async (req, res) => {
     try {
         const { userID, voucherData } = req.body;
-
-        // Verify if the user is an admin
-        const user = await User.findById(userID);
-        if (!user || !user.isAdmin) {
-            return res.status(403).json({ message: 'Access denied' });
-        }
 
         const voucher = new Voucher(voucherData);
         await voucher.save();
@@ -21,12 +15,6 @@ const createVoucher = async (req, res) => {
 const updateVoucher = async (req, res) => {
     try {
         const { userID, voucherCode, updateData } = req.body;
-
-        // Verify if the user is an admin
-        const user = await User.findById(userID);
-        if (!user || !user.isAdmin) {
-            return res.status(403).json({ message: 'Access denied' });
-        }
 
         const voucher = await Voucher.findOneAndUpdate({ voucherCode }, updateData, { new: true });
         if (!voucher) {
@@ -42,12 +30,6 @@ const updateVoucher = async (req, res) => {
 const deleteVoucher = async (req, res) => {
     try {
         const { userID, voucherCode } = req.body;
-
-        // Verify if the user is an admin
-        const user = await User.findById(userID);
-        if (!user || !user.isAdmin) {
-            return res.status(403).json({ message: 'Access denied' });
-        }
 
         const voucher = await Voucher.findOneAndDelete({ voucherCode });
         if (!voucher) {
