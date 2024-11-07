@@ -33,10 +33,8 @@ let userSchema = new mongoose.Schema({
             type: Array,
             default: [],
         },
-        address: {
-            type: Array,
-            default: [],
-        },
+        address: [{ type: mongoose.Types.ObjectId, ref: 'Address'}],
+        wishlist: [{ type: mongoose.Types.ObjectId, ref: 'Product'}],
         refreshToken: {
             type: String,
         },
