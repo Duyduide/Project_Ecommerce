@@ -4,21 +4,32 @@ const mongoose = require('mongoose');
 const addToCart = async (req, res) => {
     try {
         const { createdBy, productId, quantity} = req.body;
-        console.log(createdBy);
-        console.log(productId);
 
-        let pid=new mongoose.Types.ObjectId(productId);
-        let uid=new mongoose.Types.ObjectId(createdBy);
-        console.log(pid);
-        console.log(uid);
-
-        const cartItem = new Cart({ productId: pid, quantity, createdBy: uid });
+        const cartItem = new Cart({ productId, quantity, createdBy });
         await cartItem.save();
         res.status(201).json(cartItem);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
 };
+
+const changeCartProductQuantity = async (req, res) => {
+    try {
+        const { createdBy, productId, quantity } = req.body;
+
+        const cartItem = await Cart.findOne ({ productId, createdBy });
+        if (!cartItem) {
+            return res.status(404).json({ message: 'Product not found in cart' });
+        }
+
+        cartItem.quantity = quantity;
+        await cartItem.save();
+        res.status(200).json(cartItem);
+    }
+    catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
 
 const queryCartOfUser = async (req, res) => {
     try {
@@ -53,5 +64,6 @@ const deleteProductFromCart = async (req, res) => {
 module.exports = {
     addToCart,
     queryCartOfUser,
-    deleteProductFromCart
+    deleteProductFromCart,
+    changeCartProductQuantity
 }
