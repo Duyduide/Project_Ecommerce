@@ -45,4 +45,4 @@ const userorderproductRATE = new mongoose.Schema({
 
 const UserorderproductRATE = mongoose.model('UserRATEproduct', userorderproductRATE);
 
-module.exports = {userorderproductRATE};
+module.exports = {UserorderproductRATE};
