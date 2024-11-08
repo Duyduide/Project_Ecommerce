@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import path from '../utils/path';
+
+//import { useSelector } from 'react-redux'
+
 const categories = [
   {
     name: 'Điện thoại, Tablet',
@@ -71,7 +75,7 @@ const Navigation = () => {
   };
 
   const handleLogin = () => {
-    navigate('/login'); // Điều hướng đến trang đăng nhập
+    navigate(path.LOGIN); // Điều hướng đến trang đăng nhập
   };
 
   const handleOrderLookup = () => {
@@ -86,8 +90,6 @@ const Navigation = () => {
       {/* Khung giới hạn nội dung thanh điều hướng */}
       <div className="w-main h-[48px] py-2  mx-auto flex items-center justify-between">
         <div className="flex items-center space-x-8">
-        
-
           {/* Products Dropdown */}
           <div className="relative">
             <button
