@@ -45,11 +45,10 @@ const productSchema = new mongoose.Schema({
         type: String,
         trim: true
     },
-    createdAt: {
-        type: Date,
-        default: Date.now
-    }
-});
+},{
+    timestamps:true
+}
+);
 
 const Product = mongoose.model('Product', productSchema);
 

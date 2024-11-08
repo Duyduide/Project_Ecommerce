@@ -43,6 +43,8 @@ const voucherSchema=new mongoose.Schema({
         type:Boolean,
         default:false
     }
+},{
+    timestamps:true
 });
 
 const Voucher=mongoose.model('Voucher',voucherSchema);

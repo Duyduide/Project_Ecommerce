@@ -21,8 +21,15 @@ const ratingSchema=new mongoose.Schema({
         required:true,
         min:1,
         max:5
+    },
+    review:{
+        type:String,
+        trim:true
     }
-});
+},{
+    timestamps:true
+}
+);
 
 const Rating=mongoose.model('Rating',ratingSchema);
 

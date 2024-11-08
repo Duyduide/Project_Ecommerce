@@ -11,10 +11,6 @@ const orderSchema = new mongoose.Schema({
         required: true,
         trim: true
     },
-    createdAt: {
-        type: Date,
-        default: Date.now
-    },
     address: {
         type: String,
         required: true,
@@ -51,6 +47,8 @@ const orderSchema = new mongoose.Schema({
             min: 1
         }
     }]
+},{
+    timestamps:true
 });
 
 const Order = mongoose.model('Order', orderSchema);
