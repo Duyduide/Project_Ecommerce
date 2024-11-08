@@ -2,7 +2,7 @@ const Voucher = require('../models/voucher');
 
 const createVoucher = async (req, res) => {
     try {
-        const { userID, voucherData } = req.body;
+        const { voucherData } = req.body;
 
         const voucher = new Voucher(voucherData);
         await voucher.save();
@@ -14,7 +14,7 @@ const createVoucher = async (req, res) => {
 
 const updateVoucher = async (req, res) => {
     try {
-        const { userID, voucherCode, updateData } = req.body;
+        const { voucherCode, updateData } = req.body;
 
         const voucher = await Voucher.findOneAndUpdate({ voucherCode }, updateData, { new: true });
         if (!voucher) {
@@ -29,7 +29,7 @@ const updateVoucher = async (req, res) => {
 
 const deleteVoucher = async (req, res) => {
     try {
-        const { userID, voucherCode } = req.body;
+        const { voucherCode } = req.body;
 
         const voucher = await Voucher.findOneAndDelete({ voucherCode });
         if (!voucher) {

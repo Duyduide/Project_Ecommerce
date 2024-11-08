@@ -6,7 +6,7 @@ const { User } = require('../models/user');
 
 const createProduct = async (req, res) => {
     try {
-        const { userID, productType, productData } = req.body;
+        const { productType, productData } = req.body;
 
         let product;
         switch (productType) {
@@ -53,7 +53,7 @@ const createProduct = async (req, res) => {
 
 const deleteProductById = async (req, res) => {
     try {
-        const { userID, productType, productID } = req.body;
+        const { productType, productID } = req.body;
 
         let productModel;
         switch (productType) {
@@ -105,7 +105,7 @@ const deleteProductById = async (req, res) => {
 
 const deleteProductByName = async (req, res) => {
     try {
-        const { userID, productType, productName } = req.body;
+        const { productType, productName } = req.body;
 
         let productModel;
         switch (productType) {
@@ -177,7 +177,7 @@ const deleteProductByName = async (req, res) => {
 
 const updateProductByID = async (req, res) => {
     try {
-        const { userID, productType, productID, updateData } = req.body;
+        const { productType, productID, updateData } = req.body;
 
 
         let productModel;
