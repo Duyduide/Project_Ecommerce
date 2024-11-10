@@ -5,3 +5,8 @@ export const apiRegister = (data) => axios({
     method:'post',
     data
 })
+export const apiLogin = (data) => axios({
+    url: '/user/login', 
+    method:'post',
+    data
+})
