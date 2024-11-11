@@ -13,11 +13,13 @@ module.exports = {
         main: '1220px'
       },
       backgroundColor: {
-        main: '#d70018'
+        main: '#d70018',
+        overlay: 'rgba(0,0,0,0.8)'
       },
       colors: {
         main: '#d70018'
       },
+      
     },
   },
   plugins: [],

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-const InputField = ({ value, setValue, nameKey, type, invalidField, setInvalidField }) => {
+const InputField = ({ value, setValue, nameKey, type, invalidFields, setInvalidFields }) => {
   //const [isFocus, setIsFocus] = useState(false)
   return (
     <div className='w-full relative'>
@@ -11,7 +11,12 @@ const InputField = ({ value, setValue, nameKey, type, invalidField, setInvalidFi
           placeholder={nameKey?.slice(0, 1).toUpperCase() + nameKey?.slice(1)}
           value={value}
           onChange={e => setValue(prev => ({ ...prev, [nameKey]: e.target.value }))}
+          onFocus={() => setInvalidFields([])}
         />
+        {invalidFields?.some(el => el.name === nameKey) &&  
+          <small className='text-main text-[10px] italic'> 
+            {invalidFields.find(el => el.name === nameKey)?.mes}
+          </small>}
     </div>
   )
 }

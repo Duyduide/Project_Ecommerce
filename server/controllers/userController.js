@@ -1,31 +1,57 @@
 const User = require('../models/user');
 const asyncHandler = require('express-async-handler');
 const {generateAccessToken, generateRefreshToken} = require('../middlewares/jwt');
-const { response } = require('express');
 const jwt = require('jsonwebtoken');
 const sendMail = require('../utils/sendMail');
 const crypto = require('crypto');
-const { use } = require('bcrypt/promises');
+const makeToken = require('uniqid');
+
 // Hàm đăng ký
 const register = asyncHandler(async (req, res) => {
     const { firstname, lastname, email, mobile, password } = req.body;
-    if(!firstname || !lastname || !email || !mobile || !password) {
+    if(!firstname || !lastname || !email || !mobile || !password) 
         return res.status(400).json({
             success: false,
             mes: 'Missing inputs'
         })
-    }
     const user = await User.findOne({email});
     if(user) 
         throw new Error('User already existed!');
     else {
-        const newUser = await User.create(req.body);
-        return res.status(201).json({
-            success: newUser ? true : false,
-            mes: newUser ? 'User created successfully' : 'User not created'
+        const token = makeToken();
+        const emailEdited = btoa(email) + '@' + token;
+        const newUser = await User.create({
+            email: emailEdited, password, firstname, lastname, mobile
         })
-    }    
+        if(newUser) {
+            const html = `<h2>Mã đăng ký: </h2> <br /><blockquote>${token}</blockquote>`;
+            await sendMail({ email, html, subject: 'Xác nhận đăng ký tài khoản trang web ABC' });
+        }
+        
+        setTimeout(async () => { 
+            await User.deleteOne({email: emailEdited})
+        }, [300000])
+
+        return res.json({
+            success: newUser ? true : false,
+            mes: newUser ? 'Đã gửi mã xác nhận qua email' : 'Đã có lỗi xảy ra, vui lòng thử lại'
+        })
+    }
 });
+
+const finalRegister = asyncHandler(async (req, res) => { 
+    const { token } = req.params;
+    const notActiveEmail = await  User.findOne({email: new RegExp(`${token}$`)})
+    if(notActiveEmail) {
+        notActiveEmail.email = atob(notActiveEmail?.email?.split('@')[0]);
+        notActiveEmail.save();
+    }
+    return res.json({
+        success: notActiveEmail ? true : false,
+        mes: notActiveEmail ? 'Đã đăng ký thành công, vui lòng đăng nhập' : 'Đã có lỗi xảy ra, vui lòng thử lại'
+    })
+})
+
 // Refresh token: cấp mới lại access token
 // Access token: xác thực người dùng, phân quyền người dùng
 
@@ -135,19 +161,21 @@ const updateUserByAdmin = asyncHandler(async (req, res) => {
     })
 })
 const forgotPassword = asyncHandler(async(req, res) => {
-    const { email } = req.query;
+    const { email } = req.body;
     if(!email) throw new Error('Missing email');
     const user = await User.findOne({ email });
     if(!user) throw new Error('User not found');
     const resetToken = user.createPasswordChangeToken();
     await user.save();
+
     const html = `Xin vui lòng click vào link dưới đây để thay đổi mật khẩu. Link này sẽ hết hạn sau 15 phút kể từ bây giờ.  
-    <a href=${process.env.URL_SERVER}/api/user/reset-password/${resetToken}>Click Here</a>`;
-    const data = { email: email, html };
+    <a href=${process.env.CLIENT_URL}/reset-password/${resetToken}>Click Here</a>`;
+    const data = { email: email, html, subject: 'Forgot password' };
+
     const rs = await sendMail(data);
     return res.status(200).json({
-        success: true,
-        rs
+        success: rs.response?.includes('OK') ? true : false,
+        mes: rs.response?.includes('OK') ? 'Hãy kiểm tra email của bạn để thay đổi mật khẩu.' : 'Đã có lỗi xảy ra, vui lòng thử lại.'
     });
 })
 
@@ -190,5 +218,6 @@ module.exports = {
     getUsers,
     deleteUser,
     updateUser,
-    updateUserByAdmin
+    updateUserByAdmin,
+    finalRegister
 }
