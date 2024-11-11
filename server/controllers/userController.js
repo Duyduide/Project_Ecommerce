@@ -86,7 +86,7 @@ const login = asyncHandler(async (req, res) => {
         throw new Error('Invalid credentials');
     }
 });
-// Hàm lấy thông tin user hiện tại (dùng để test api login với middleware)
+// Hàm lấy thông tin user hiện tại (login và xác thực người dùng)
 const getCurrent = asyncHandler(async(req, res) => {
     const { _id } = req.user;
     const user = await User.findById(_id).select('-password -refreshToken -role ');

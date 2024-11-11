@@ -3,6 +3,7 @@ import { Sidebar, Banner } from '../../components/index'
 import { useSelector } from 'react-redux'
 
 const Home = () => {
+  
   const { isLoggedIn, current } = useSelector(state => state.user)
 
   console.log({ isLoggedIn, current })
@@ -18,6 +19,7 @@ const Home = () => {
         <Banner />
         <span>Best seller</span>
       </div>
+      
     </div>
   )
 }

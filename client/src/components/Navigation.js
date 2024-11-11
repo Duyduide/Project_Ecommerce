@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ChevronDown } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import path from '../utils/path';
-
-//import { useSelector } from 'react-redux'
+import { getCurrent } from '../store/user/asyncActions'
+import { useSelector, useDispatch } from 'react-redux'
+import { IoIosLogOut } from "react-icons/io";
+import { logout } from '../store/user/userSlice'
 
 const categories = [
   {
@@ -56,15 +58,26 @@ const categories = [
   }
 ];
 
-
 const Navigation = () => {
   const [showProducts, setShowProducts] = useState(false);
   const [activeCategory, setActiveCategory] = useState(null);
   // Simulated authentication state - in real app, this would come from your auth context
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [username, setUsername] = useState('');
+  //const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // const [username, setUsername] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
   const navigate = useNavigate(); // Hook điều hướng từ react-router-dom
+
+  const dispatch = useDispatch();
+
+  const { isLoggedIn, current }  = useSelector(state => state.user)
+  // console.log(current.lastname);
+  useEffect(() => { 
+    if (isLoggedIn) {
+      dispatch(getCurrent())
+     
+    }
+  }, [dispatch, isLoggedIn])
+  
   const handleSearch = () => {
     if (searchQuery) {
       navigate(`/search?query=${searchQuery}`); // Điều hướng đến trang tìm kiếm sản phẩm
@@ -85,6 +98,7 @@ const Navigation = () => {
       navigate('/login'); // Nếu chưa đăng nhập, điều hướng đến trang đăng nhập
     }
   };
+
   return (
     <div className="bg-blue-200 w-full">
       {/* Khung giới hạn nội dung thanh điều hướng */}
@@ -166,10 +180,15 @@ const Navigation = () => {
           </div>
 
           {/* Login/User Info */}
-          <div>
+          <div className=''>
             {isLoggedIn ? (
-              <div className="cursor-pointer hover:text-gray-200">
-                {username}
+              <div className=" flex items-center gap-4">
+                <span className='cursor-pointer hover:text-gray-200 text-sm'>{`Chào mừng, ${current?.firstname}`}</span>
+                <span 
+                  className='cursor-pointer hover:text-gray-200 hover:rounded text-sm flex flex-row'
+                  onClick={() => dispatch(logout())}> 
+                  Đăng xuất<IoIosLogOut size={20}/> 
+                </span>
               </div>
             ) : (
               <button onClick={handleLogin} className="hover:text-gray-200">
