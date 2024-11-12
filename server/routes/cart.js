@@ -12,5 +12,6 @@ router.post('/addToUserCart', verifyAccessToken , cartController.addToUserCart);
 router.get('/queryUserCart/:userID', verifyAccessToken , cartController.queryUserCart);
 router.delete('/deleteProductFromUserCart', verifyAccessToken, cartController.deleteProductFromUserCart);
 router.put('/updateUserCartProductQuantity', verifyAccessToken, cartController.changeUserCartProductQuantity);
+router.delete('/deleteAllProductsFromUserCart', verifyAccessToken, cartController.deleteAllProductsFromUserCart);
 
 module.exports = router;

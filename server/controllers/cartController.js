@@ -1,6 +1,6 @@
 const { Cart } = require('../models/cart');
 const mongoose = require('mongoose');
-const { User } = require('../models/user');
+const User = require('../models/user');
 
 const addToCart = async (req, res) => {
     try {
@@ -16,19 +16,22 @@ const addToCart = async (req, res) => {
 
 const addToUserCart = async (req, res) => {
     try {
-        const { userID, productId, quantity } = req.body;
+        const { userId, productId, quantity } = req.body;
 
-        const user = await User.findById(userID);
+        const user = await User.findById(userId);
         if (!user) {
             return res.status(404).json({ message: 'User not found' });
         }
 
-        const cartItemIndex = user.cart.findIndex(item => item.productId.toString() === productId);
-        if (cartItemIndex > -1) {
-            user.cart[cartItemIndex].quantity += quantity;
-        } else {
-            user.cart.push({ productId, quantity });
+        // const cartItemIndex = user.cart.findIndex(item => item.productId.toString() === productId);
+        for (let i=0; i<quantity; i++) {
+            user.cart.push( productId );
         }
+        // if (cartItemIndex > -1) {
+        //     user.cart[cartItemIndex].quantity += quantity;
+        // } else {
+        //     user.cart.push( productId );
+        // }
 
         await user.save();
         res.status(201).json(user.cart);
@@ -39,19 +42,55 @@ const addToUserCart = async (req, res) => {
 
 const changeUserCartProductQuantity = async (req, res) => {
     try {
-        const { userID, productId, quantity } = req.body;
+        const { userID, productId, isIncrease, changeQuantity = 0 } = req.body;
 
         const user = await User.findById(userID);
         if (!user) {
             return res.status(404).json({ message: 'User not found' });
         }
 
-        const cartItemIndex = user.cart.findIndex(item => item.productId.toString() === productId);
-        if (cartItemIndex > -1) {
-            user.cart[cartItemIndex].quantity = quantity;
-        } else {
-            return res.status(404).json({ message: 'Product not found in cart' });
+        // const cartItemIndex = user.cart.findIndex(item => item.productId.toString() === productId);
+        // if (cartItemIndex > -1) {
+        //     user.cart[cartItemIndex].quantity = quantity;
+        // } else {
+        //     return res.status(404).json({ message: 'Product not found in cart' });
+        // }
+        if(!changeQuantity) {
+            if (isIncrease) {
+                user.cart.push( productId );
+            }
+            else {
+                const cartItemIndex = user.cart.findIndex(item => item.toString() === productId);
+                if (cartItemIndex > -1) {
+                    user.cart.splice(cartItemIndex, 1);
+                }
+            }
         }
+        else{
+            let currentQuantity = 0;
+            for (let i=0; i<user.cart.length; i++) {
+                if(user.cart[i].toString() === productId) {
+                    currentQuantity++;
+                }
+            }
+
+            if (currentQuantity<changeQuantity) {
+                for (let i=0; i<changeQuantity-currentQuantity; i++) {
+                    user.cart.push( productId );
+                }
+            }
+            else if (currentQuantity>changeQuantity) {
+                for (let i=0; i<currentQuantity-changeQuantity; i++) {
+                    const cartItemIndex = user.cart.findIndex(item => item.toString() === productId);
+                    if (cartItemIndex > -1) {
+                        user.cart.splice(cartItemIndex, 1);
+                    }
+                    else break;
+                }
+            }
+        }
+
+        //xem
 
         await user.save();
         res.status(200).json(user.cart);
@@ -129,14 +168,14 @@ const deleteProductFromCart = async (req, res) => {
 
 const deleteProductFromUserCart = async (req, res) => {
     try {
-        const { userID, productID } = req.body;
+        const { userId, productId } = req.body;
 
-        const user = await User.findById(userID);
+        const user = await User.findById(userId);
         if (!user) {
             return res.status(404).json({ message: 'User not found' });
         }
 
-        const cartItemIndex = user.cart.findIndex(item => item.productId.toString() === productID);
+        const cartItemIndex = user.cart.findIndex(item => item.toString() === productId);
         if (cartItemIndex > -1) {
             user.cart.splice(cartItemIndex, 1);
         } else {
@@ -150,6 +189,24 @@ const deleteProductFromUserCart = async (req, res) => {
     }
 };
 
+const deleteAllProductsFromUserCart = async (req, res) => {
+    try {
+        const { userID } = req.body;
+
+        const user = await User.findById(userID);
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        user.cart = [];
+        await user.save();
+        res.status(200).json({ message: 'All products removed from cart successfully' });
+    }
+    catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
 module.exports = {
     addToCart,
     queryCartOfUser,
@@ -158,5 +215,6 @@ module.exports = {
     addToUserCart,
     queryUserCart,
     deleteProductFromUserCart,
-    changeUserCartProductQuantity
+    changeUserCartProductQuantity,
+    deleteAllProductsFromUserCart
 }
