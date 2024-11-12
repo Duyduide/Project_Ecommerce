@@ -6,6 +6,6 @@ router.post('/createVoucher', [verifyAccessToken, isAdmin], voucherController.cr
 router.put('/updateVoucher', [verifyAccessToken, isAdmin], voucherController.updateVoucher);
 router.delete('/deleteVoucher', [verifyAccessToken, isAdmin], voucherController.deleteVoucher);
 router.get('/findVoucherByCode/:voucherCode', verifyAccessToken, voucherController.findVoucherByCode);
-router.get('/queryAllAvailableVouchers', verifyAccessToken, voucherController.queryPublicVouchers);
+router.get('/queryAllAvailableVouchers/:membership', verifyAccessToken, voucherController.queryPublicVouchers);
 
 module.exports = router;
