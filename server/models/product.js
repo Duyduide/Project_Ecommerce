@@ -45,6 +45,16 @@ const productSchema = new mongoose.Schema({
         type: String,
         trim: true
     },
+    saleDiscountRate: {
+        type: Number,
+        default: 0,
+        min: 0,
+        max: 100
+    },
+    slug: {
+        type: String,
+        trim: true
+    },
 },{
     timestamps:true
 }

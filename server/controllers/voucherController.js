@@ -1,4 +1,4 @@
-const Voucher = require('../models/voucher');
+const { Voucher } = require('../models/voucher');
 
 const createVoucher = async (req, res) => {
     try {
@@ -29,7 +29,7 @@ const updateVoucher = async (req, res) => {
 
 const deleteVoucher = async (req, res) => {
     try {
-        const { voucherCode } = req.body;
+        const { voucherCode } = req.params;
 
         const voucher = await Voucher.findOneAndDelete({ voucherCode });
         if (!voucher) {
@@ -77,7 +77,7 @@ const queryPublicVouchers = async (req, res) => {
 
 const queryAvailablePublicVouchers = async (req, res) => {// sẽ thêm tính toán sao cho giá được giảm là cao nhất
     try {
-        const { membership } = req.body;
+        const { membership } = req.params;
 
         const vouchers = await Voucher.find({ isHidden: false, membership }).sort({ createdAt: -1 });
         res.status(200).json(vouchers);

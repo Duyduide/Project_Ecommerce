@@ -53,45 +53,45 @@ const createProduct = async (req, res) => {
 
 const deleteProductById = async (req, res) => {
     try {
-        const { productType, productID } = req.body;
+        const { productID } = req.params;
 
-        let productModel;
-        switch (productType) {
-            case 'Phone':
-                productModel = Phone;
-                break;
-            case 'Laptop':
-                productModel = Laptop;
-                break;
-            case 'Tablet':
-                productModel = Tablet;
-                break;
-            case 'SmartWatch':
-                productModel = SmartWatch;
-                break;
-            case 'PowerBank':
-                productModel = PowerBank;
-                break;
-            case 'Headphone':
-                productModel = Headphone;
-                break;
-            case 'Charger':
-                productModel = Charger;
-                break;
-            case 'Case':
-                productModel = Case;
-                break;
-            case 'Mouse':
-                productModel = Mouse;
-                break;
-            case 'Keyboard':
-                productModel = Keyboard;
-                break;
-            default:
-                return res.status(400).json({ message: 'Invalid product type' });
-        }
+        // let productModel;
+        // switch (productType) {
+        //     case 'Phone':
+        //         productModel = Phone;
+        //         break;
+        //     case 'Laptop':
+        //         productModel = Laptop;
+        //         break;
+        //     case 'Tablet':
+        //         productModel = Tablet;
+        //         break;
+        //     case 'SmartWatch':
+        //         productModel = SmartWatch;
+        //         break;
+        //     case 'PowerBank':
+        //         productModel = PowerBank;
+        //         break;
+        //     case 'Headphone':
+        //         productModel = Headphone;
+        //         break;
+        //     case 'Charger':
+        //         productModel = Charger;
+        //         break;
+        //     case 'Case':
+        //         productModel = Case;
+        //         break;
+        //     case 'Mouse':
+        //         productModel = Mouse;
+        //         break;
+        //     case 'Keyboard':
+        //         productModel = Keyboard;
+        //         break;
+        //     default:
+        //         return res.status(400).json({ message: 'Invalid product type' });
+        // }
 
-        const product = await productModel.findByIdAndDelete(productID);
+        const product = await Product.findByIdAndDelete(productID);
         if (!product) {
             return res.status(404).json({ message: 'Product not found' });
         }
