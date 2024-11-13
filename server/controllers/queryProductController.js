@@ -23,7 +23,10 @@ const queryProductMain = async (req, res) => {
         }
         else{
             const products = await Product.find({ __t: category }).sort(sort).skip((page - 1) * pageSize).limit(pageSize);
-            res.status(200).json(products);
+            res.status(200).json({
+                success: product? true: false,
+                productData: products? products: 'Cannot get products'
+            });
         }
     } catch (error) {
         res.status(500).json({ message: error.message });
