@@ -4,9 +4,9 @@ import { useSelector } from 'react-redux'
 
 const Sidebar = () => {
   const { categories } = useSelector(state => state.app)
-  
+
   return (
-    <div className='flex flex-col border-2 rounded-md shadow-lg'>
+    <div className='flex flex-col border-2 rounded-md shadow-xl'>
       {categories?.map(el => (
         <NavLink
           key={createSlug(el.name)}
