@@ -3,11 +3,11 @@ const orderController = require('../controllers/orderController');
 const { verifyAccessToken } = require('../middlewares/verifyToken');
 
 router.post('/createOrder', verifyAccessToken, orderController.createOrder);
-router.get('/queryOrderOfUser', verifyAccessToken, orderController.queryOrderOfUser);
+router.get('/queryOrderOfUser/:userID', verifyAccessToken, orderController.queryOrderOfUser);
 router.get('/queryOrderById/:orderID', verifyAccessToken, orderController.queryOrderById);
 // router.put('/updateOrder', orderController.updateOrderById); //admin only
-router.put('/cancelOrder', verifyAccessToken, orderController.cancelOrderById);
+router.put('/cancelOrder/:orderID', verifyAccessToken, orderController.cancelOrderById);
 //thêm vài cái modify order cho admin
-router.delete('/deleteOrder', verifyAccessToken, orderController.deleteOrderById);
+router.delete('/deleteOrder/:orderID', verifyAccessToken, orderController.deleteOrderById);
 
 module.exports = router;
