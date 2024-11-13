@@ -2,9 +2,10 @@ import { NavLink } from 'react-router-dom'
 import { createSlug } from '../utils/helper'
 import { useSelector } from 'react-redux'
 
+
+
 const Sidebar = () => {
   const { categories } = useSelector(state => state.app)
-
   return (
     <div className='flex flex-col border-2 rounded-md shadow-xl'>
       {categories?.map(el => (

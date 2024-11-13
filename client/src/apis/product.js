@@ -1,7 +1,7 @@
 import axios from '../axios';
 
-export const apiGetProduct = (params) => axios({
-    url: '/getAllProduct',
-    method: 'get',
-    params
+// '/queryProduct'
+export const apiGetProduct = () => axios({
+    url: '/queryProduct/getAllProduct',
+    method: 'get'
 })

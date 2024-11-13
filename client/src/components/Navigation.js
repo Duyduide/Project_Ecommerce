@@ -70,11 +70,11 @@ const Navigation = () => {
   const dispatch = useDispatch();
 
   const { isLoggedIn, current }  = useSelector(state => state.user)
-  // console.log(current.lastname);
+  
+ // console.log(current.lastname);
   useEffect(() => { 
     if (isLoggedIn) {
       dispatch(getCurrent())
-     
     }
   }, [dispatch, isLoggedIn])
   

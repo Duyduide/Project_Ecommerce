@@ -1,13 +1,14 @@
 const { Product, Phone, Laptop, Tablet, SmartWatch, PowerBank, Headphone, Charger, Case, Mouse, Keyboard } = require('../models/product');
+const asyncHandler = require('express-async-handler');  
 
-const queryAllProducts = async (req, res) => {
-    try {
-        const products = await Product.find().sort({ createdAt: -1 });
-        res.status(200).json(products);
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-};
+const queryAllProducts = asyncHandler(async(req, res) => {
+    const response = await Product.find().sort({ createdAt: -1 });
+    return res.json({
+        success: response ? true : false,   
+        products: response ? response : 'Cannot get all product-categories'
+    })
+   
+});
 
 const queryProductByType = async (req, res) => {
     try {
