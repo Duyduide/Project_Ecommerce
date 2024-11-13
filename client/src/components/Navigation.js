@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { ChevronDown } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import path from '../utils/path';
 import { getCurrent } from '../store/user/asyncActions'
 import { useSelector, useDispatch } from 'react-redux'
 import { IoIosLogOut } from "react-icons/io";
+import { IoMdSearch } from "react-icons/io";
 import { logout } from '../store/user/userSlice'
-
+import { IoChatbubbleEllipsesOutline } from "react-icons/io5";
 const categories = [
   {
     name: 'Điện thoại, Tablet',
@@ -98,12 +100,27 @@ const Navigation = () => {
       navigate('/login'); // Nếu chưa đăng nhập, điều hướng đến trang đăng nhập
     }
   };
+  const handleCartClick = () => {
+    if (!isLoggedIn) {
+      // Nếu chưa đăng nhập, điều hướng đến trang đăng nhập
+      navigate('/login');
+    } else {
+      // Nếu đã đăng nhập, điều hướng đến trang giỏ hàng
+      navigate('/cart');
+    }
+  };
 
   return (
     <div className="bg-blue-200 w-full">
       {/* Khung giới hạn nội dung thanh điều hướng */}
-      <div className="w-main h-[48px] py-2  mx-auto flex items-center justify-between">
+      <div className="w-main h-[48px] py-2 mx-auto flex items-center justify-between">
         <div className="flex items-center space-x-8">
+
+           {/* Trang chủ */}
+        <Link to={path.HOME} className="hover:text-gray-200">
+          Trang chủ
+        </Link>
+        
           {/* Products Dropdown */}
           <div className="relative">
             <button
@@ -114,7 +131,7 @@ const Navigation = () => {
               <span>Sản phẩm</span>
               <ChevronDown size={20} />
             </button>
-
+  
             {/* Products Menu */}
             {showProducts && (
               <div
@@ -133,7 +150,7 @@ const Navigation = () => {
                     <div className="px-4 py-2 text-gray-800 hover:bg-gray-100 cursor-pointer">
                       {category.name}
                     </div>
-
+  
                     {/* Subcategories */}
                     {activeCategory === index && (
                       <div className="absolute left-full top-0 w-64 bg-white rounded-md shadow-lg">
@@ -153,7 +170,7 @@ const Navigation = () => {
               </div>
             )}
           </div>
-
+  
           {/* Order Lookup */}
           <div
             className="cursor-pointer hover:text-gray-200"
@@ -162,32 +179,54 @@ const Navigation = () => {
             Tra cứu đơn hàng
           </div>
         </div>
-
-        <div className="flex items-center space-x-4">
-          {/* Search Bar */}
-          <input
-            type="search"
-            placeholder="Search products"
-            className="px-4 py-1 rounded-md text-gray-800 w-72"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
-          />
-
-          {/* Cart */}
-          <div className="cursor-pointer hover:text-gray-200">
-            <img src="giohangwhite.png" alt="Cart" className="h-7" />
+  
+     {/* Căn giữa Search Bar */}
+<div className="flex items-center justify-center flex-grow">
+  <div className="flex items-center border border-white rounded-full bg-white p-1 space-x-2">
+    {/* Kính lúp và Search Bar */}
+    <input
+      type="search"
+      placeholder="Tìm kiếm sản phẩm"
+      className="px-4 py-1 text-gray-800 w-72 rounded-full outline-none"
+      value={searchQuery}
+      onChange={(e) => setSearchQuery(e.target.value)}
+      onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
+    />
+    <IoMdSearch
+      size={20}
+      className="cursor-pointer text-gray-800"
+      onClick={handleSearch}
+    />
           </div>
+        </div>
+  
+        <div className="flex items-center space-x-8">
+          {/*Chat ngay*/}
+          
+        <div className="flex items-center space-x-2 cursor-pointer hover:text-gray-200">
+  <IoChatbubbleEllipsesOutline color='red' size={20} className="text--800 h-6" />
+  <span className="text-base">Liên hệ</span> {/* Sử dụng text-base thay vì text-sm */}
+</div>
 
+         
+          {/* Cart */}
+        <div className="relative cursor-pointer hover:text-gray-200" onClick={handleCartClick}>
+        <img src="giohangwhite.png" alt="Cart" className="h-7" />
+       <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+         0 
+       </span>
+        </div>
+  
           {/* Login/User Info */}
-          <div className=''>
+          <div>
             {isLoggedIn ? (
-              <div className=" flex items-center gap-4">
-                <span className='cursor-pointer hover:text-gray-200 text-sm'>{`Chào mừng, ${current?.firstname}`}</span>
-                <span 
-                  className='cursor-pointer hover:text-gray-200 hover:rounded text-sm flex flex-row'
-                  onClick={() => dispatch(logout())}> 
-                  Đăng xuất<IoIosLogOut size={20}/> 
+              <div className="flex items-center gap-4">
+                <span className="cursor-pointer hover:text-gray-200 text-sm">{`Chào mừng, ${current?.firstname}`}</span>
+                <span
+                  className="cursor-pointer hover:text-gray-200 hover:rounded text-sm flex flex-row"
+                  onClick={() => dispatch(logout())}
+                >
+                  Đăng xuất <IoIosLogOut size={20} />
                 </span>
               </div>
             ) : (
