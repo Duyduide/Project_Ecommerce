@@ -19,7 +19,7 @@ export const apiUpdateProduct = (data) => axios({
 })
 
 //Fetch sản phẩm
-export const apiFetchProductByCategoryAndPageThenCustomSort = (category, page, sortField, sortOrder, pageSize=20) => axios({
+export const apiFetchProductByPage = (category, page, sortField, sortOrder, pageSize=20) => axios({
     url: '/getProductMain/' + category, 
     method:'get',
     params: {page, sortField, sortOrder, pageSize}
