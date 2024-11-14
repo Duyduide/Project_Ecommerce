@@ -51,7 +51,10 @@ const findVoucherByCode = async (req, res) => {
             return res.status(404).json({ message: 'Voucher not found' });
         }
 
-        res.status(200).json(voucher);
+        res.status(200).json({
+            success: voucher? true : false,
+            voucherData: voucher
+        });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
@@ -60,7 +63,10 @@ const findVoucherByCode = async (req, res) => {
 const queryAllVouchers = async (req, res) => {
     try {
         const vouchers = await Voucher.find().sort({ createdAt: -1 });
-        res.status(200).json(vouchers);
+        res.status(200).json({
+            success: vouchers? true : false,
+            voucherData: vouchers
+        });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
@@ -69,7 +75,10 @@ const queryAllVouchers = async (req, res) => {
 const queryPublicVouchers = async (req, res) => {
     try {
         const vouchers = await Voucher.find({ isHidden: false }).sort({ createdAt: -1 });
-        res.status(200).json(vouchers);
+        res.status(200).json({
+            success: vouchers? true : false,
+            voucherData: vouchers
+        });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }

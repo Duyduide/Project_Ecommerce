@@ -3,7 +3,10 @@ const { Product, Phone, Laptop, Tablet, SmartWatch, PowerBank, Headphone, Charge
 const queryAllProducts = async (req, res) => {
     try {
         const products = await Product.find().sort({ createdAt: -1 });
-        res.status(200).json(products);
+        res.status(200).json({
+            success: products? true: false,
+            productData: products? products: 'Cannot get products'
+        });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
@@ -14,16 +17,19 @@ const queryAllProducts = async (req, res) => {
 const queryProductMain = async (req, res) => {
     try {
         const { category } = req.params;
-        const { page, sortField, sortOrder, pagesize = 20 } = req.query;
+        const { page, sortField, sortOrder, pageSize = 20 } = req.query;
         let sort = {};
         sort[sortField] = sortOrder === 'ascend' ? 1 : -1;
         if (category==='All') {
-            const products = await Product.find().sort(sort).skip((page - 1) * pagesize).limit(pagesize);
+            const products = await Product.find().sort(sort).skip((page - 1) * pageSize).limit(pageSize);
             res.status(200).json(products);
         }
         else{
-            const products = await Product.find({ __t: category }).sort(sort).skip((page - 1) * pagesize).limit(pagesize);
-            res.status(200).json(products);
+            const products = await Product.find({ __t: category }).sort(sort).skip((page - 1) * pageSize).limit(pageSize);
+            res.status(200).json({
+                success: products? true: false,
+                productData: products? products: 'Cannot get products'
+            });
         }
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -100,7 +106,10 @@ const queryProductByID = async (req, res) => {
             return res.status(404).json({ message: 'Product not found' });
         }
 
-        res.status(200).json(product);
+        res.status(200).json({
+            success: product? true: false,
+            productData: product? product: 'Cannot get products'
+        });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
