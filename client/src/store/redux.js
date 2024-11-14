@@ -19,7 +19,7 @@ const userConfig = {
 export const store = configureStore({
   reducer: {
     app: appSlice,
-    // product: productListSlice,
+    product: productListSlice,
     user: persistReducer(userConfig, userSlice)
   },
 });
