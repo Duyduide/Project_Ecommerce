@@ -22,7 +22,10 @@ const queryOrderOfUser = async (req, res) => {
             return res.status(404).json({ message: 'No order found' });
         }
 
-        res.status(200).json(orders);
+        res.status(200).json({
+            success: orders? true : false,
+            orderData: orders
+        });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
@@ -37,7 +40,10 @@ const queryOrderById = async (req, res) => {
             return res.status(404).json({ message: 'Order not found' });
         }
 
-        res.status(200).json(order);
+        res.status(200).json({
+            success: order? true : false,
+            orderData: order
+        });
     }
     catch (error) {
         res.status(500).json({ message: error.message });

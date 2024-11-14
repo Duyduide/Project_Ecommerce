@@ -3,7 +3,10 @@ const { Product, Phone, Laptop, Tablet, SmartWatch, PowerBank, Headphone, Charge
 const queryAllProducts = async (req, res) => {
     try {
         const products = await Product.find().sort({ createdAt: -1 });
-        res.status(200).json(products);
+        res.status(200).json({
+            success: products? true: false,
+            productData: products? products: 'Cannot get products'
+        });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
@@ -24,7 +27,7 @@ const queryProductMain = async (req, res) => {
         else{
             const products = await Product.find({ __t: category }).sort(sort).skip((page - 1) * pageSize).limit(pageSize);
             res.status(200).json({
-                success: product? true: false,
+                success: products? true: false,
                 productData: products? products: 'Cannot get products'
             });
         }
@@ -103,7 +106,10 @@ const queryProductByID = async (req, res) => {
             return res.status(404).json({ message: 'Product not found' });
         }
 
-        res.status(200).json(product);
+        res.status(200).json({
+            success: product? true: false,
+            productData: product? product: 'Cannot get products'
+        });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
