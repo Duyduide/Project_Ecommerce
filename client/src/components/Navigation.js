@@ -4,7 +4,9 @@ import { useNavigate } from 'react-router-dom';
 import path from '../utils/path';
 import { getCurrent } from '../store/user/asyncActions'
 import { useSelector, useDispatch } from 'react-redux'
-import { IoIosLogOut } from "react-icons/io";
+import { IoLogOut } from "react-icons/io5";
+import { MdManageAccounts } from "react-icons/md";
+import { LuMenuSquare } from "react-icons/lu";
 import { FaRegUserCircle } from "react-icons/fa";
 import { logout } from '../store/user/userSlice'
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
@@ -95,7 +97,8 @@ const Navigation = () => {
       navigate('/login'); // Nếu chưa đăng nhập, điều hướng đến trang đăng nhập
     }
   };
-
+  const userButtonClasses = 
+  "flex items-center gap-2 border rounded-md bg-slate-500 bg-opacity-20 px-1 py-2 hover:text-gray-200 text-xs";
   return (
     <div className="bg-blue-200 w-full">
       {/* Khung giới hạn nội dung thanh điều hướng */}
@@ -177,18 +180,56 @@ const Navigation = () => {
           </div>
 
           {/* Login/User Info */}
-          <button className='flex flex-col items-center border rounded-md bg-slate-500 bg-opacity-20 hover:text-gray-200'>
-            <div className='pt-1 pl text-xl'><FaRegUserCircle /></div>
-            {!isLoggedIn &&
-              <span 
-              className='px-2 text-sm'
-              onClick={handleLogin}
-              >Đăng nhập</span>
-            }
-            {isLoggedIn && 
-              <span className='px-2 text-sm relative'>Chào mừng</span>
-            }
+          {isLoggedIn ? (
+          <Menu as="div" className="relative inline-block text-left">
+            <MenuButton className={userButtonClasses}>
+              <FaRegUserCircle className="text-xl" />
+              <span className="text-sm">{`${current?.lastname}`}</span>
+              <ChevronDown className="h-5 w-5 text-gray-400" />
+            </MenuButton>
+            <MenuItems
+              className="absolute right-0 mt-2 w-48 bg-white border rounded-md shadow-lg"
+            >
+              <div className="py-1">
+                <MenuItem>
+                  {({ active }) => (
+                    <button
+                      onClick={() => { navigate('/account') }}
+                      className={`${
+                        active ? 'bg-gray-100 text-gray-900' : 'text-gray-700'
+                      } block w-full text-left px-4 py-2 text-sm`}
+                    >
+                      <MdManageAccounts className="mr-2 h-5 w-5 text-gray-500" />
+                      Thông tin tài khoản
+                    </button>
+                  )}
+                </MenuItem>
+                  <MenuItem>
+                    {({ active }) => (
+                      <button
+                        type="button"
+                        onClick={ () => { dispatch(logout()) } }
+                        className={`${
+                          active ? 'bg-gray-100 text-gray-900' : 'text-gray-700'
+                        } block w-full text-left px-4 py-2 text-sm`}
+                      >
+                        <IoLogOut className="mr-2 h-5 w-5 text-gray-500" />
+                        Đăng xuất
+                      </button>
+                    )}
+                  </MenuItem>
+              </div>
+            </MenuItems>
+          </Menu>
+        ) : (
+          <button
+            className={userButtonClasses}
+            onClick={handleLogin}
+          >
+            <FaRegUserCircle className="text-xl" />
+            <span className="px-0.5 text-sm">Đăng nhập</span>
           </button>
+        )}
         </div>
       </div>
     </div>

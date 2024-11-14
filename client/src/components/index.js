@@ -4,4 +4,6 @@ export { default as Sidebar } from './Sidebar';
 export { default as Banner } from './Banner';
 export { default as InputField } from './InputField';
 export { default as Button } from './Button';   
-export {default as RightBanner} from './RightBanner';
+export { default as RightBanner } from './RightBanner';
+export { default as SliderBanner } from './SliderBanner'
+
