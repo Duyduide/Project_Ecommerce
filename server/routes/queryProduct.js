@@ -5,6 +5,8 @@ router.get('/getAllProduct', queryProductController.queryAllProducts);
 router.get('/getProductById/:productID', queryProductController.queryProductByID);
 router.get('/getProductByType', queryProductController.queryProductByType);
 router.get('/getProductByManufacturer', queryProductController.queryProductByManufacturer);
+router.get('/getPhone', queryProductController.queryAllPhones);
+
 // router.get('/getProductByPrice', queryProductController.queryProductByPrice);
 router.get('/filterProduct', queryProductController.filterProducts);
 

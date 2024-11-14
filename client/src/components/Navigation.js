@@ -5,7 +5,9 @@ import path from '../utils/path';
 import { getCurrent } from '../store/user/asyncActions'
 import { useSelector, useDispatch } from 'react-redux'
 import { IoIosLogOut } from "react-icons/io";
+import { FaRegUserCircle } from "react-icons/fa";
 import { logout } from '../store/user/userSlice'
+import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 
 const categories = [
   {
@@ -61,23 +63,18 @@ const categories = [
 const Navigation = () => {
   const [showProducts, setShowProducts] = useState(false);
   const [activeCategory, setActiveCategory] = useState(null);
-  // Simulated authentication state - in real app, this would come from your auth context
-  //const [isLoggedIn, setIsLoggedIn] = useState(false);
-  // const [username, setUsername] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
   const navigate = useNavigate(); // Hook điều hướng từ react-router-dom
 
   const dispatch = useDispatch();
 
   const { isLoggedIn, current }  = useSelector(state => state.user)
-  
- // console.log(current.lastname);
   useEffect(() => { 
     if (isLoggedIn) {
       dispatch(getCurrent())
     }
   }, [dispatch, isLoggedIn])
-  
+
   const handleSearch = () => {
     if (searchQuery) {
       navigate(`/search?query=${searchQuery}`); // Điều hướng đến trang tìm kiếm sản phẩm
@@ -180,22 +177,18 @@ const Navigation = () => {
           </div>
 
           {/* Login/User Info */}
-          <div className=''>
-            {isLoggedIn ? (
-              <div className=" flex items-center gap-4">
-                <span className='cursor-pointer hover:text-gray-200 text-sm'>{`Chào mừng, ${current?.firstname}`}</span>
-                <span 
-                  className='cursor-pointer hover:text-gray-200 hover:rounded text-sm flex flex-row'
-                  onClick={() => dispatch(logout())}> 
-                  Đăng xuất<IoIosLogOut size={20}/> 
-                </span>
-              </div>
-            ) : (
-              <button onClick={handleLogin} className="hover:text-gray-200">
-                Đăng nhập
-              </button>
-            )}
-          </div>
+          <button className='flex flex-col items-center border rounded-md bg-slate-500 bg-opacity-20 hover:text-gray-200'>
+            <div className='pt-1 pl text-xl'><FaRegUserCircle /></div>
+            {!isLoggedIn &&
+              <span 
+              className='px-2 text-sm'
+              onClick={handleLogin}
+              >Đăng nhập</span>
+            }
+            {isLoggedIn && 
+              <span className='px-2 text-sm relative'>Chào mừng</span>
+            }
+          </button>
         </div>
       </div>
     </div>

@@ -178,7 +178,6 @@ const forgotPassword = asyncHandler(async(req, res) => {
         mes: rs.response?.includes('OK') ? 'Hãy kiểm tra email của bạn để thay đổi mật khẩu.' : 'Đã có lỗi xảy ra, vui lòng thử lại.'
     });
 })
-
 const resetPassword = asyncHandler(async (req, res) => {
     const { password, token } = req.body;
     if(!token || !password) throw new Error('Missing token or password');

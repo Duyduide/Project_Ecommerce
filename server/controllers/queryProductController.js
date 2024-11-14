@@ -7,7 +7,6 @@ const queryAllProducts = asyncHandler(async(req, res) => {
         success: response ? true : false,   
         products: response ? response : 'Cannot get all product-categories'
     })
-   
 });
 
 const queryProductByType = async (req, res) => {

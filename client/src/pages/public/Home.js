@@ -1,27 +1,25 @@
 import React, { useEffect, useState } from 'react'
 import { Sidebar, Banner, RightBanner } from '../../components/index'
 import { useSelector, useDispatch } from 'react-redux'
-import {getProduct} from '../../store/product/asyncActions'
-import {apiGetProduct} from '../../apis'
+//import {getProduct} from '../../store/product/asyncActions'
+import {apiGetPhone, apiGetProduct} from '../../apis'
 
 const Home = () => {
+
   //api gọi toàn bộ sản phẩm
-  const [products, setProducts] = useState(null);
-  //const dispatch = useDispatch();
-  const fetchProducts = async () => {
-    const response = await apiGetProduct()
-    if(response.success) setProducts(response);
-  }
-  useEffect(() => {
-    fetchProducts()
-    //dispatch(getProduct())
-  }, [])
-  console.log(products)
+  // const [products, setProducts] = useState(null);
+  // const fetchProducts = async () => {
+  //   const response = await apiGetProduct()
+  //   if(response.success) setProducts(response);
+  // }
+  // useEffect(() => {
+  //   fetchProducts()
+  // }, [])
+  // console.log(products)
   // hết api gọi sản phẩm 
-
-
   // const { newProducts } = useSelector(state => state.products)
   // console.log({newProducts})
+  // api lấy toàn bộ sản phẩm
   return (
     <div className="w-main flex flex-r ">
       <div className='flex flex-col gap-5 w-[20%] flex-auto'>

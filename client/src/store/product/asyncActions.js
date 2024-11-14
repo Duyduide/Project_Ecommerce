@@ -6,3 +6,4 @@ export const getProduct = createAsyncThunk('product/getProduct', async(data, { r
     if(!response.success) return rejectedWithValue(response);
     return response.products;
 })
+
