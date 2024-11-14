@@ -6,4 +6,4 @@ export { default as InputField } from './InputField';
 export { default as Button } from './Button';   
 export { default as RightBanner } from './RightBanner';
 export { default as SliderBanner } from './SliderBanner'
-
+export { default as Footer } from './Footer';

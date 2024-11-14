@@ -5,21 +5,37 @@ export const apiGetProduct = () => axios({
     url: '/queryProduct/getAllProduct',
     method: 'get'
 })
+//chỉnh sửa database sản phẩm (chỉ dành cho admin)
+export const apiAddProduct = (data) => axios({
+    url: '/createProduct', 
+    method:'post',
+    data
+})
 
-// get by type
-export const apiGetPhone = () => axios({
-    url: '/queryProduct/getPhone',
-    method: 'get'
+export const apiDeleteProduct = (id) => axios({
+    url: '/deleteProduct/' + id, 
+    method:'delete',
 })
-export const apiGetLaptop = () => axios({
-    url: '/queryProduct/getLatop',
-    method: 'get'
+
+export const apiUpdateProduct = (data) => axios({
+    url: '/updateProduct', 
+    method:'put',
+    data
 })
-export const apiGetTablet = () => axios({
-    url: '/queryProduct/getTablet',
-    method: 'get'
+
+//Fetch sản phẩm
+export const apiFetchProductByPage = (category, page, sortField, sortOrder, pageSize=20) => axios({
+    url: '/getProductMain/' + category, 
+    method:'get',
+    params: {page, sortField, sortOrder, pageSize}
 })
-export const apiGetHeadphone = () => axios({
-    url: '/queryProduct/getHeadphone',
-    method: 'get'
+
+export const apiFetchProductById = (id) => axios({
+    url: '/getProductById/' + id, 
+    method:'get',
+})
+
+export const apiFetchProductBySlug = (slug) => axios({
+    url: '/getProductBySlug/' + slug, 
+    method:'get',
 })

@@ -4,8 +4,8 @@ const { verifyAccessToken, isAdmin } = require('../middlewares/verifyToken');
 
 router.post('/createVoucher', [verifyAccessToken, isAdmin], voucherController.createVoucher);
 router.put('/updateVoucher', [verifyAccessToken, isAdmin], voucherController.updateVoucher);
-router.delete('/deleteVoucher', [verifyAccessToken, isAdmin], voucherController.deleteVoucher);
+router.delete('/deleteVoucher/:voucherCode', [verifyAccessToken, isAdmin], voucherController.deleteVoucher);
 router.get('/findVoucherByCode/:voucherCode', verifyAccessToken, voucherController.findVoucherByCode);
-router.get('/queryAllAvailableVouchers', verifyAccessToken, voucherController.queryPublicVouchers);
+router.get('/findAllAvailableVouchers/:membership', verifyAccessToken, voucherController.queryPublicVouchers);
 
 module.exports = router;

@@ -9,6 +9,27 @@ const queryAllProducts = asyncHandler(async(req, res) => {
     })
 });
 
+
+//tìm kiếm sản phẩm dựa vào loại sp và tìm theo trang, sau đó tuỳ chọn sắp xếp theo trường được chọn
+const queryProductMain = async (req, res) => {
+    try {
+        const { category } = req.params;
+        const { page, sortField, sortOrder, pageSize = 20 } = req.query;
+        let sort = {};
+        sort[sortField] = sortOrder === 'ascend' ? 1 : -1;
+        if (category==='All') {
+            const products = await Product.find().sort(sort).skip((page - 1) * pageSize).limit(pageSize);
+            res.status(200).json(products);
+        }
+        else{
+            const products = await Product.find({ __t: category }).sort(sort).skip((page - 1) * pageSize).limit(pageSize);
+            res.status(200).json(products);
+        }
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
 const queryProductByType = async (req, res) => {
     try {
         const { productType, productData } = req.body;
@@ -51,6 +72,21 @@ const queryProductByType = async (req, res) => {
         res.status(200).json(products);
     }
     catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+const queryProductBySlug = async (req, res) => {
+    try {
+        const { productSlug } = req.params;
+
+        const product = await Product.findOne({ slug: productSlug });
+        if (!product) {
+            return res.status(404).json({ message: 'Product not found' });
+        }
+
+        res.status(200).json(product);
+    } catch (error) {
         res.status(500).json({ message: error.message });
     }
 };
@@ -205,5 +241,7 @@ module.exports = {
     queryAllKeyboards,
     queryProductByType,
     queryProductByManufacturer,
-    filterProducts
+    filterProducts,
+    queryProductBySlug,
+    queryProductMain
 }
