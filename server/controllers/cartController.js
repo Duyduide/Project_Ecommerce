@@ -145,7 +145,10 @@ const queryUserCart = async (req, res) => {
             return res.status(404).json({ message: 'Cart is empty' });
         }
 
-        res.status(200).json(user.cart);
+        res.status(200).json({
+            success: user.cart? true : false,
+            cartData: user.cart
+        });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }

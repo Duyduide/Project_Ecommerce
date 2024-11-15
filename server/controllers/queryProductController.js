@@ -1,13 +1,17 @@
 const { Product, Phone, Laptop, Tablet, SmartWatch, PowerBank, Headphone, Charger, Case, Mouse, Keyboard } = require('../models/product');
 const asyncHandler = require('express-async-handler');  
 
-const queryAllProducts = asyncHandler(async(req, res) => {
-    const response = await Product.find().sort({ createdAt: -1 });
-    return res.json({
-        success: response ? true : false,   
-        products: response ? response : 'Cannot get all product-categories'
-    })
-});
+const queryAllProducts = async (req, res) => {
+    try {
+        const products = await Product.find().sort({ createdAt: -1 });
+        res.status(200).json({
+            success: products? true: false,
+            productData: products? products: 'Cannot get products'
+        });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
 
 
 //tìm kiếm sản phẩm dựa vào loại sp và tìm theo trang, sau đó tuỳ chọn sắp xếp theo trường được chọn
@@ -23,7 +27,10 @@ const queryProductMain = async (req, res) => {
         }
         else{
             const products = await Product.find({ __t: category }).sort(sort).skip((page - 1) * pageSize).limit(pageSize);
-            res.status(200).json(products);
+            res.status(200).json({
+                success: products? true: false,
+                productData: products? products: 'Cannot get products'
+            });
         }
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -100,7 +107,10 @@ const queryProductByID = async (req, res) => {
             return res.status(404).json({ message: 'Product not found' });
         }
 
-        res.status(200).json(product);
+        res.status(200).json({
+            success: product? true: false,
+            productData: product? product: 'Cannot get products'
+        });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }

@@ -1,10 +1,10 @@
 import axios from '../axios';
 
 // '/queryProduct'
-export const apiGetProduct = () => axios({
-    url: '/queryProduct/getAllProduct',
-    method: 'get'
-})
+// export const apiGetProduct = () => axios({
+//     url: '/queryProduct/getAllProduct',
+//     method: 'get'
+// })
 //chỉnh sửa database sản phẩm (chỉ dành cho admin)
 export const apiAddProduct = (data) => axios({
     url: '/createProduct', 
