@@ -23,4 +23,9 @@ router.get('/getKeyboard', queryProductController.queryAllKeyboards);
 // router.get('/getProductByPrice', queryProductController.queryProductByPrice);
 router.get('/filterProduct', queryProductController.filterProducts);
 
+router.get('/getPhone', queryProductController.queryAllPhones);
+router.get('/getLaptop', queryProductController.queryAllLaptops);
+router.get('/getTablet', queryProductController.queryAllTablets);
+router.get('/getHeadphone', queryProductController.queryAllHeadphones);
+
 module.exports = router;

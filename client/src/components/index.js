@@ -4,6 +4,11 @@ export { default as Sidebar } from './Sidebar';
 export { default as Banner } from './Banner';
 export { default as InputField } from './InputField';
 export { default as Button } from './Button';   
-export { default as RightBanner } from './RightBanner';
-export { default as SliderBanner } from './SliderBanner'
+export {default as RightBanner} from './RightBanner';
+export {default as ProductPhone} from './ProductPhone';
+export {default as ProductHeadphone} from './ProductHeadphone';
+export {default as ProductLaptop} from './ProductLaptop';
+export {default as ProductTablet} from './ProductTablet';
+export {default as DetailProduct} from './DetailProduct';
+export { default as SliderBanner } from './SliderBanner';
 export { default as Footer } from './Footer';

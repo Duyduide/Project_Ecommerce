@@ -13,6 +13,8 @@ import { logout } from '../store/user/userSlice'
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { IoChatbubbleEllipsesOutline } from "react-icons/io5";
 import { IoMdSearch } from "react-icons/io";
+import { FaShoppingCart } from "react-icons/fa";
+import { IoCartOutline } from "react-icons/io5";
 
 const categories = [
   {
@@ -110,7 +112,7 @@ const Navigation = () => {
     }
   };
   const userButtonClasses = 
-  "flex items-center gap-2 border rounded-md bg-slate-500 bg-opacity-20 px-1 py-2 hover:text-gray-200 text-xs";
+  "flex items-center gap-2 rounded-md bg-slate-500 bg-opacity-20 px-1 py-2 hover:text-gray-200 text-xs";
   return (
     <div className="bg-blue-200 w-full">
       {/* Khung giới hạn nội dung thanh điều hướng */}
@@ -212,10 +214,10 @@ const Navigation = () => {
          
           {/* Cart */}
         <div className="relative cursor-pointer hover:text-gray-200" onClick={handleCartClick}>
-        <img src="giohangwhite.png" alt="Cart" className="h-7" />
-       <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-         0 
-       </span>
+          <IoCartOutline size={25}/>
+          <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
+            0 
+          </span>
         </div>
   
           {/* Login/User Info */}
@@ -250,7 +252,7 @@ const Navigation = () => {
                         onClick={ () => { dispatch(logout()) } }
                         className={`${
                           active ? 'bg-gray-100 text-gray-900' : 'text-gray-700'
-                        } block w-full text-left px-4 py-2 text-sm`}
+                        } block w-full text-left px-4 py-2 text-sm border-t`}
                       >
                         <IoLogOut className="mr-2 h-5 w-5 text-gray-500" />
                         Đăng xuất
