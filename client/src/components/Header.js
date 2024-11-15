@@ -1,7 +1,10 @@
-import React from 'react'
+import React, { useState }  from 'react'
 import { RiPhoneFill } from "react-icons/ri";
 import { CgMail } from "react-icons/cg";
+
 const Header = () => {
+  
+
   return (
     <div className="bg-blue-100 w-full">
       <div className=" w-main h-[110px] py-[35px]  mx-auto flex items-center justify-start">
@@ -23,6 +26,7 @@ const Header = () => {
           </span>
           <span> Online Support 24/7 </span>
           </div>
+          
           </div> 
       </div>
     </div>
