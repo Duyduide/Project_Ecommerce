@@ -11,6 +11,8 @@ import { MdManageAccounts } from "react-icons/md";
 import { FaRegUserCircle } from "react-icons/fa";
 import { logout } from '../store/user/userSlice'
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
+import { IoChatbubbleEllipsesOutline } from "react-icons/io5";
+import { IoMdSearch } from "react-icons/io";
 
 const categories = [
   {
