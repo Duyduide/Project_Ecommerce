@@ -34,7 +34,10 @@ const addToUserCart = async (req, res) => {
         // }
 
         await user.save();
-        res.status(201).json(user.cart);
+        res.status(201).json({
+            success: user.cart? true : false,
+            cartData: user.cart
+        });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
@@ -93,7 +96,10 @@ const changeUserCartProductQuantity = async (req, res) => {
         //xem
 
         await user.save();
-        res.status(200).json(user.cart);
+        res.status(200).json({
+            success: user.cart? true : false,
+            cartData: user.cart
+        });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
@@ -178,15 +184,19 @@ const deleteProductFromUserCart = async (req, res) => {
             return res.status(404).json({ message: 'User not found' });
         }
 
-        const cartItemIndex = user.cart.findIndex(item => item.toString() === productId);
-        if (cartItemIndex > -1) {
-            user.cart.splice(cartItemIndex, 1);
-        } else {
-            return res.status(404).json({ message: 'Product not found in cart' });
-        }
+        // const cartItemIndex = user.cart.findIndex(item => item.toString() === productId);
+        // if (cartItemIndex > -1) {
+        //     user.cart.splice(cartItemIndex, 1);
+        // } else {
+        //     return res.status(404).json({ message: 'Product not found in cart' });
+        // }
+        user.cart=user.cart.filter(item => item.toString() !== productId);
 
         await user.save();
-        res.status(200).json({ message: 'Product removed from cart successfully' });
+        res.status(200).json({
+            success: user.cart? true : false,
+            cartData: user.cart
+        });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
