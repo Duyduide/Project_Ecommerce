@@ -1,5 +1,5 @@
 import React from 'react';
-import { DetailProduct, Header } from '../../components';
+import { DetailProduct} from '../../components';
 
 function Detail() {
   return (
