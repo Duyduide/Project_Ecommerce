@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import * as action from "./asyncActions";
 
 export const appSlice = createSlice({
@@ -16,7 +16,6 @@ export const appSlice = createSlice({
             state.isLoading = true;
         })
         builder.addCase(action.getCategories.fulfilled, (state, action) => {
-            console.log(action);
             state.isLoading = false;
             state.categories = action.payload;
         });

@@ -7,8 +7,6 @@ router.get('/', productCategoryController.getCategories);
 router.put('/:pcid', [verifyAccessToken, isAdmin], productCategoryController.updateCategory);
 router.delete('/:pcid', [verifyAccessToken, isAdmin], productCategoryController.deleteCategory);
 
-
-
 module.exports = router;
 
 // CRUD |   Create - Read - Update - Delete 

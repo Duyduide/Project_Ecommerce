@@ -15,7 +15,6 @@ const initRoutes = (app) => {
     app.use('/api/order', orderRouter);
     app.use('/api/cart', cartRouter);
     app.use('/api/queryProduct', queryProductRouter);
-
     app.use(notFound);
     app.use(errorHandler);
 }

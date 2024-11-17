@@ -1,8 +1,8 @@
-const Voucher = require('../models/voucher');
+const { Voucher } = require('../models/voucher');
 
 const createVoucher = async (req, res) => {
     try {
-        const { userID, voucherData } = req.body;
+        const { voucherData } = req.body;
 
         const voucher = new Voucher(voucherData);
         await voucher.save();
@@ -14,7 +14,7 @@ const createVoucher = async (req, res) => {
 
 const updateVoucher = async (req, res) => {
     try {
-        const { userID, voucherCode, updateData } = req.body;
+        const { voucherCode, updateData } = req.body;
 
         const voucher = await Voucher.findOneAndUpdate({ voucherCode }, updateData, { new: true });
         if (!voucher) {
@@ -29,7 +29,7 @@ const updateVoucher = async (req, res) => {
 
 const deleteVoucher = async (req, res) => {
     try {
-        const { userID, voucherCode } = req.body;
+        const { voucherCode } = req.params;
 
         const voucher = await Voucher.findOneAndDelete({ voucherCode });
         if (!voucher) {
@@ -51,7 +51,10 @@ const findVoucherByCode = async (req, res) => {
             return res.status(404).json({ message: 'Voucher not found' });
         }
 
-        res.status(200).json(voucher);
+        res.status(200).json({
+            success: voucher? true : false,
+            voucherData: voucher
+        });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
@@ -60,7 +63,10 @@ const findVoucherByCode = async (req, res) => {
 const queryAllVouchers = async (req, res) => {
     try {
         const vouchers = await Voucher.find().sort({ createdAt: -1 });
-        res.status(200).json(vouchers);
+        res.status(200).json({
+            success: vouchers? true : false,
+            voucherData: vouchers
+        });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
@@ -69,7 +75,10 @@ const queryAllVouchers = async (req, res) => {
 const queryPublicVouchers = async (req, res) => {
     try {
         const vouchers = await Voucher.find({ isHidden: false }).sort({ createdAt: -1 });
-        res.status(200).json(vouchers);
+        res.status(200).json({
+            success: vouchers? true : false,
+            voucherData: vouchers
+        });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
@@ -77,7 +86,7 @@ const queryPublicVouchers = async (req, res) => {
 
 const queryAvailablePublicVouchers = async (req, res) => {// sẽ thêm tính toán sao cho giá được giảm là cao nhất
     try {
-        const { membership } = req.body;
+        const { membership } = req.params;
 
         const vouchers = await Voucher.find({ isHidden: false, membership }).sort({ createdAt: -1 });
         res.status(200).json(vouchers);

@@ -5,7 +5,6 @@ function Detail() {
   return (
     <>
     <DetailProduct/>
-    
     </>
   )
 }

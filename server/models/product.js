@@ -45,11 +45,20 @@ const productSchema = new mongoose.Schema({
         type: String,
         trim: true
     },
-    createdAt: {
-        type: Date,
-        default: Date.now
-    }
-});
+    saleDiscountRate: {
+        type: Number,
+        default: 0,
+        min: 0,
+        max: 100
+    },
+    slug: {
+        type: String,
+        trim: true
+    },
+},{
+    timestamps:true
+}
+);
 
 const Product = mongoose.model('Product', productSchema);
 

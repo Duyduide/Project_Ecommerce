@@ -1,6 +1,6 @@
 import React from 'react'
 import { Outlet } from 'react-router-dom'
-import { Header, Navigation, Sidebar, Banner } from '../../components/index'
+import {  Header, Navigation, Footer } from '../../components/index'
 
 const Public = () => {
   return (
@@ -10,6 +10,7 @@ const Public = () => {
       <div className='w-main pt-5'>
         <Outlet />
       </div>
+      <Footer />
     </div>
   )
 }

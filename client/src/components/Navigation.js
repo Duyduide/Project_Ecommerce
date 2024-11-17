@@ -1,6 +1,21 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ChevronDown } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import path from '../utils/path';
+import { getCurrent } from '../store/user/asyncActions'
+import { useSelector, useDispatch } from 'react-redux'
+import { IoLogOut } from "react-icons/io5";
+import { MdManageAccounts } from "react-icons/md";
+//import { LuMenuSquare } from "react-icons/lu";
+import { FaRegUserCircle } from "react-icons/fa";
+import { logout } from '../store/user/userSlice'
+import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
+import { IoChatbubbleEllipsesOutline } from "react-icons/io5";
+import { IoMdSearch } from "react-icons/io";
+import { FaShoppingCart } from "react-icons/fa";
+import { IoCartOutline } from "react-icons/io5";
+
 const categories = [
   {
     name: 'Điện thoại, Tablet',
@@ -52,15 +67,21 @@ const categories = [
   }
 ];
 
-
 const Navigation = () => {
   const [showProducts, setShowProducts] = useState(false);
   const [activeCategory, setActiveCategory] = useState(null);
-  // Simulated authentication state - in real app, this would come from your auth context
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [username, setUsername] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
   const navigate = useNavigate(); // Hook điều hướng từ react-router-dom
+
+  const dispatch = useDispatch();
+
+  const { isLoggedIn, current }  = useSelector(state => state.user)
+  useEffect(() => { 
+    if (isLoggedIn) {
+      dispatch(getCurrent())
+    }
+  }, [dispatch, isLoggedIn])
+
   const handleSearch = () => {
     if (searchQuery) {
       navigate(`/search?query=${searchQuery}`); // Điều hướng đến trang tìm kiếm sản phẩm
@@ -71,7 +92,7 @@ const Navigation = () => {
   };
 
   const handleLogin = () => {
-    navigate('/login'); // Điều hướng đến trang đăng nhập
+    navigate(path.LOGIN); // Điều hướng đến trang đăng nhập
   };
 
   const handleOrderLookup = () => {
@@ -81,13 +102,28 @@ const Navigation = () => {
       navigate('/login'); // Nếu chưa đăng nhập, điều hướng đến trang đăng nhập
     }
   };
+  const handleCartClick = () => {
+    if (!isLoggedIn) {
+      // Nếu chưa đăng nhập, điều hướng đến trang đăng nhập
+      navigate('/login');
+    } else {
+      // Nếu đã đăng nhập, điều hướng đến trang giỏ hàng
+      navigate('/cart');
+    }
+  };
+  const userButtonClasses = 
+  "flex items-center gap-2 rounded-md bg-slate-500 bg-opacity-20 px-1 py-2 hover:text-gray-200 text-xs";
   return (
     <div className="bg-blue-200 w-full">
       {/* Khung giới hạn nội dung thanh điều hướng */}
-      <div className="w-main h-[48px] py-2  mx-auto flex items-center justify-between">
+      <div className="w-main h-[48px] py-2 mx-auto flex items-center justify-between">
         <div className="flex items-center space-x-8">
-        
 
+           {/* Trang chủ */}
+        <Link to={path.HOME} className="hover:text-gray-200">
+          Trang chủ
+        </Link>
+        
           {/* Products Dropdown */}
           <div className="relative">
             <button
@@ -98,7 +134,7 @@ const Navigation = () => {
               <span>Sản phẩm</span>
               <ChevronDown size={20} />
             </button>
-
+  
             {/* Products Menu */}
             {showProducts && (
               <div
@@ -117,7 +153,7 @@ const Navigation = () => {
                     <div className="px-4 py-2 text-gray-800 hover:bg-gray-100 cursor-pointer">
                       {category.name}
                     </div>
-
+  
                     {/* Subcategories */}
                     {activeCategory === index && (
                       <div className="absolute left-full top-0 w-64 bg-white rounded-md shadow-lg">
@@ -137,7 +173,7 @@ const Navigation = () => {
               </div>
             )}
           </div>
-
+  
           {/* Order Lookup */}
           <div
             className="cursor-pointer hover:text-gray-200"
@@ -146,35 +182,95 @@ const Navigation = () => {
             Tra cứu đơn hàng
           </div>
         </div>
+  
+     {/* Căn giữa Search Bar */}
+<div className="flex items-center justify-center flex-grow">
+  <div className="flex items-center border border-white rounded-full bg-white p-1 space-x-2">
+    {/* Kính lúp và Search Bar */}
+    <input
+      type="search"
+      placeholder="Tìm kiếm sản phẩm"
+      className="px-4 py-1 text-gray-800 w-72 rounded-full outline-none"
+      value={searchQuery}
+      onChange={(e) => setSearchQuery(e.target.value)}
+      onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
+    />
+    <IoMdSearch
+      size={20}
+      className="cursor-pointer text-gray-800"
+      onClick={handleSearch}
+    />
+          </div>
+        </div>
+  
+        <div className="flex items-center space-x-8">
+          {/*Chat ngay*/}
+          
+        <div className="flex items-center space-x-2 cursor-pointer hover:text-gray-200">
+  <IoChatbubbleEllipsesOutline color='red' size={20} className="text--800 h-6" />
+  <span className="text-base">Liên hệ</span> {/* Sử dụng text-base thay vì text-sm */}
+</div>
 
-        <div className="flex items-center space-x-4">
-          {/* Search Bar */}
-          <input
-            type="search"
-            placeholder="Search products"
-            className="px-4 py-1 rounded-md text-gray-800 w-72"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
-          />
-
+         
           {/* Cart */}
-          <div className="cursor-pointer hover:text-gray-200">
-            <img src="giohangwhite.png" alt="Cart" className="h-7" />
-          </div>
-
+        <div className="relative cursor-pointer hover:text-gray-200" onClick={handleCartClick}>
+          <IoCartOutline size={25}/>
+          <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
+            0 
+          </span>
+        </div>
+  
           {/* Login/User Info */}
-          <div>
-            {isLoggedIn ? (
-              <div className="cursor-pointer hover:text-gray-200">
-                {username}
+          {isLoggedIn ? (
+          <Menu as="div" className="relative inline-block text-left">
+            <MenuButton className={userButtonClasses}>
+              <FaRegUserCircle className="text-xl" />
+              <span className="text-sm">{`${current?.lastname}`}</span>
+              <ChevronDown className="h-5 w-5 text-gray-400" />
+            </MenuButton>
+            <MenuItems
+              className="absolute right-0 mt-2 w-48 bg-white border rounded-md shadow-lg"
+            >
+              <div className="py-1">
+                <MenuItem>
+                  {({ active }) => (
+                    <button
+                      onClick={() => { navigate('/account') }}
+                      className={`${
+                        active ? 'bg-gray-100 text-gray-900' : 'text-gray-700'
+                      } block w-full text-left px-4 py-2 text-sm`}
+                    >
+                      <MdManageAccounts className="mr-2 h-5 w-5 text-gray-500" />
+                      Thông tin tài khoản
+                    </button>
+                  )}
+                </MenuItem>
+                  <MenuItem>
+                    {({ active }) => (
+                      <button
+                        type="button"
+                        onClick={ () => { dispatch(logout()) } }
+                        className={`${
+                          active ? 'bg-gray-100 text-gray-900' : 'text-gray-700'
+                        } block w-full text-left px-4 py-2 text-sm border-t`}
+                      >
+                        <IoLogOut className="mr-2 h-5 w-5 text-gray-500" />
+                        Đăng xuất
+                      </button>
+                    )}
+                  </MenuItem>
               </div>
-            ) : (
-              <button onClick={handleLogin} className="hover:text-gray-200">
-                Đăng nhập
-              </button>
-            )}
-          </div>
+            </MenuItems>
+          </Menu>
+        ) : (
+          <button
+            className={userButtonClasses}
+            onClick={handleLogin}
+          >
+            <FaRegUserCircle className="text-xl" />
+            <span className="px-0.5 text-sm">Đăng nhập</span>
+          </button>
+        )}
         </div>
       </div>
     </div>
