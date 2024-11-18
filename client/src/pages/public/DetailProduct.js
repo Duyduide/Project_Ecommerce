@@ -3,9 +3,7 @@ import { DetailProduct} from '../../components';
 
 function Detail() {
   return (
-    <>
     <DetailProduct/>
-    </>
   )
 }
 

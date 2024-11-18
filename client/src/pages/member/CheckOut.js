@@ -1,8 +1,8 @@
 import React from 'react'
-
+import { Address } from '../../components'
 const CheckOut = () => {
   return (
-    <div>CheckOut</div>
+    <div><Address/></div>
   )
 }
 
