@@ -31,10 +31,10 @@ const Address = () => {
   }, [])
 
   useEffect(() => { 
-    setDistrict(null)
-    fetchPublicDistrict()
+    setDistrict(null);
     province && fetchPublicDistrict();
-    !province ? setReset(true) : setReset(false)
+    !province ? setReset(true) : setReset(false);
+    !province && setDistricts([]);
   }, [province])
   
   const deliveryAddress = [
