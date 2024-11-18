@@ -86,7 +86,7 @@ const Footer = () => {
     </div>
     <div className='flex-1'>
   <h3 className='mb-[20px] text-[15px] font-medium border-l-2 border-main pl-[15px] mt-[65px]'>
-    ABC - Giao hàng tận nơi
+    ABC - GIAO HÀNG TẬN NƠI
   </h3>
 
   <div className="social-links">
