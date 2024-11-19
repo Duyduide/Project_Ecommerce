@@ -4,11 +4,12 @@ import { apiGetPublicProvinces, apiGetPublicDistrict } from '../apis/app'
 import Swal from 'sweetalert2'
 
 const Address = () => {
+
   const [provinces, setProvinces] = useState([]);
   const [districts, setDistricts] = useState([]);
   const [province, setProvince] = useState();
   const [district, setDistrict] = useState();
-  
+
   const [reset, setReset] = useState(false);
   const [houseNumber, setHouseNumber] = useState('');
 
@@ -60,49 +61,50 @@ const Address = () => {
   };
 
   return (
-    <div className='flex flex-col gap-4 w-1/2'>
 
-        {/*2 cái ô chọn tỉnh/thành với quận/huyện*/}
-        <div className='flex items-center gap-4'> 
-          <Select type='province' value={province} setValue={setProvince} label='Tỉnh/Thành phố' options={provinces} /> 
-          <Select reset={reset} type='district' value={district} setValue={setDistrict} label='Quận/Huyện' options={districts}/>    
+    <div className="flex gap-8">
+      <div className="flex flex-col flex-1 gap-8">
+        {/* Ô chọn tỉnh/thành phố và quận/huyện */}
+        <div className="flex items-center gap-4">
+          <Select type="province" value={province} setValue={setProvince} label="Tỉnh/Thành phố" options={provinces} />
+          <Select reset={reset} type="district" value={district} setValue={setDistrict} label="Quận/Huyện" options={districts} />
         </div>
-
-        {/* ô nhập số nhà, tên đường*/}
-        <div className='flex flex-col gap-2'>
-          <label className='font-medium gap-2 font-semibold	' htmlFor='house-number'>Số nhà, tên đường</label>
-          <input 
-            type='text' 
-            id='house-number' 
-            placeholder='Ví dụ: 268 Lý Thường Kiệt, Phường 14' 
-            className='border border-gray-200 shadow-inner outline-none rounded-md p-2 w-full'
+        {/* Nhập số nhà, tên đường */}
+        <div className="flex flex-col gap-2">
+          <label className="font-medium font-semibold" htmlFor="house-number">Số nhà, tên đường</label>
+          <input
+            type="text"
+            id="house-number"
+            placeholder="Ví dụ: 268 Lý Thường Kiệt, Phường 14"
+            className="border border-gray-200 shadow-inner outline-none rounded-md p-2 w-full"
             value={houseNumber}
-            onChange={(e) => {setHouseNumber(e.target.value)}}
+            onChange={(e) => setHouseNumber(e.target.value)}
           />
         </div>
-
-        {/* ô hiện địa chỉ đã nhập */}
-          <div className='flex flex-col gap-2'>
-            <label className='font-medium font-semibold	' htmlFor='exactly-address'>Địa chỉ giao hàng</label>
-            <input 
-              type='text'
-              id='exactly-address'
-              readOnly
-              className='border border-gray-200 bg-gray-300 shadow-inner outline-none rounded-md p-2 w-full'
-              value={deliveryAddress}
-            />
+        {/* Hiển thị địa chỉ giao hàng */}
+        <div className="flex flex-col gap-2">
+          <label className="font-medium font-semibold" htmlFor="exactly-address">Địa chỉ giao hàng</label>
+          <input
+            type="text"
+            id="exactly-address"
+            readOnly
+            className="border border-gray-200 bg-gray-300 shadow-inner outline-none rounded-md p-2 w-full"
+            rows={3}
+            value={deliveryAddress}
+          />
         </div>
-
-        {/* Submit Button dùng để test khi merge code thì sử dụng submit button của trang checkout*/}
-        <button
-          type='submit'
-          className='mt-4 bg-main text-white px-4 py-2 rounded-md hover:bg-main-dark'
+        {/* <button
+          type="submit"
+          className="mt-4 bg-main text-white px-4 py-2 rounded-md hover:bg-main-dark w-full" // Thêm class w-full để button có chiều rộng đầy đủ
           onClick={handleSubmit}
         >
           Xác nhận Địa chỉ
-        </button>
-    </div>    
-  )
-}
+        </button> */}
+      </div>
+    </div>
+  );
+};
+
+
 
 export default Address
