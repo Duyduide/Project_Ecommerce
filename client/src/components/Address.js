@@ -71,7 +71,8 @@ const Address = () => {
   return (
     <div className="flex gap-8 mb-20 mt-8">
       {/* Tiêu đề thông tin thanh toán */}
-      <div className="flex-1">
+      <div className="flex flex-col   flex-1 gap-8">
+
         <h2 className="text-xl font-semibold">THÔNG TIN THANH TOÁN</h2>
 
         {/* Nhập họ và tên */}
@@ -140,6 +141,7 @@ const Address = () => {
             id="exactly-address"
             readOnly
             className="border border-gray-200 bg-gray-300 shadow-inner outline-none rounded-md p-2 w-full"
+            rows={3}
             value={deliveryAddress}
           />
         </div>
@@ -166,8 +168,8 @@ const Address = () => {
       </div>
 
       {/* Đơn hàng của bạn */}
-      <div className="w-1/3">
-        <div className="border border-blue-500 p-4 rounded-md flex flex-col gap-4">
+      <div className=" w-1/3 ">
+        <div className="border border-blue-500 p-4 rounded-md flex flex-col gap-8">
           <h2 className="text-xl font-semibold text-blue-600 text-center">ĐƠN HÀNG CỦA BẠN</h2>
 
           {/* Sản phẩm và giá */}
@@ -196,31 +198,31 @@ const Address = () => {
           </div>
 
         {/* Chọn phương thức vận chuyển */}
-<div>
-<h3 className="font-semibold mb-2">Chọn phương thức vận chuyển</h3>
-<div className="flex flex-col gap-2">
-  <label className="flex items-center gap-2 bg-gray-300 p-2 rounded-md opacity-80">
-    <input
-      type="radio"
-      name="shipping"
-      value={20000}
-      checked={shippingFee === 20000}
-      onChange={() => setShippingFee(20000)}
-    />
-    <strong className="font-bold">Giao hàng tiết kiệm</strong>: 20.000 VND
-  </label>
-  <label className="flex items-center gap-2 bg-gray-300 p-2 rounded-md opacity-80">
-    <input
-      type="radio"
-      name="shipping"
-      value={30000}
-      checked={shippingFee === 30000}
-      onChange={() => setShippingFee(30000)}
-    />
-    <strong className="font-bold">Giao hàng siêu tốc nội thành</strong>: 30.000 VND
-  </label>
-</div>
-</div>
+        <div>
+          <h3 className="font-semibold mb-2">Chọn phương thức vận chuyển</h3>
+          <div className="flex flex-col gap-2">
+            <label className="flex items-center gap-2 bg-gray-300 p-2 rounded-md opacity-80">
+              <input
+                type="radio"
+                name="shipping"
+                value={20000}
+                checked={shippingFee === 20000}
+                onChange={() => setShippingFee(20000)}
+              />
+              <strong className="font-bold">Giao hàng tiết kiệm</strong>: 20.000 VND
+            </label>
+            <label className="flex items-center gap-2 bg-gray-300 p-2 rounded-md opacity-80">
+              <input
+                type="radio"
+                name="shipping"
+                value={30000}
+                checked={shippingFee === 30000}
+                onChange={() => setShippingFee(30000)}
+              />
+              <strong className="font-bold">Giao hàng siêu tốc nội thành</strong>: 30.000 VND
+            </label>
+          </div>
+        </div>
 
 
           {/* Tổng thanh toán */}

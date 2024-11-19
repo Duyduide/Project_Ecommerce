@@ -9,7 +9,9 @@ const orderSchema = new mongoose.Schema({
     status: {
         type: String,
         required: true,
-        trim: true
+        trim: true,
+        default: 'Processing',
+        enum: ['Delivering', 'Delivered', 'Cancelled']
     },
     address: {
         type: String,

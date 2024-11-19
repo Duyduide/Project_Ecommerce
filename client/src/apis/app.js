@@ -30,3 +30,4 @@ export const apiGetPublicDistrict = (provinceId) => new Promise(async (resolve, 
         reject(error)
     }
 }) 
+
