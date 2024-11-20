@@ -39,7 +39,7 @@ const queryProductMain = async (req, res) => {
 
 const queryProductByType = async (req, res) => {
     try {
-        const { productType, productData } = req.body;
+        const { productType } = req.body;
 
         let products;
         switch (productType) {
@@ -98,15 +98,12 @@ const queryProductBySlug = async (req, res) => {
     }
 };
 
-const queryProductByID = async (req, res) => {
+const queryProductById = async (req, res) => {
     try {
-        const { productID } = req.params;
+        const { productId } = req.params;
 
-        const product = await Product.findById(productID);
-        if (!product) {
-            return res.status(404).json({ message: 'Product not found' });
-        }
-
+        const product = await Product.findById(productId);
+        
         res.status(200).json({
             success: product? true: false,
             productData: product? product: 'Cannot get products'
@@ -238,7 +235,7 @@ const filterProducts = async (req, res) => {
 
 module.exports = {
     queryAllProducts,
-    queryProductByID,
+    queryProductById,
     queryAllPhones,
     queryAllLaptops,
     queryAllTablets,

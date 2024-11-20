@@ -1,8 +1,4 @@
 const { Product, Phone, Laptop, Tablet, SmartWatch, PowerBank, Headphone, Charger, Case, Mouse, Keyboard } = require('../models/product');
-const Cart = require('../models/cart');
-const { Voucher } = require('../models/voucher');
-const { Order } = require('../models/order');
-const { User } = require('../models/user');
 
 const createProduct = async (req, res) => {
     try {
@@ -53,45 +49,9 @@ const createProduct = async (req, res) => {
 
 const deleteProductById = async (req, res) => {
     try {
-        const { productID } = req.params;
+        const { productId } = req.params;
 
-        // let productModel;
-        // switch (productType) {
-        //     case 'Phone':
-        //         productModel = Phone;
-        //         break;
-        //     case 'Laptop':
-        //         productModel = Laptop;
-        //         break;
-        //     case 'Tablet':
-        //         productModel = Tablet;
-        //         break;
-        //     case 'SmartWatch':
-        //         productModel = SmartWatch;
-        //         break;
-        //     case 'PowerBank':
-        //         productModel = PowerBank;
-        //         break;
-        //     case 'Headphone':
-        //         productModel = Headphone;
-        //         break;
-        //     case 'Charger':
-        //         productModel = Charger;
-        //         break;
-        //     case 'Case':
-        //         productModel = Case;
-        //         break;
-        //     case 'Mouse':
-        //         productModel = Mouse;
-        //         break;
-        //     case 'Keyboard':
-        //         productModel = Keyboard;
-        //         break;
-        //     default:
-        //         return res.status(400).json({ message: 'Invalid product type' });
-        // }
-
-        const product = await Product.findByIdAndDelete(productID);
+        const product = await Product.findByIdAndDelete(productId);
         if (!product) {
             return res.status(404).json({ message: 'Product not found' });
         }
@@ -103,63 +63,27 @@ const deleteProductById = async (req, res) => {
 };
 
 
-const deleteProductByName = async (req, res) => {
-    try {
-        const { productType, productName } = req.body;
-
-        let productModel;
-        switch (productType) {
-            case 'Phone':
-                productModel = Phone;
-                break;
-            case 'Laptop':
-                productModel = Laptop;
-                break;
-            case 'Tablet':
-                productModel = Tablet;
-                break;
-            case 'SmartWatch':
-                productModel = SmartWatch;
-                break;
-            case 'PowerBank':
-                productModel = PowerBank;
-                break;
-            case 'Headphone':
-                productModel = Headphone;
-                break;
-            case 'Charger':
-                productModel = Charger;
-                break;
-            case 'Case':
-                productModel = Case;
-                break;
-            case 'Mouse':
-                productModel = Mouse;
-                break;
-            case 'Keyboard':
-                productModel = Keyboard;
-                break;
-            default:
-                return res.status(400).json({ message: 'Invalid product type' });
-        }
-
-        const result = await productModel.deleteMany({ name: productName });
-        if (!product) {
-            return res.status(404).json({ message: 'Product not found' });
-        }
-
-        res.status(200).json({ message: 'Product deleted successfully' });
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-};
-
-// const updateProductByID = async (req, res) => {
+// const deleteProductByName = async (req, res) => {
 //     try {
-//         const { userID, name, updateData } = req.body;
+//         const { productName } = req.params;
+
+//         const result = await Product.deleteMany({ name: productName });
+//         if (!product) {
+//             return res.status(404).json({ message: 'Product not found' });
+//         }
+
+//         res.status(200).json({ message: 'Product deleted successfully' });
+//     } catch (error) {
+//         res.status(500).json({ message: error.message });
+//     }
+// };
+
+// const updateProductById = async (req, res) => {
+//     try {
+//         const { userId, name, updateData } = req.body;
 
 //         // Verify if the user is an admin
-//         const user = await User.findById(userID);
+//         const user = await User.findById(userId);
 //         if (!user || !user.isAdmin) {
 //             return res.status(403).json({ message: 'Access denied' });
 //         }
@@ -175,48 +99,11 @@ const deleteProductByName = async (req, res) => {
 //     }
 // };
 
-const updateProductByID = async (req, res) => {
+const updateProductById = async (req, res) => {
     try {
-        const { productType, productID, updateData } = req.body;
+        const { productId, updateData } = req.body;
 
-
-        let productModel;
-        switch (productType) {
-            case 'Phone':
-                productModel = Phone;
-                break;
-            case 'Laptop':
-                productModel = Laptop;
-                break;
-            case 'Tablet':
-                productModel = Tablet;
-                break;
-            case 'SmartWatch':
-                productModel = SmartWatch;
-                break;
-            case 'PowerBank':
-                productModel = PowerBank;
-                break;
-            case 'Headphone':
-                productModel = Headphone;
-                break;
-            case 'Charger':
-                productModel = Charger;
-                break;
-            case 'Case':
-                productModel = Case;
-                break;
-            case 'Mouse':
-                productModel = Mouse;
-                break;
-            case 'Keyboard':
-                productModel = Keyboard;
-                break;
-            default:
-                return res.status(400).json({ message: 'Invalid product type' });
-        }
-
-        const product = await productModel.findByIdAndUpdate(productID, updateData, { new: true });
+        const product = await Product.findByIdAndUpdate(productId, updateData, { new: true });
         if (!product) {
             return res.status(404).json({ message: 'Product not found' });
         }
@@ -227,5 +114,4 @@ const updateProductByID = async (req, res) => {
     }
 }
 
-module.exports = { createProduct, deleteProductByName, 
-    updateProductByID, deleteProductById };
+module.exports = { createProduct, updateProductById, deleteProductById };
