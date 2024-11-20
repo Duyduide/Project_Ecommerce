@@ -1,4 +1,3 @@
-const {Cart} = require('../models/cart');
 const {Order} = require('../models/order');
 
 const createOrder = async (req, res) => {
@@ -15,9 +14,9 @@ const createOrder = async (req, res) => {
 
 const queryOrderOfUser = async (req, res) => {
     try {
-        const { userID } = req.params;
+        const { userId } = req.params;
 
-        const orders = await Order.find({ createdBy: userID });
+        const orders = await Order.find({ createdBy: userId });
         if (!orders.length) {
             return res.status(404).json({ message: 'No order found' });
         }
@@ -33,9 +32,9 @@ const queryOrderOfUser = async (req, res) => {
 
 const queryOrderById = async (req, res) => {
     try {
-        const { orderID } = req.params;
+        const { orderId } = req.params;
 
-        const order = await Order.findById(orderID);
+        const order = await Order.findById(orderId);
         if (!order) {
             return res.status(404).json({ message: 'Order not found' });
         }
@@ -52,9 +51,9 @@ const queryOrderById = async (req, res) => {
 
 const cancelOrderById = async (req, res) => {
     try {
-        const { orderID } = req.params;
+        const { orderId } = req.params;
         //sửa thành đã huỷ là được
-        const order = await Order.findByIdAndUpdate(orderID, { status: 'Cancelled' });
+        const order = await Order.findByIdAndUpdate(orderId, { status: 'Cancelled' });
         if (!order) {
             return res.status(404).json({ message: 'Order not found' });
         }
@@ -67,9 +66,9 @@ const cancelOrderById = async (req, res) => {
 
 const deleteOrderById = async (req, res) => {
     try {
-        const { orderID } = req.params;
+        const { orderId } = req.params;
 
-        const order = await Order.findByIdAndDelete(orderID);
+        const order = await Order.findByIdAndDelete(orderId);
         if (!order) {
             return res.status(404).json({ message: 'Order not found' });
         }
