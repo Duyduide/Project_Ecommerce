@@ -41,7 +41,7 @@ const createProduct = async (req, res) => {
         }
 
         await product.save();
-        res.status(201).json(product);
+        res.status(201).json({success: product ? true : false, productData: product ? product : 'Cannot create product'});
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
@@ -53,10 +53,10 @@ const deleteProductById = async (req, res) => {
 
         const product = await Product.findByIdAndDelete(productId);
         if (!product) {
-            return res.status(404).json({ message: 'Product not found' });
+            return res.status(404).json({ success: false, productData: 'Product not found' });
         }
 
-        res.status(200).json({ message: 'Product deleted successfully' });
+        res.status(200).json({ success: true, productData: 'Product deleted successfully' });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
@@ -105,10 +105,10 @@ const updateProductById = async (req, res) => {
 
         const product = await Product.findByIdAndUpdate(productId, updateData, { new: true });
         if (!product) {
-            return res.status(404).json({ message: 'Product not found' });
+            return res.status(404).json({ success: false, productData: 'Product not found' });
         }
 
-        res.status(200).json(product);
+        res.status(200).json({ success: true, productData: product? product : 'Cannot update product' });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }

@@ -6,7 +6,10 @@ const createVoucher = async (req, res) => {
 
         const voucher = new Voucher(voucherData);
         await voucher.save();
-        res.status(201).json(voucher);
+        res.status(201).json({
+            success: voucher? true : false,
+            voucherData: voucher? voucher : 'Cannot create voucher'
+        });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
@@ -18,10 +21,13 @@ const updateVoucher = async (req, res) => {
 
         const voucher = await Voucher.findOneAndUpdate({ voucherCode }, updateData, { new: true });
         if (!voucher) {
-            return res.status(404).json({ message: 'Voucher not found' });
+            return res.status(404).json({ success: false, voucherData: 'Voucher not found' });
         }
 
-        res.status(200).json(voucher);
+        res.status(200).json({
+            success: voucher? true : false,
+            voucherData: voucher? voucher : 'Cannot update voucher'
+        });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
@@ -33,10 +39,13 @@ const deleteVoucher = async (req, res) => {
 
         const voucher = await Voucher.findOneAndDelete({ voucherCode });
         if (!voucher) {
-            return res.status(404).json({ message: 'Voucher not found' });
+            return res.status(404).json({ success: false, voucherData: 'Voucher not found' });
         }
 
-        res.status(200).json({ message: 'Voucher deleted successfully' });
+        res.status(200).json({
+            success: true,
+            voucherData: 'Voucher deleted successfully'
+        });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
@@ -48,12 +57,12 @@ const findVoucherByCode = async (req, res) => {
 
         const voucher = await Voucher.findOne({ voucherCode });
         if (!voucher) {
-            return res.status(404).json({ message: 'Voucher not found' });
+            return res.status(404).json({ success: false, voucherData: 'Voucher not found' });
         }
 
         res.status(200).json({
             success: voucher? true : false,
-            voucherData: voucher
+            voucherData: voucher? voucher : 'Cannot get voucher'
         });
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -65,7 +74,7 @@ const queryAllVouchers = async (req, res) => {
         const vouchers = await Voucher.find().sort({ createdAt: -1 });
         res.status(200).json({
             success: vouchers? true : false,
-            voucherData: vouchers
+            voucherData: vouchers? vouchers : 'Cannot get vouchers'
         });
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -77,7 +86,7 @@ const queryPublicVouchers = async (req, res) => {
         const vouchers = await Voucher.find({ isHidden: false }).sort({ createdAt: -1 });
         res.status(200).json({
             success: vouchers? true : false,
-            voucherData: vouchers
+            voucherData: vouchers? vouchers : 'Cannot get vouchers'
         });
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -89,7 +98,10 @@ const queryAvailablePublicVouchers = async (req, res) => {// sẽ thêm tính to
         const { membership } = req.params;
 
         const vouchers = await Voucher.find({ isHidden: false, membership }).sort({ createdAt: -1 });
-        res.status(200).json(vouchers);
+        res.status(200).json({
+            success: vouchers? true : false,
+            voucherData: vouchers? vouchers : 'Cannot get vouchers'
+        });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
