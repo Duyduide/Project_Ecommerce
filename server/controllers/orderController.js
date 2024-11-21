@@ -11,7 +11,7 @@ const createOrder = async (req, res) => {
             orderData: order? order : 'Cannot create order'
         });
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        res.status(500).json({ success: false, orderData: error.message });
     }
 }
 
@@ -26,7 +26,7 @@ const queryOrderOfUser = async (req, res) => {
             orderData: orders? orders : 'Cannot get order'
         });
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        res.status(500).json({ success: false, orderData: error.message });
     }
 }
 
@@ -42,7 +42,7 @@ const queryOrderById = async (req, res) => {
         });
     }
     catch (error) {
-        res.status(500).json({ message: error.message });
+        res.status(500).json({ success: false, orderData: error.message });
     }
 };
 
@@ -60,7 +60,7 @@ const cancelOrderById = async (req, res) => {
             orderData: 'Order cancelled successfully'
         });
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        res.status(500).json({ success: false, orderData: error.message });
     }
 }
 
@@ -78,7 +78,7 @@ const deleteOrderById = async (req, res) => {
             orderData: 'Order deleted successfully'
         });
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        res.status(500).json({ success: false, orderData: error.message });
     }
 }
 

@@ -39,7 +39,7 @@ const addToUserCart = async (req, res) => {
             cartData: user.cart? user.cart : 'Cannot get cart'
         });
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        res.status(500).json({ success: false, cartData: error.message });
     }
 };
 
@@ -101,7 +101,7 @@ const changeUserCartProductQuantity = async (req, res) => {
             cartData: user.cart? user.cart : 'Cannot get cart'
         });
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        res.status(500).json({ success: false, cartData: error.message });
     }
 };
 
@@ -152,7 +152,7 @@ const queryUserCart = async (req, res) => {
             cartData: user.cart? user.cart : 'Cannot get cart'
         });
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        res.status(500).json({ success: false, cartData: error.message });
     }
 };
 
@@ -194,7 +194,7 @@ const deleteProductFromUserCart = async (req, res) => {
             cartData: user.cart? user.cart : 'Cannot get cart'
         });
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        res.status(500).json({ success: false, cartData: error.message });
     }
 };
 
@@ -212,7 +212,7 @@ const deleteAllProductsFromUserCart = async (req, res) => {
         res.status(200).json({ success: true, cartData: 'Cart is empty' });
     }
     catch (error) {
-        res.status(500).json({ message: error.message });
+        res.status(500).json({ success: false, cartData: error.message });
     }
 };
 

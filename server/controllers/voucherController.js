@@ -11,7 +11,7 @@ const createVoucher = async (req, res) => {
             voucherData: voucher? voucher : 'Cannot create voucher'
         });
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        res.status(500).json({ success: false, voucherData: error.message });
     }
 };
 
@@ -29,7 +29,7 @@ const updateVoucher = async (req, res) => {
             voucherData: voucher? voucher : 'Cannot update voucher'
         });
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        res.status(500).json({ success: false, voucherData: error.message });
     }
 };
 
@@ -47,7 +47,7 @@ const deleteVoucher = async (req, res) => {
             voucherData: 'Voucher deleted successfully'
         });
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        res.status(500).json({ success: false, voucherData: error.message });
     }
 }
 
@@ -65,7 +65,7 @@ const findVoucherByCode = async (req, res) => {
             voucherData: voucher? voucher : 'Cannot get voucher'
         });
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        res.status(500).json({ success: false, voucherData: error.message });
     }
 };
 
@@ -77,7 +77,7 @@ const queryAllVouchers = async (req, res) => {
             voucherData: vouchers? vouchers : 'Cannot get vouchers'
         });
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        res.status(500).json({ success: false, voucherData: error.message });
     }
 };
 
@@ -89,7 +89,7 @@ const queryPublicVouchers = async (req, res) => {
             voucherData: vouchers? vouchers : 'Cannot get vouchers'
         });
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        res.status(500).json({ success: false, voucherData: error.message });
     }
 };
 
@@ -103,7 +103,7 @@ const queryAvailablePublicVouchers = async (req, res) => {// sẽ thêm tính to
             voucherData: vouchers? vouchers : 'Cannot get vouchers'
         });
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        res.status(500).json({ success: false, voucherData: error.message });
     }
 };
 
