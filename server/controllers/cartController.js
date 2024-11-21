@@ -204,12 +204,12 @@ const deleteAllProductsFromUserCart = async (req, res) => {
 
         const user = await User.findById(userId);
         if (!user) {
-            return res.status(404).json({ message: 'User not found' });
+            return res.status(404).json({success: false, cartData: 'Cannot get user'});
         }
 
         user.cart = [];
         await user.save();
-        res.status(200).json({ message: 'All products removed from cart successfully' });
+        res.status(200).json({ success: true, cartData: 'Cart is empty' });
     }
     catch (error) {
         res.status(500).json({ message: error.message });
