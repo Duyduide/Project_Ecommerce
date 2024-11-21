@@ -43,7 +43,7 @@ const createProduct = async (req, res) => {
         await product.save();
         res.status(201).json({success: product ? true : false, productData: product ? product : 'Cannot create product'});
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        res.status(500).json({ success: false, productData: error.message });
     }
 };
 
@@ -58,7 +58,7 @@ const deleteProductById = async (req, res) => {
 
         res.status(200).json({ success: true, productData: 'Product deleted successfully' });
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        res.status(500).json({ success: false, productData: error.message });
     }
 };
 
@@ -110,7 +110,7 @@ const updateProductById = async (req, res) => {
 
         res.status(200).json({ success: true, productData: product? product : 'Cannot update product' });
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        res.status(500).json({ success: false, productData: error.message });
     }
 }
 

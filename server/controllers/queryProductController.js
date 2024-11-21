@@ -9,7 +9,7 @@ const queryAllProducts = async (req, res) => {
             productData: products? products: 'Cannot get products'
         });
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        res.status(500).json({ success: false, productData: error.message });
     }
 };
 
@@ -36,7 +36,7 @@ const queryProductMain = async (req, res) => {
             });
         }
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        res.status(500).json({ success: false, productData: error.message });
     }
 };
 
@@ -85,7 +85,7 @@ const queryProductByType = async (req, res) => {
         });
     }
     catch (error) {
-        res.status(500).json({ message: error.message });
+        res.status(500).json({ success: false, productData: error.message });
     }
 };
 
@@ -103,7 +103,7 @@ const queryProductBySlug = async (req, res) => {
             productData: product? product : 'Cannot get product'
         });
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        res.status(500).json({ success: false, productData: error.message });
     }
 };
 
@@ -118,7 +118,7 @@ const queryProductById = async (req, res) => {
             productData: product? product: 'Cannot get products'
         });
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        res.status(500).json({ success: false, productData: error.message });
     }
 };
 
@@ -130,7 +130,7 @@ const queryAllPhones = async (req, res) => {
             productData: phones? phones: 'Cannot get phones'
         });
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        res.status(500).json({ success: false, productData: error.message });
     }
 };
 
@@ -142,7 +142,7 @@ const queryAllLaptops = async (req, res) => {
             productData: laptops? laptops: 'Cannot get laptops'
         });
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        res.status(500).json({ success: false, productData: error.message });
     }
 };
 
@@ -154,7 +154,7 @@ const queryAllTablets = async (req, res) => {
             productData: tablets? tablets: 'Cannot get tablets'
         });
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        res.status(500).json({ success: false, productData: error.message });
     }
 };
 
@@ -166,7 +166,7 @@ const queryAllSmartWatches = async (req, res) => {
             productData: smartWatches? smartWatches: 'Cannot get smart watches'
         });
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        res.status(500).json({ success: false, productData: error.message });
     }
 };
 
@@ -178,7 +178,7 @@ const queryAllPowerBanks = async (req, res) => {
             productData: powerBanks? powerBanks: 'Cannot get power banks'
         });
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        res.status(500).json({ success: false, productData: error.message });
     }
 };
 
@@ -190,7 +190,7 @@ const queryAllHeadphones = async (req, res) => {
             productData: headphones? headphones: 'Cannot get headphones'
         });
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        res.status(500).json({ success: false, productData: error.message });
     }
 };
 
@@ -202,7 +202,7 @@ const queryAllChargers = async (req, res) => {
             productData: chargers? chargers: 'Cannot get chargers'
         });
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        res.status(500).json({ success: false, productData: error.message });
     }
 };
 
@@ -214,7 +214,7 @@ const queryAllCases = async (req, res) => {
             productData: cases? cases: 'Cannot get cases'
         });
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        res.status(500).json({ success: false, productData: error.message });
     }
 };
 
@@ -226,7 +226,7 @@ const queryAllMice = async (req, res) => {
             productData: mice? mice: 'Cannot get mice'
     });
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        res.status(500).json({ success: false, productData: error.message });
     }
 };
 
@@ -238,7 +238,7 @@ const queryAllKeyboards = async (req, res) => {
             productData: keyboards? keyboards: 'Cannot get keyboards'
         });
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        res.status(500).json({ success: false, productData: error.message });
     }
 };
 
@@ -253,7 +253,7 @@ const queryProductByManufacturer = async (req, res) => {
             productData: products? products : 'Cannot get products'
         });
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        res.status(500).json({ success: false, productData: error.message });
     }
 };
 
@@ -268,7 +268,7 @@ const filterProducts = async (req, res) => {
             productData: products? products : 'Cannot get products'
         });
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        res.status(500).json({ success: false, productData: error.message });
     }
 };
 
