@@ -247,9 +247,6 @@ const queryProductByManufacturer = async (req, res) => {
         const { manufacturer } = req.params;
 
         const products = await Product.find({ manufacturer });
-        if (!products.length) {
-            return res.status(404).json({ success: false, productData: 'No products found' });
-        }
 
         res.status(200).json({
             success: products? true : false,
@@ -265,9 +262,6 @@ const filterProducts = async (req, res) => {
         const { filterData } = req.body;
 
         const products = await Product.find(filterData);
-        if (!products.length) {
-            return res.status(404).json({ success: false, productData: 'No products found' });
-        }
 
         res.status(200).json({
             success: products? true : false,
