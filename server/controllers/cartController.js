@@ -20,7 +20,7 @@ const addToUserCart = async (req, res) => {
 
         const user = await User.findById(userId);
         if (!user) {
-            return res.status(404).json({ message: 'User not found' });
+            return res.status(404).json({ success: false, cartData: 'Cannot get user'});
         }
 
         const cartItemIndex = user.cart.findIndex(item => item.productId.toString() === productId);
@@ -36,7 +36,7 @@ const addToUserCart = async (req, res) => {
         await user.save();
         res.status(201).json({
             success: user.cart? true : false,
-            cartData: user.cart
+            cartData: user.cart? user.cart : 'Cannot get cart'
         });
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -49,14 +49,14 @@ const changeUserCartProductQuantity = async (req, res) => {
 
         const user = await User.findById(userId);
         if (!user) {
-            return res.status(404).json({ message: 'User not found' });
+            return res.status(404).json({ success: false, cartData: 'Cannot get user'});
         }
 
         const cartItemIndex = user.cart.findIndex(item => item.productId.toString() === productId);
         if (cartItemIndex > -1) {
             user.cart[cartItemIndex].quantity = quantity;
         } else {
-            return res.status(404).json({ message: 'Product not found in cart' });
+            return res.status(404).json({ success: false, cartData: 'Product not found in cart' });
         }
         // if(!changeQuantity) {
         //     if (isIncrease) {
@@ -98,7 +98,7 @@ const changeUserCartProductQuantity = async (req, res) => {
         await user.save();
         res.status(200).json({
             success: user.cart? true : false,
-            cartData: user.cart
+            cartData: user.cart? user.cart : 'Cannot get cart'
         });
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -144,16 +144,12 @@ const queryUserCart = async (req, res) => {
 
         const user = await User.findById(userId).populate('cart.productId');
         if (!user) {
-            return res.status(404).json({ message: 'User not found' });
-        }
-
-        if (!user.cart.length) {
-            return res.status(404).json({ message: 'Cart is empty' });
+            return res.status(404).json({ success: false, cartData: 'Cannot get user'});
         }
 
         res.status(200).json({
             success: user.cart? true : false,
-            cartData: user.cart
+            cartData: user.cart? user.cart : 'Cannot get cart'
         });
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -181,7 +177,7 @@ const deleteProductFromUserCart = async (req, res) => {
 
         const user = await User.findById(userId);
         if (!user) {
-            return res.status(404).json({ message: 'User not found' });
+            return res.status(404).json({ success: false, cartData: 'Cannot get user'});
         }
 
         // const cartItemIndex = user.cart.findIndex(item => item.toString() === productId);
@@ -195,7 +191,7 @@ const deleteProductFromUserCart = async (req, res) => {
         await user.save();
         res.status(200).json({
             success: user.cart? true : false,
-            cartData: user.cart
+            cartData: user.cart? user.cart : 'Cannot get cart'
         });
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -208,12 +204,12 @@ const deleteAllProductsFromUserCart = async (req, res) => {
 
         const user = await User.findById(userId);
         if (!user) {
-            return res.status(404).json({ message: 'User not found' });
+            return res.status(404).json({success: false, cartData: 'Cannot get user'});
         }
 
         user.cart = [];
         await user.save();
-        res.status(200).json({ message: 'All products removed from cart successfully' });
+        res.status(200).json({ success: true, cartData: 'Cart is empty' });
     }
     catch (error) {
         res.status(500).json({ message: error.message });

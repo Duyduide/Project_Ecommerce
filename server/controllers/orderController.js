@@ -6,7 +6,10 @@ const createOrder = async (req, res) => {
 
         const order = new Order(orderData);
         await order.save();
-        res.status(201).json(order);
+        res.status(201).json({
+            success: order? true : false,
+            orderData: order? order : 'Cannot create order'
+        });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
@@ -17,13 +20,10 @@ const queryOrderOfUser = async (req, res) => {
         const { userId } = req.params;
 
         const orders = await Order.find({ createdBy: userId });
-        if (!orders.length) {
-            return res.status(404).json({ message: 'No order found' });
-        }
 
         res.status(200).json({
             success: orders? true : false,
-            orderData: orders
+            orderData: orders? orders : 'Cannot get order'
         });
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -35,13 +35,10 @@ const queryOrderById = async (req, res) => {
         const { orderId } = req.params;
 
         const order = await Order.findById(orderId);
-        if (!order) {
-            return res.status(404).json({ message: 'Order not found' });
-        }
 
         res.status(200).json({
             success: order? true : false,
-            orderData: order
+            orderData: order? order : 'Cannot get order'
         });
     }
     catch (error) {
@@ -55,10 +52,13 @@ const cancelOrderById = async (req, res) => {
         //sửa thành đã huỷ là được
         const order = await Order.findByIdAndUpdate(orderId, { status: 'Cancelled' });
         if (!order) {
-            return res.status(404).json({ message: 'Order not found' });
+            return res.status(404).json({ success: false,  orderData: 'Order not found' });
         }
 
-        res.status(200).json({ message: 'Order canceled successfully' });
+        res.status(200).json({
+            success: true,
+            orderData: 'Order cancelled successfully'
+        });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
@@ -70,10 +70,13 @@ const deleteOrderById = async (req, res) => {
 
         const order = await Order.findByIdAndDelete(orderId);
         if (!order) {
-            return res.status(404).json({ message: 'Order not found' });
+            return res.status(404).json({ success: false,  orderData: 'Order not found' });
         }
 
-        res.status(200).json({ message: 'Order deleted successfully' });
+        res.status(200).json({
+            success: true,
+            orderData: 'Order deleted successfully'
+        });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
