@@ -49,7 +49,7 @@ const changeUserCartProductQuantity = async (req, res) => {
 
         const user = await User.findById(userId);
         if (!user) {
-            return res.status(404).json({ success: false, cartData: user.cart? user.cart : 'Cannot get user'});
+            return res.status(404).json({ success: false, cartData: 'Cannot get user'});
         }
 
         const cartItemIndex = user.cart.findIndex(item => item.productId.toString() === productId);
@@ -144,7 +144,7 @@ const queryUserCart = async (req, res) => {
 
         const user = await User.findById(userId).populate('cart.productId');
         if (!user) {
-            return res.status(404).json({ success: false, cartData: user.cart? user.cart : 'Cannot get user'});
+            return res.status(404).json({ success: false, cartData: 'Cannot get user'});
         }
 
         res.status(200).json({
