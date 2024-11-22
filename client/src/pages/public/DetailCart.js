@@ -6,13 +6,13 @@ const DetailCart = () => {
   const [cart, setCart] = useState(JSON.parse(localStorage.getItem('cart')) || []);
 
   useEffect(() => {
-    // Lấy giỏ hàng từ localStorage khi component được mount
+   
     const storedCart = JSON.parse(localStorage.getItem('cart')) || [];
     setCart(storedCart);
   }, []);
 
   useEffect(() => {
-    // Cập nhật lại localStorage khi cart thay đổi
+
     localStorage.setItem('cart', JSON.stringify(cart));
   }, [cart]);
 
@@ -34,17 +34,17 @@ const DetailCart = () => {
     const { name, price, imageLink } = productAttributes;
 
     const updatedCart = cart.map((item) => {
-      // Xác định sản phẩm cần thay đổi dựa trên tất cả thuộc tính
+
       if (
         item.id === productId &&
         item.name === name &&
         item.price === price &&
         item.imageLink === imageLink
       ) {
-        const validQuantity = Math.max(1, Math.min(newQuantity, item.stock)); // Giới hạn số lượng
+        const validQuantity = Math.max(1, Math.min(newQuantity, item.stock));
         return { ...item, quantity: validQuantity };
       }
-      return item; // Giữ nguyên các sản phẩm khác
+      return item;
     });
 
     setCart(updatedCart);

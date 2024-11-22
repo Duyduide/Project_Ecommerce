@@ -71,7 +71,7 @@ const Navigation = () => {
   const [showProducts, setShowProducts] = useState(false);
   const [activeCategory, setActiveCategory] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
-  const navigate = useNavigate(); // Hook điều hướng từ react-router-dom
+  const navigate = useNavigate(); 
   const [cartCount, setCartCount] = useState(0); 
   const dispatch = useDispatch();
 
@@ -88,13 +88,13 @@ const Navigation = () => {
   };
 
   useEffect(() => {
-    updateCartCount(); // Initial cart count update
+    updateCartCount(); 
 
-    // Listen for storage changes (e.g., when items are added/removed from the cart)
+    
     window.addEventListener('storage', updateCartCount);
 
     return () => {
-      window.removeEventListener('storage', updateCartCount); // Cleanup on unmount
+      window.removeEventListener('storage', updateCartCount); 
     };
   }, []); 
 

@@ -39,7 +39,7 @@ const DetailProduct = () => {
   useEffect(() => {
     // Cập nhật lại giỏ hàng và số lượng giỏ hàng khi có thay đổi
     localStorage.setItem('cart', JSON.stringify(cart));
-    setCartCount(cart.length); // Cập nhật số lượng giỏ hàng
+    setCartCount(cart.length); 
   }, [cart]);
 
 
@@ -53,7 +53,7 @@ const DetailProduct = () => {
       quantity,
     };
   
-    // Kiểm tra nếu sản phẩm có ID, tên, và số lượng giống nhau đã tồn tại
+
     const existingProduct = cart.find(
       (item) =>
         item.id === newProduct.id &&
@@ -65,7 +65,7 @@ const DetailProduct = () => {
  
     let updatedCart;
     if (existingProduct) {
-      // Nếu tồn tại sản phẩm giống hệt, tăng số lượng
+
       updatedCart = cart.map((item) => {
         if (item === existingProduct) {
           return { ...item, quantity: item.quantity + quantity };
@@ -73,10 +73,10 @@ const DetailProduct = () => {
         return item;
       });
     } else {
-      // Nếu không, thêm sản phẩm mới vào giỏ hàng
+  
       updatedCart = [...cart, newProduct];
     }
-  // trang navigate
+
     setCart(updatedCart);
     localStorage.setItem('cart', JSON.stringify(updatedCart));
   
