@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { apiGetPhone } from '../apis';
-import { useNavigate } from 'react-router-dom';
-import '../css/Product.css';  
+import { useNavigate } from 'react-router-dom'; 
 
 const ProductPhone = () => {
   const [phones, setPhones] = useState([]);
@@ -13,7 +12,7 @@ const ProductPhone = () => {
     if (result.success === false) {
       setError(result.message);
     } else {
-      setPhones(result.slice(0, 5)); // Chỉ lấy 5 sản phẩm
+      setPhones(result.productData.slice(0, 5)); 
     }
   };
 

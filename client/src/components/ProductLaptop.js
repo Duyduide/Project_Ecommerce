@@ -13,7 +13,7 @@ const ProductLaptop = () => {
     if (result.success === false) {
       setError(result.message);
     } else {
-      setLaptops(result.slice(0, 5)); // Chỉ lấy 5 sản phẩm
+      setLaptops(result.productData.slice(0, 5)); 
     }
   };
 
