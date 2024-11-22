@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { apiGetTablet } from '../apis'; 
 import { useNavigate } from 'react-router-dom';
-import '../css/Product.css'; 
 
 const ProductTablet = () => {
   const [tablets, setTablets] = useState([]);
@@ -13,7 +12,7 @@ const ProductTablet = () => {
     if (result.success === false) {
       setError(result.message);
     } else {
-      setTablets(result.slice(0, 5)); // Chỉ lấy 5 sản phẩm
+      setTablets(result.productData.slice(0, 5)); // Chỉ lấy 5 sản phẩm
     }
   };
 

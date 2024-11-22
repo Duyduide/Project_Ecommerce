@@ -12,3 +12,6 @@ export {default as ProductTablet} from './ProductTablet';
 export {default as DetailProduct} from './DetailProduct';
 export { default as SliderBanner } from './SliderBanner';
 export { default as Footer } from './Footer';
+export { default as Address } from './Address';
+export { default as Select } from './Select';
+export { default as DetailCart } from './DetailCart';

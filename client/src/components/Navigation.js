@@ -71,8 +71,8 @@ const Navigation = () => {
   const [showProducts, setShowProducts] = useState(false);
   const [activeCategory, setActiveCategory] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
-  const navigate = useNavigate(); // Hook điều hướng từ react-router-dom
-
+  const navigate = useNavigate(); 
+  const [cartCount, setCartCount] = useState(0); 
   const dispatch = useDispatch();
 
   const { isLoggedIn, current }  = useSelector(state => state.user)
@@ -81,6 +81,22 @@ const Navigation = () => {
       dispatch(getCurrent())
     }
   }, [dispatch, isLoggedIn])
+  const updateCartCount = () => {
+    // 'cảt'
+    const storedCart = JSON.parse(localStorage.getItem('cart')) || [];
+    setCartCount(storedCart.length); 
+  };
+
+  useEffect(() => {
+    updateCartCount(); 
+
+    
+    window.addEventListener('storage', updateCartCount);
+
+    return () => {
+      window.removeEventListener('storage', updateCartCount); 
+    };
+  }, []); 
 
   const handleSearch = () => {
     if (searchQuery) {
@@ -108,9 +124,15 @@ const Navigation = () => {
       navigate('/login');
     } else {
       // Nếu đã đăng nhập, điều hướng đến trang giỏ hàng
-      navigate('/cart');
+      navigate('/detail-cart');
     }
   };
+  // useEffect(() => {
+  //   window.addEventListener('storage', updateCartCount); // Lắng nghe thay đổi trong localStorage
+  //   return () => {
+  //     window.removeEventListener('storage', updateCartCount); // Hủy sự kiện khi component bị hủy
+  //   };
+  // }, []);
   const userButtonClasses = 
   "flex items-center gap-2 rounded-md bg-slate-500 bg-opacity-20 px-1 py-2 hover:text-gray-200 text-xs";
   return (
@@ -213,13 +235,13 @@ const Navigation = () => {
 
          
           {/* Cart */}
-        <div className="relative cursor-pointer hover:text-gray-200" onClick={handleCartClick}>
-          <IoCartOutline size={25}/>
-          <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
-            0 
-          </span>
-        </div>
-  
+          <div className="relative cursor-pointer hover:text-gray-200" onClick={handleCartClick}>
+            <IoCartOutline size={25}/>
+            <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
+              {cartCount} {/* Hiển thị số sản phẩm */}
+            </span>
+          </div>
+
           {/* Login/User Info */}
           {isLoggedIn ? (
           <Menu as="div" className="relative inline-block text-left">

@@ -3,52 +3,55 @@ const bcrypt = require('bcrypt');
 const crypto = require('crypto');
 // Declare the Schema of the Mongo model
 let userSchema = new mongoose.Schema({
-        firstname:{
-            type:String,
-            required:true,
-        },
-        lastname:{
-            type:String,
-            required:true,
-        },
-        email:{
-            type:String,
-            required:true,
-            unique:true,
-        },
-        mobile:{
-            type:String,
-            unique:true,
-            required:true,
-        },
-        password:{
-            type:String,
-            required:true,
-        },
-        role: {
-            type: String,
-            default: 'user',
-        },
-        cart: [{ type: mongoose.Types.ObjectId, ref: 'Product'}], //quantity -> đếm object 
-        address: [{ type: mongoose.Types.ObjectId, ref: 'Address'}],
-        wishlist: [{ type: mongoose.Types.ObjectId, ref: 'Product'}],
-        refreshToken: {
-            type: String,
-        },
-        passwordChangeAt: {
-            type: Date,
-        },
-        passwordResetToken: {
-            type: String,
-        },
-        passwordResetExpires: {
-            type: String,
-        },
-        registerToken: {
-            type: String
-        }
+    firstname:{
+        type:String,
+        required:true,
+    },
+    lastname:{
+        type:String,
+        required:true,
+    },
+    email:{
+        type:String,
+        required:true,
+        unique:true,
+    },
+    mobile:{
+        type:String,
+        unique:true,
+        required:true,
+    },
+    password:{
+        type:String,
+        required:true,
+    },
+    role: {
+        type: String,
+        default: 'user',
+    },
+    cart: [{
+        productId: { type: mongoose.Types.ObjectId, ref: 'Product' },
+        quantity: { type: Number, required: true }
+    }],
+    address: [{ type: mongoose.Types.ObjectId, ref: 'Address'}],
+    wishlist: [{ type: mongoose.Types.ObjectId, ref: 'Product'}],
+    refreshToken: {
+        type: String,
+    },
+    passwordChangeAt: {
+        type: Date,
+    },
+    passwordResetToken: {
+        type: String,
+    },
+    passwordResetExpires: {
+        type: String,
+    },
+    registerToken: {
+        type: String
+    }
     }, 
-        {timestamps: true}
+    {timestamps: true}
 );
 
 // Hash password before saving to database

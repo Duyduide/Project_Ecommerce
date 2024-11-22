@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { apiGetHeadPhone } from '../apis'; 
-import { useNavigate } from 'react-router-dom';
-import '../css/Product.css';  
+import { useNavigate } from 'react-router-dom';  
 
 const ProductHeadphone = () => {
   const [headphones, setHeadphones] = useState([]);
@@ -13,7 +12,7 @@ const ProductHeadphone = () => {
     if (result.success === false) {
       setError(result.message);
     } else {
-      setHeadphones(result.slice(0, 5)); // Chỉ lấy 5 sản phẩm
+      setHeadphones(result.productData.slice(0, 5)); // Chỉ lấy 5 sản phẩm
     }
   };
 

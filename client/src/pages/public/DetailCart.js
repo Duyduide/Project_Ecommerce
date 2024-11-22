@@ -1,9 +1,9 @@
 import React from 'react';
-import { DetailProduct} from '../../components';
+import { DetailCart} from '../../components';
 
 function Detail() {
   return (
-    <DetailProduct/>
+    <DetailCart/>
   )
 }
 
