@@ -24,7 +24,7 @@ function App() {
           <Route path = {path.PRODUCT} element={<Product />} />
           <Route path = {path.DETAIL_PRODUCT} element={<DetailProduct />} />
           <Route path = {path.DETAIL_CART} element={<DetailCart />} />
-          <Route path = {path.DETAIL_CART} element={<DetailCart />} />
+          {/* <Route path = {path.DETAIL_CART} element={<DetailCart />} /> */}
           <Route path = {path.CHECKOUT} element={<CheckOut />} />
         </Route>
         <Route path = {path.ADMIN} element={<AdminLayout />}>
