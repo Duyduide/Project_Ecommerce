@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { apiGetTablet } from '../apis'; 
 import { useNavigate } from 'react-router-dom';
-import '../css/Product.css'; 
 
 const ProductTablet = () => {
   const [tablets, setTablets] = useState([]);

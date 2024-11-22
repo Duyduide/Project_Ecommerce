@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { apiGetHeadPhone } from '../apis'; 
-import { useNavigate } from 'react-router-dom';
-import '../css/Product.css';  
+import { useNavigate } from 'react-router-dom';  
 
 const ProductHeadphone = () => {
   const [headphones, setHeadphones] = useState([]);

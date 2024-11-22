@@ -1,26 +1,31 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
 import { apiGetProductById } from '../apis/product';
+import ProductPhone from './ProductPhone';
+import ProductLaptop from './ProductLaptop';
+import ProductHeadphone from './ProductHeadphone';
+import ProductTablet from './ProductTablet';
 import '../css/Detail.css';
 
 const DetailProduct = () => {
   const { productId } = useParams(); 
-  const [productDetail, setProductDetail] = useState(null); 
+  const [products, setProducts] = useState(null); 
   const [error, setError] = useState(null);
+  const [show, setShow] = useState(false);
   const [cart, setCart] = useState(JSON.parse(localStorage.getItem('cart')) || []);
   const [isAdded, setIsAdded] = useState(false); 
   const [quantity, setQuantity] = useState(1); 
 
   const location = useLocation();
   const product = location.state?.product; 
-  const [cartCount, setCartCount] = useState(cart.length); // Thêm state cartCount
+  const [cartCount, setCartCount] = useState(cart.length); 
   const fetchProductDetails = async () => {
     try {
       const result = await apiGetProductById(productId);
       if (result.success === false) {
         setError(result.message);
       } else {
-        setProductDetail(result.productData);
+        setProducts(result.productData);
         setQuantity(1); 
       }
     } catch (err) {
@@ -31,11 +36,7 @@ const DetailProduct = () => {
   useEffect(() => {
     fetchProductDetails();
   }, [productId]);
-// trang navigate
-  // useEffect(() => {
-  //   // Cập nhật lại giỏ hàng khi có thay đổi
-  //   localStorage.setItem('cart', JSON.stringify(cart));
-  // }, [cart]);
+
   useEffect(() => {
     // Cập nhật lại giỏ hàng và số lượng giỏ hàng khi có thay đổi
     localStorage.setItem('cart', JSON.stringify(cart));
@@ -89,14 +90,14 @@ const DetailProduct = () => {
 
   const handleQuantityChange = (event) => {
     let value = Math.max(1, event.target.value);
-    if (productDetail && value > productDetail.stock) {
-      value = productDetail.stock; 
+    if (products && value > products.stock) {
+      value = products.stock; 
     }
     setQuantity(value);
   };
 
   const increaseQuantity = () => {
-    if (productDetail && quantity < productDetail.stock) {
+    if (products && quantity < products.stock) {
       setQuantity(prevQuantity => prevQuantity + 1);
     }
   };
@@ -111,119 +112,213 @@ const DetailProduct = () => {
     return <p className="error-message">{error}</p>;
   }
 
-  if (!productDetail) {
+  if (!products) {
     return <p className="loading-message">Đang tải...</p>;
   }
 
 
+  const renderProductDetails = () => {
+    if (products.__t === "Phone") {
+      return (
+        <>
+          <div className="detail-product-item">
+            <div className="field">Camera:</div>
+            <div className="desc">{products.camera}</div>
+          </div>
+          <div className="detail-product-item">
+            <div className="field">Pin:</div>
+            <div className="desc">{products.battery}</div>
+          </div>
+          <div className="detail-product-item">
+            <div className="field">Màn hình:</div>
+            <div className="desc">{products.screen}</div>
+          </div>
+          <div className="detail-product-item">
+            <div className="field">Kết nối:</div>
+            <div className="desc">{products.connection}</div>
+          </div>
+          <div className="detail-product-item">
+            <div className="field">Bộ vi xử lý:</div>
+            <div className="desc">{products.processor}</div>
+          </div>
+          <div className="detail-product-item">
+            <div className="field">RAM/ROM:</div>
+            <div className="desc">{products.ramRom}</div>
+          </div>
+        </>
+      );
+    } else if (products.__t === "Laptop") {
+      return (
+        <>
+          <div className="detail-product-item">
+            <div className="field">CPU:</div>
+            <div className="desc">{products.cpu}</div>
+          </div>
+          <div className="detail-product-item">
+            <div className="field">GPU:</div>
+            <div className="desc">{products.gpu}</div>
+          </div>
+          <div className="detail-product-item">
+            <div className="field">Hard Drive:</div>
+            <div className="desc">{products.hardDrive}</div>
+          </div>
+          <div className="detail-product-item">
+            <div className="field">RAM:</div>
+            <div className="desc">{products.ram}</div>
+          </div>
+          <div className="detail-product-item">
+            <div className="field">Màn hình:</div>
+            <div className="desc">{products.screen}</div>
+          </div>
+          <div className="detail-product-item">
+            <div className="field">Pin:</div>
+            <div className="desc">{products.battery}</div>
+          </div>
+        </>
+      );
+    } else if (products.__t === "Headphone") {
+      return (
+        <>
+          <div className="detail-product-item">
+            <div className="field">Loại tai nghe:</div>
+            <div className="desc">{products.type}</div>
+          </div>
+          <div className="detail-product-item">
+            <div className="field">Pin:</div>
+            <div className="desc">{products.battery}</div>
+          </div>
+          <div className="detail-product-item">
+            <div className="field">Màu sắc:</div>
+            <div className="desc">{products.color}</div>
+          </div>
+          <div className="detail-product-item">
+            <div className="field">Kết nối:</div>
+            <div className="desc">{products.connection}</div>
+          </div>
+        </>
+      );
+    } else if (products.__t === "Tablet") {
+      return (
+        <>
+          <div className="detail-product-item">
+            <div className="field">Màn hình:</div>
+            <div className="desc">{products.screen}</div>
+          </div>
+          <div className="detail-product-item">
+            <div className="field">Bộ vi xử lý:</div>
+            <div className="desc">{products.processor}</div>
+          </div>
+          <div className="detail-product-item">
+            <div className="field">RAM/ROM:</div>
+            <div className="desc">{products.ramRom}</div>
+          </div>
+          <div className="detail-product-item">
+            <div className="field">Camera:</div>
+            <div className="desc">{products.camera}</div>
+          </div>
+          <div className="detail-product-item">
+            <div className="field">Kết nối:</div>
+            <div className="desc">{products.connection}</div>
+          </div>
+        </>
+      );
+    } else {
+      return <div className="detail-product-item">No details available.</div>;
+    }
+  };
+
   return (
-    <div className="product-detail-container">
-      <div className="product-header">
-        <h1>{productDetail.name}</h1>
-        <p className="product-price">{productDetail.price} VND</p>
-      </div>
-       {/* Hiển thị số lượng sản phẩm trong giỏ hàng */}
-       {/* <div className="cart-info">
-        <p>Giỏ hàng của bạn: {cartCount} sản phẩm</p>
-      </div> */}
-      <div className="product-detail">
-        <div className="product-image-container">
-          <img src={productDetail.imageLink} alt={productDetail.name} className="product-image" />
+    <>
+      <div className="detail-container">
+        <div className="center">
+          <img src={products.imageLink} alt={`${products.name}`} />
         </div>
-
-        <div className="product-info">
-          <div className="product-info-item">
-            <p className="info-label">Xuất xứ:</p>
-            <p>{productDetail.origin}</p>
-          </div>
-
-          <div className="product-info-item">
-            <p className="info-label">Mô tả:</p>
-            <p>{productDetail.description}</p>
-          </div>
-
-          <div className="product-info-item">
-            <p className="info-label">Nhà sản xuất:</p>
-            <p>{productDetail.manufacturer}</p>
-          </div>
-
-          <div className="product-info-item">
-            <p className="info-label">Chip:</p>
-            <p>{productDetail.processor}</p>
-          </div>
-
-          <div className="product-info-item">
-            <p className="info-label">RAM/ROM:</p>
-            <p>{productDetail.ramRom}</p>
-          </div>
-
-          <div className="product-info-item">
-            <p className="info-label">Pin:</p>
-            <p>{productDetail.battery}</p>
-          </div>
-
-          <div className="product-info-item">
-            <p className="info-label">Camera:</p>
-            <p>{productDetail.camera}</p>
-          </div>
-
-          <div className="product-info-item">
-            <p className="info-label">Màn hình:</p>
-            <p>{productDetail.screen}</p>
-          </div>
-
-          <div className="product-info-item">
-            <p className="info-label">Kết nối:</p>
-            <p>{productDetail.connection}</p>
-          </div>
-
-          <div className="product-info-item">
-            <p className="info-label">SIM:</p>
-            <p>{productDetail.sim}</p>
-          </div>
-
-          <div className="product-info-item">
-            <p className="info-label">Kho còn:</p>
-            <p>{productDetail.stock} sản phẩm</p>
-          </div>
-
-          <div className="product-info-item">
-            <p className="info-label">Bảo hành:</p>
-            <p>{productDetail.warrantyPeriod} - Chính sách: {productDetail.warrantyPolicy}</p>
-          </div>
-
-          <div className="product-info-item">
-            <p className="info-label">Đánh giá:</p>
-            <p>{productDetail.rating} sao</p>
+        <div className="name-product">{products.name}</div>
+        <div className="under">
+          <div className="price">
+            <ion-icon className="price-tag-icon" name="pricetags-outline" />
+            <div className="price-self">{products.price.toLocaleString()}đ</div>
           </div>
         </div>
-      </div>
-      
-      <div className="product-action">
-        <div className="quantity-selector">
-          <label htmlFor="quantity">Số lượng: </label>
-          <div className="quantity-input">
-            <button className="quantity-btn" onClick={decreaseQuantity}>-</button>
-            <input
-              type="number"
-              id="quantity"
-              min="1"
-              value={quantity}
-              onChange={handleQuantityChange}
-            />
-            <button className="quantity-btn" onClick={increaseQuantity}>+</button>
+        
+        <div className="product-action">
+          <div className="quantity-selector">
+            <label htmlFor="quantity">Số lượng: </label>
+            <div className="quantity-input">
+              <button className="quantity-btn" onClick={decreaseQuantity}>-</button>
+              <input
+                type="number"
+                id="quantity"
+                min="1"
+                value={quantity}
+                onChange={handleQuantityChange}
+              />
+              <button className="quantity-btn" onClick={increaseQuantity}>+</button>
+            </div>
+          </div>
+
+          <button 
+            className="btn-shopping btn-add-to-card" 
+            onClick={() => handleAddToCart(products)}
+          >
+            <ion-icon name="cart-outline" className="shopping-cart" /> Thêm vào giỏ hàng
+          </button>
+
+          {isAdded && (
+            <div className="cart-notification">
+              <p>Sản phẩm đã được thêm vào giỏ hàng</p>
+            </div>
+          )}
+        </div>
+        
+        <div className="product-describe bg-gray-100 p-4 rounded-md shadow-md my-6 mx-4">
+          <h2 className="text-lg font-semibold text-gray-800 mb-2">Thông tin mô tả</h2>
+          <ul className="list-disc list-inside text-gray-600">
+            <p>{products.description}</p>
+          </ul>
+        </div>
+
+
+        <div className="more-detail">
+          <div className="detail">Thông tin chi tiết</div>
+          <div className="hide" onClick={() => setShow(!show)}>
+            {show ? "Ẩn bớt" : "Xem thêm"}
+            <ion-icon name={show ? "chevron-up-outline" : "chevron-down-outline"} />
           </div>
         </div>
 
-        <button className="btn-add-to-card" onClick={() => handleAddToCart(productDetail)}>Thêm vào giỏ hàng</button>
-
-        {isAdded && (
-          <div className="cart-notification">
-            <p>Sản phẩm đã được thêm vào giỏ hàng</p>
+        {show && (
+          <div className="detail-product">
+            {renderProductDetails()}
           </div>
         )}
+
+        <div className="extra-info">
+          <div className="info-item">
+            <span>Giao Hàng Siêu Tốc 24H</span>
+          </div>
+          <div className="info-item">
+            <span>Đổi trả 15 ngày</span>
+          </div>
+          <div className="info-item">
+            <span>Đa Dạng Thanh Toán</span>
+          </div>
+          <div className="info-item">
+            <span>Chính Hãng</span>
+          </div>
+        </div>
+
+        <div className="related-products">
+          <h3 class="related-products">Sản phẩm liên quan</h3>
+          {products.__t === "Phone" && <ProductPhone />}
+          {products.__t === "Laptop" && <ProductLaptop />}
+          {products.__t === "Headphone" && <ProductHeadphone />}
+          {products.__t === "Tablet" && <ProductTablet />}
+        </div>
+
       </div>
-    </div>
+
+    </>
   );
 };
 
