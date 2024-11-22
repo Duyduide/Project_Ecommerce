@@ -56,7 +56,12 @@ const findVoucherByCode = async (req, res) => {
         const { voucherCode } = req.params;
 
         const now = new Date();
-        const voucher = await Voucher.findOne({ validUntil: { $gte: now }, voucherCode });
+        const voucher = await Voucher.findOne({ 
+            validUntil: { $gte: now }, 
+            voucherCode , 
+            validFrom: { $lte: now },
+            quantity: { $gt: 0 } 
+        });
         if (!voucher) {
             return res.status(404).json({ success: false, voucherData: 'Voucher not found' });
         }
@@ -102,7 +107,9 @@ const queryAvailablePublicVouchers = async (req, res) => {// sẽ thêm tính to
         const vouchers = await Voucher.find({
             membership: { $in: [userMembership] },
             isHidden: false,
-            validUntil: { $gte: now }
+            validUntil: { $gte: now },
+            validFrom: { $lte: now },
+            quantity: { $gt: 0 } 
         }).sort({ createdAt: -1 });
         // const validVouchers = vouchers.filter(voucher => 
         //     voucher.membership.includes(membership) && 
