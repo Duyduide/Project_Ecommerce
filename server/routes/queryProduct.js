@@ -3,10 +3,11 @@ const queryProductController = require('../controllers/queryProductController');
 
 router.get('/getAllProduct', queryProductController.queryAllProducts);
 router.get('/getProductById/:productId', queryProductController.queryProductById);
-router.get('/getProductByType', queryProductController.queryProductByType);
-router.get('/getProductByManufacturer', queryProductController.queryProductByManufacturer);
+router.get('/getProductByType/:productType', queryProductController.queryProductByType);
+router.get('/getProductByManufacturer/:manufacturer', queryProductController.queryProductByManufacturer);
 //
 router.get('/getProductBySlug/:productSlug', queryProductController.queryProductBySlug);
+router.get('/getProductByName/:productName', queryProductController.queryProductByName);
 //
 router.get('/getProductMain/:category', queryProductController.queryProductMain);
 //get từng loại sản phẩm
@@ -21,6 +22,6 @@ router.get('/getMouse', queryProductController.queryAllMice);
 router.get('/getKeyboard', queryProductController.queryAllKeyboards);
 
 // router.get('/getProductByPrice', queryProductController.queryProductByPrice);
-router.get('/filterProduct', queryProductController.filterProducts);
+router.post('/filterProduct', queryProductController.filterProducts);
 
 module.exports = router;

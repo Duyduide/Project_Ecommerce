@@ -40,9 +40,31 @@ const queryProductMain = async (req, res) => {
     }
 };
 
+const queryProductByName = async (req, res) => {
+    try {
+        const { productName } = req.params;
+        if (!productName) {
+            return res.status(400).json({ success: false, productData: 'Product name is required' });
+        }
+
+        const regex = new RegExp(productName, 'i'); // Case-insensitive search
+        const products = await Product.find({ name: { $regex: regex } });
+
+        // if (products.length > 0) {
+        res.status(200).json({ success: true, productData: products });
+        // } else {
+        //     res.status(404).json({ success: false, productData: 'No products found with the given name' });
+        // }
+    } catch (error) {
+        res.status(500).json({ success: false, productData: error.message });
+    }
+};
+
+module.exports = { queryProductByName };
+
 const queryProductByType = async (req, res) => {
     try {
-        const { productType } = req.body;
+        const { productType } = req.params;
 
         let products;
         switch (productType) {
@@ -289,5 +311,6 @@ module.exports = {
     queryProductByManufacturer,
     filterProducts,
     queryProductBySlug,
-    queryProductMain
+    queryProductMain,
+    queryProductByName
 }
