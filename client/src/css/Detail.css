@@ -149,6 +149,7 @@ html, body {
   padding: 20px;
   border-radius: 8px;
   background-color: #fff;
+  margin-bottom: 20px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
@@ -213,7 +214,7 @@ html, body {
 
 .extra-info .extra-detail.show {
   display: block;
-  max-height: 200px; /* Tùy chỉnh chiều cao tối đa khi hiển thị */
+  max-height: 200px; 
 }
 .related-products {
   font-size: 24px;  
