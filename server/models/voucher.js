@@ -21,7 +21,7 @@ const voucherSchema=new mongoose.Schema({
         type:Date,
         required:true
     },
-    Name:{
+    name:{
         type:String,
         required:true,
         trim:true
