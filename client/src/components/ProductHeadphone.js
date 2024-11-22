@@ -12,7 +12,7 @@ const ProductHeadphone = () => {
     if (result.success === false) {
       setError(result.message);
     } else {
-      setHeadphones(result.slice(0, 5)); // Chỉ lấy 5 sản phẩm
+      setHeadphones(result.productData.slice(0, 5)); // Chỉ lấy 5 sản phẩm
     }
   };
 

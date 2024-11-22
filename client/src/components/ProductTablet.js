@@ -12,7 +12,7 @@ const ProductTablet = () => {
     if (result.success === false) {
       setError(result.message);
     } else {
-      setTablets(result.slice(0, 5)); // Chỉ lấy 5 sản phẩm
+      setTablets(result.productData.slice(0, 5)); // Chỉ lấy 5 sản phẩm
     }
   };
 
