@@ -215,7 +215,12 @@ html, body {
   display: block;
   max-height: 200px; /* Tùy chỉnh chiều cao tối đa khi hiển thị */
 }
-
+.related-products {
+  font-size: 24px;  
+  font-weight: bold;  
+  border-bottom: 2px solid #4a90e2;  
+  padding-bottom: 5px;  
+}
 
   .btn-add-to-card,
   .btn-compare {
