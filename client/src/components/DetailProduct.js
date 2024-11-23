@@ -80,57 +80,29 @@ const DetailProduct = () => {
     }
   };
     
-   // Tăng số lượng sản phẩm
-   const increaseQuantity = async () => {
+  // Tăng số lượng sản phẩm
+  const increaseQuantity = () => {
     if (products && quantity < products?.stock) {
       const updatedQuantity = quantity + 1;
-      try {
-        await apiChangeUserCartProductQuantity({
-          userId: user?._id,
-          productId: products?._id,
-          quantity: updatedQuantity
-        });
-        setQuantity(updatedQuantity);
-      } catch (error) {
-        console.error("Lỗi khi tăng số lượng sản phẩm:", error);
-      }
+      setQuantity(updatedQuantity); 
     }
   };
 
   // Giảm số lượng sản phẩm
-  const decreaseQuantity = async () => {
+  const decreaseQuantity = () => {
     if (quantity > 1) {
       const updatedQuantity = quantity - 1;
-      try {
-        await apiChangeUserCartProductQuantity({
-          userId: user?._id,
-          productId: products?._id,
-          quantity: updatedQuantity
-        });
-        setQuantity(updatedQuantity);
-      } catch (error) {
-        console.error("Lỗi khi giảm số lượng sản phẩm:", error);
-      }
+      setQuantity(updatedQuantity); 
     }
   };
 
-  // Xử lý thay đổi số lượng
-  const handleQuantityChange = async (event) => {
+  // Xử lý thay đổi số lượng trực tiếp
+  const handleQuantityChange = (event) => {
     let value = Math.max(1, Number(event.target.value));
     if (products && value > products.stock) {
       value = products.stock;
     }
-
-    try {
-      await apiChangeUserCartProductQuantity({
-        userId: user?._id,
-        productId: products?._id,
-        quantity: value,
-      });
-      setQuantity(value);
-    } catch (error) {
-      console.error("Lỗi khi cập nhật số lượng sản phẩm:", error);
-    }
+    setQuantity(value); 
   };
 
   if (error) {
