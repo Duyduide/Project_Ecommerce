@@ -81,18 +81,17 @@ const Navigation = () => {
       dispatch(getCurrent())
     }
   }, [dispatch, isLoggedIn])
+  
+
   const updateCartCount = () => {
-    // 'cảt'
+    // cart
     const storedCart = JSON.parse(localStorage.getItem('cart')) || [];
     setCartCount(storedCart.length); 
   };
 
   useEffect(() => {
     updateCartCount(); 
-
-    
     window.addEventListener('storage', updateCartCount);
-
     return () => {
       window.removeEventListener('storage', updateCartCount); 
     };
