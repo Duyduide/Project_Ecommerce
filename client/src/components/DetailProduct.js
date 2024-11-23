@@ -171,6 +171,10 @@ const DetailProduct = () => {
             <div className="desc">{products.screen}</div>
           </div>
           <div className="detail-product-item">
+            <div className="field">Kết nối:</div>
+            <div className="desc">{products.connectionPorts}</div>
+          </div>
+          <div className="detail-product-item">
             <div className="field">Pin:</div>
             <div className="desc">{products.battery}</div>
           </div>

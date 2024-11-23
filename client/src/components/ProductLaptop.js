@@ -52,7 +52,7 @@ const ProductLaptop = () => {
                 <img
                   src={laptop.imageLink}
                   alt={laptop.name}
-                  className="w-full h-64 object-cover bg-white rounded-md"
+                  className="w-48 h-48 object-contain bg-white rounded-md"
                 />
               </div>
 

@@ -30,7 +30,7 @@ const addToUserCart = async (req, res) => {
         if (cartItemIndex > -1) {
             user.cart[cartItemIndex].quantity += quantity;
         } else {
-            user.cart.push( productId );
+            user.cart.push( { productId, quantity });
         }
 
         await user.save();

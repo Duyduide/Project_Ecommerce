@@ -1,11 +1,13 @@
 const mongoose=require('mongoose');
 
 const voucherSchema=new mongoose.Schema({
-    condition:{
-        type:String,
-        required:true,
-        trim:true
-    },
+    membership:[
+        {
+            type:String,
+            required:true,
+            trim:true
+        }
+    ],
     discount:{
         type:Number,
         required:true,
@@ -19,7 +21,7 @@ const voucherSchema=new mongoose.Schema({
         type:Date,
         required:true
     },
-    Name:{
+    name:{
         type:String,
         required:true,
         trim:true
