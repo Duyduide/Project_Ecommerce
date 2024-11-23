@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
 import { apiGetProductById } from '../apis/product';
+import { apiAddToUserCart, apiChangeUserCartProductQuantity } from '../apis/cart'
+import { apiGetCurrent } from '../apis/user'
 import ProductPhone from './ProductPhone';
 import ProductLaptop from './ProductLaptop';
 import ProductHeadphone from './ProductHeadphone';
@@ -12,13 +14,23 @@ const DetailProduct = () => {
   const [products, setProducts] = useState(null); 
   const [error, setError] = useState(null);
   const [show, setShow] = useState(false);
-  const [cart, setCart] = useState(JSON.parse(localStorage.getItem('cart')) || []);
   const [isAdded, setIsAdded] = useState(false); 
   const [quantity, setQuantity] = useState(1); 
+  const [user, setUser] = useState(null);
 
-  const location = useLocation();
-  const product = location.state?.product; 
-  const [cartCount, setCartCount] = useState(cart.length); 
+  const fetchCurrentUser = async () => {
+    try {
+      const results = await apiGetCurrent();
+      if (results.success === false) {
+        setError(results.message);
+      } else {
+        setUser(results.rs); 
+      }
+    } catch (err) {
+      setError('Lỗi khi tải thông tin người dùng');
+    }
+  };
+  
   const fetchProductDetails = async () => {
     try {
       const result = await apiGetProductById(productId);
@@ -34,77 +46,90 @@ const DetailProduct = () => {
   };
 
   useEffect(() => {
+    fetchCurrentUser();
     fetchProductDetails();
   }, [productId]);
 
-  useEffect(() => {
-    // Cập nhật lại giỏ hàng và số lượng giỏ hàng khi có thay đổi
-    localStorage.setItem('cart', JSON.stringify(cart));
-    setCartCount(cart.length); 
-  }, [cart]);
-
-
-  const handleAddToCart = (product) => {
+  const handleAddToCart = async (products) => {
+    if (!user) {
+      console.error('User không hợp lệ');
+      return;
+    }
     const newProduct = {
-      id: product.id,
-      name: product.name,
-      imageLink: product.imageLink,
-      price: product.price,
-      stock: product.stock,
-      quantity,
+      _id: products?._id,
+      name: products?.name,
+      imageLink: products?.imageLink,
+      price: products?.price,
+      stock: products?.stock,
+      quantity
     };
-  
 
-    const existingProduct = cart.find(
-      (item) =>
-        item.id === newProduct.id &&
-        item.name === newProduct.name &&
-        item.price === newProduct.price &&
-        item.imageLink === newProduct.imageLink &&
-        item.quantity === newProduct.quantity
-    );
- 
-    let updatedCart;
-    if (existingProduct) {
-
-      updatedCart = cart.map((item) => {
-        if (item === existingProduct) {
-          return { ...item, quantity: item.quantity + quantity };
-        }
-        return item;
+    try {
+      await apiAddToUserCart({
+        userId: user?._id,
+        productId: newProduct?._id,
+        quantity: newProduct?.quantity
       });
-    } else {
-  
-      updatedCart = [...cart, newProduct];
+
+      setIsAdded(true);
+      setTimeout(() => {
+        setIsAdded(false);
+      }, 3000);
+    } catch (error) {
+      console.error("Lỗi khi thêm sản phẩm vào giỏ hàng:", error);
     }
-
-    setCart(updatedCart);
-    localStorage.setItem('cart', JSON.stringify(updatedCart));
-  
-    setIsAdded(true);
-  
-    setTimeout(() => {
-      setIsAdded(false);
-    }, 3000);
   };
-
-  const handleQuantityChange = (event) => {
-    let value = Math.max(1, event.target.value);
-    if (products && value > products.stock) {
-      value = products.stock; 
-    }
-    setQuantity(value);
-  };
-
-  const increaseQuantity = () => {
-    if (products && quantity < products.stock) {
-      setQuantity(prevQuantity => prevQuantity + 1);
+    
+   // Tăng số lượng sản phẩm
+   const increaseQuantity = async () => {
+    if (products && quantity < products?.stock) {
+      const updatedQuantity = quantity + 1;
+      try {
+        await apiChangeUserCartProductQuantity({
+          userId: user?._id,
+          productId: products?._id,
+          quantity: updatedQuantity
+        });
+        setQuantity(updatedQuantity);
+      } catch (error) {
+        console.error("Lỗi khi tăng số lượng sản phẩm:", error);
+      }
     }
   };
 
-  const decreaseQuantity = () => {
+  // Giảm số lượng sản phẩm
+  const decreaseQuantity = async () => {
     if (quantity > 1) {
-      setQuantity(prevQuantity => prevQuantity - 1);
+      const updatedQuantity = quantity - 1;
+      try {
+        await apiChangeUserCartProductQuantity({
+          userId: user?._id,
+          productId: products?._id,
+          quantity: updatedQuantity
+        });
+        setQuantity(updatedQuantity);
+      } catch (error) {
+        console.error("Lỗi khi giảm số lượng sản phẩm:", error);
+      }
+    }
+  };
+
+  // Xử lý thay đổi số lượng
+  const handleQuantityChange = async (event) => {
+    let value = Math.max(1, Number(event.target.value));
+    if (products && value > products.stock) {
+      value = products.stock;
+    }
+
+    try {
+      await apiChangeUserCartProductQuantity({
+        userId: user?._id,
+        productId: products?._id,
+        quantity: value,
+      });
+      setQuantity(value);
+    } catch (error) {
+      console.error("Lỗi khi cập nhật số lượng sản phẩm:", error);
     }
   };
 
@@ -115,7 +140,6 @@ const DetailProduct = () => {
   if (!products) {
     return <p className="loading-message">Đang tải...</p>;
   }
-
 
   const renderProductDetails = () => {
     if (products.__t === "Phone") {
