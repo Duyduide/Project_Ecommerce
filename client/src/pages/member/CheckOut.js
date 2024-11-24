@@ -86,8 +86,7 @@ const CheckOut = () => {
             } else {
                 console.error('Failed to clear cart:', deleteResponse.cartData);
             }
-    
-            navigate(path.HOME);
+            navigate(`\${path.HOME}`);
             window.location.reload(); // Reload trang
         });
     } else {

@@ -73,7 +73,7 @@ const Login = () => {
             token: response.accessToken,
             userData: response.userData
           }))
-          Navigate(`/${path.HOME}`);
+          Navigate(`\${path.HOME}`);
         }
         else {
           Swal.fire('Đăng nhập thất bại' , response.mes, 'error');
