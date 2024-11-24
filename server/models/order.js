@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const { User } = require('./user');
+const { Product } = require('./product');
 
 const orderSchema = new mongoose.Schema({
     totalPrice: {
@@ -11,7 +13,7 @@ const orderSchema = new mongoose.Schema({
         required: true,
         trim: true,
         default: 'Processing',
-        enum: ['Delivering', 'Delivered', 'Cancelled']
+        enum: ['Processing', 'Delivering', 'Delivered', 'Cancelled']
     },
     address: {
         type: String,

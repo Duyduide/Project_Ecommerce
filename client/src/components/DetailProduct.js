@@ -78,6 +78,7 @@ const DetailProduct = () => {
     } catch (error) {
       console.error("Lỗi khi thêm sản phẩm vào giỏ hàng:", error);
     }
+    window.location.reload();
   };
     
   // Tăng số lượng sản phẩm

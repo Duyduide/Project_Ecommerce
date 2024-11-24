@@ -57,6 +57,7 @@ const DetailCart = () => {
     } catch (error) {
       console.error('Failed to remove item:', error);
     }
+    window.location.reload();
   };
 
   // Cập nhật số lượng sản phẩm
@@ -78,6 +79,7 @@ const DetailCart = () => {
     } catch (error) {
       console.error('Failed to update quantity:', error);
     }
+    window.location.reload();
   };
 
   // Tính tổng giá trị giỏ hàng
