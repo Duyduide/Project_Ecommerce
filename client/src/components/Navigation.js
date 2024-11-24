@@ -77,7 +77,6 @@ const Navigation = () => {
   const dispatch = useDispatch();
 
   const { isLoggedIn, current }  = useSelector(state => state.user)
-  console.log(current.cart )
   useEffect(() => { 
     if (isLoggedIn) {
       dispatch(getCurrent())
@@ -248,7 +247,7 @@ const Navigation = () => {
           <Menu as="div" className="relative inline-block text-left">
             <MenuButton className={userButtonClasses}>
               <FaRegUserCircle className="text-xl" />
-              <span className="text-sm">{`${current?.lastname}`}</span>
+              <span className="text-sm">{`${current?.firstname}`}</span>
               <ChevronDown className="h-5 w-5 text-gray-400" />
             </MenuButton>
             <MenuItems

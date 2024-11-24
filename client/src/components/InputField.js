@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-const InputField = ({ value, setValue, nameKey, type, invalidFields, setInvalidFields }) => {
+const InputField = ({ value, setValue, nameKey, type, invalidFields, setInvalidFields, placeholder }) => {
   //const [isFocus, setIsFocus] = useState(false)
   return (
     <div className='w-full relative'>

@@ -11,7 +11,7 @@ const orderSchema = new mongoose.Schema({
         required: true,
         trim: true,
         default: 'Processing',
-        enum: ['Delivering', 'Delivered', 'Cancelled']
+        enum: ['Processing', 'Delivering', 'Delivered', 'Cancelled']
     },
     address: {
         type: String,
