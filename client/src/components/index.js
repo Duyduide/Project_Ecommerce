@@ -1,6 +1,6 @@
 export { default as Header } from './Header';
 export { default as Navigation } from './Navigation';
-export { default as Sidebar } from './Sidebar';
+export { default as Sidebar } from './sidebars/Sidebar';
 export { default as Banner } from './Banner';
 export { default as InputField } from './InputField';
 export { default as Button } from './Button';   
@@ -15,3 +15,5 @@ export { default as Footer } from './Footer';
 export { default as Address } from './Address';
 export { default as Select } from './Select';
 export { default as DetailCart } from './DetailCart';
+export { default as Loading } from './Loading';
+export { default as AdminSidebar } from './sidebars/AdminSidebar'

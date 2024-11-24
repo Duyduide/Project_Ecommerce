@@ -14,7 +14,7 @@ const DetailProduct = () => {
   const [products, setProducts] = useState(null); 
   const [error, setError] = useState(null);
   const [show, setShow] = useState(false);
-  const [isAdded, setIsAdded] = useState(false); 
+  const [isAdded, setIsAdded] = useState(false);  
   const [quantity, setQuantity] = useState(1); 
   const [user, setUser] = useState(null);
 

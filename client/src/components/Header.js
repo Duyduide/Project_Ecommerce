@@ -13,7 +13,7 @@ const Header = () => {
  
         {/* logo */}
         <Link to={path.HOME}>
-        <img src="https://abcmediagroup.co.uk/wp-content/uploads/2024/04/abc-logo-1-2-300x171.png" alt="Cart" className="h-[80px] w-auto cursor-pointer" />
+        <img src="https://abcmediagroup.co.uk/wp-content/uploads/2024/04/abc-logo-1-2-300x171.png" alt="logo" className="h-[80px] w-auto cursor-pointer" />
       </Link>
          <div className = "flex text-[13px] ml-auto space-x-8">
           <div className = 'flex flex-col items-center'>

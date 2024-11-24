@@ -1,13 +1,13 @@
 import React, { useState, useCallback, useEffect } from 'react'
-import { InputField, Button } from '../../components'
-import { apiRegister, apiLogin, apiForgotPassword, apiFinalRegister } from '../../apis/user'
+import { InputField, Button, Loading } from 'components'
+import { apiRegister, apiLogin, apiForgotPassword, apiFinalRegister } from 'apis/user'
 import Swal from 'sweetalert2'
 import { useNavigate, Link } from 'react-router-dom'
-import path from '../../utils/path'
-import { login } from '../../store/user/userSlice'
+import path from 'utils/path'
+import { login } from 'store/user/userSlice'
 import { useDispatch } from 'react-redux'
 import { toast } from 'react-toastify'
-import { validate } from '../../utils/helper'
+import { validate } from 'utils/helper'
 
 
 const Login = () => {
@@ -52,17 +52,14 @@ const Login = () => {
 
   const handleSubmit = useCallback(async () => {
     const {firstname, lastname, mobile, ...data} = payLoad;
-
     const invalids = isRegister ? validate(payLoad, setInvalidFields) : validate(data, setInvalidFields);
     if(invalids === 0) {
       if(isRegister) {
+        
         const response = await apiRegister(payLoad);
+       
         if(response.success) {
           setIsVerifiedEmail(true)
-          // Swal.fire('Vui lòng kiểm tra email' , response.mes).then(() => { 
-          //   setIsRegister(false);
-          //   resetPayload();
-          //  })
         }
         else {
           Swal.fire('Tạo tài khoản thất bại' , response.mes,'error')

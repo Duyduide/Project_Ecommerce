@@ -7,6 +7,7 @@ import path from './utils/path';
 import { getCategories } from './store/app/asyncActions'
 import { useDispatch } from 'react-redux'
 import { ToastContainer } from 'react-toastify';
+
 import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
@@ -17,7 +18,7 @@ function App() {
   }, [])
 
   return (
-    <div className="min-h-screen font-main">
+    <div className="font-main relative">
      <Routes>
         <Route path = {path.PUBLIC} element={<Public />} >
           <Route path = {path.HOME} element={<Home />} />
@@ -26,6 +27,7 @@ function App() {
           <Route path = {path.DETAIL_CART} element={<DetailCart />} />
           {/* <Route path = {path.DETAIL_CART} element={<DetailCart />} /> */}
           <Route path = {path.CHECKOUT} element={<CheckOut />} />
+          <Route path = {path.ALL} element={<Home/>} />
         </Route>
         <Route path = {path.ADMIN} element={<AdminLayout />}>
           <Route path={path.DASHBOARD} element={<Dashboard/>} />
@@ -40,6 +42,8 @@ function App() {
         <Route path = {path.LOGIN} element={<Login />} />
         <Route path = {path.FINAL_REGISTER} element={<FinalRegister />} />
         <Route path = {path.RESET_PASSWORD} element={<ResetPassword/>} />
+        
+
      </Routes>
      <ToastContainer
         position="top-right"

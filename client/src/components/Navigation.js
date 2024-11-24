@@ -15,6 +15,7 @@ import { IoChatbubbleEllipsesOutline } from "react-icons/io5";
 import { IoMdSearch } from "react-icons/io";
 import { FaShoppingCart } from "react-icons/fa";
 import { IoCartOutline } from "react-icons/io5";
+import { RiAdminFill } from "react-icons/ri";
 
 const categories = [
   {
@@ -76,6 +77,7 @@ const Navigation = () => {
   const dispatch = useDispatch();
 
   const { isLoggedIn, current }  = useSelector(state => state.user)
+  console.log(current.cart )
   useEffect(() => { 
     if (isLoggedIn) {
       dispatch(getCurrent())
@@ -253,19 +255,34 @@ const Navigation = () => {
               className="absolute right-0 mt-2 w-48 bg-white border rounded-md shadow-lg"
             >
               <div className="py-1">
-                <MenuItem>
-                  {({ active }) => (
-                    <button
-                      onClick={() => { navigate('/account') }}
-                      className={`${
-                        active ? 'bg-gray-100 text-gray-900' : 'text-gray-700'
-                      } block w-full text-left px-4 py-2 text-sm`}
-                    >
-                      <MdManageAccounts className="mr-2 h-5 w-5 text-gray-500" />
-                      Thông tin tài khoản
-                    </button>
-                  )}
-                </MenuItem>
+              {current?.role === 'admin' && (
+                  <MenuItem>
+                    {({ active }) => (
+                      <button
+                        onClick={() => { navigate(`${path.ADMIN}/${path.DASHBOARD}`) }}
+                        className={`${
+                          active ? 'bg-gray-100 text-gray-900' : 'text-gray-700'
+                        } block w-full text-left px-4 py-2 text-sm`}
+                      >
+                        <RiAdminFill className="mr-2 h-5 w-5 text-gray-500" />
+                        Trang admin
+                      </button>
+                    )}
+                  </MenuItem>
+              )}
+                  <MenuItem>
+                    {({ active }) => (
+                      <button
+                        onClick={() => { navigate(`${path.MEMBER}/${path.PERSONAL}`) }}
+                        className={`${
+                          active ? 'bg-gray-100 text-gray-900' : 'text-gray-700'
+                        } block w-full text-left px-4 py-2 text-sm`}
+                      >
+                        <MdManageAccounts className="mr-2 h-5 w-5 text-gray-500" />
+                        Thông tin tài khoản
+                      </button>
+                    )}
+                  </MenuItem>
                   <MenuItem>
                     {({ active }) => (
                       <button

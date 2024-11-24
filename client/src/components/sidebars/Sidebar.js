@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom'
-import { createSlug } from '../utils/helper'
+import { createSlug } from 'utils/helper'
 import { useSelector } from 'react-redux'
 
 const Sidebar = () => {

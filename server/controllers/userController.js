@@ -89,7 +89,7 @@ const login = asyncHandler(async (req, res) => {
 // Hàm lấy thông tin user hiện tại (login và xác thực người dùng)
 const getCurrent = asyncHandler(async(req, res) => {
     const { _id } = req.user;
-    const user = await User.findById(_id).select('-password -refreshToken -role ');
+    const user = await User.findById(_id).select('-password -refreshToken');
     return res.status(200).json({
         success: user ? true : false,
         rs: user ? user : 'User not found'
