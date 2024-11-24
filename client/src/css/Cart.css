@@ -1,15 +1,10 @@
-/* Giỏ hàng */
-.cart-container {
-    padding: 50px;
-    font-family: Arial, sans-serif;
-}
-
 .cart-item {
     display: flex;
     align-items: center;
     margin-bottom: 20px;
     padding-bottom: 20px;
     border-bottom: 1px solid #ccc;
+    justify-content: space-between; 
 }
 
 .cart-item-details {
@@ -23,22 +18,25 @@
     height: 80px;
     object-fit: cover;
     margin-right: 20px;
-    }
+}
 
 .cart-item-info {
     display: flex;
     flex-direction: column;
     flex: 1;
+    align-items: flex-end; 
+    text-align: right; 
 }
 
 .cart-item-name {
     font-size: 1.1rem;
     font-weight: bold;
+    margin-bottom: 5px;
 }
 
 .cart-item-price {
     font-size: 1rem;
-    margin: 5px 0;
+    margin-bottom: 10px;
 }
 
 .cart-item-quantity {
@@ -66,25 +64,22 @@
 .btn-remove {
     background-color: #e74c3c;
     color: white;
-    padding: 5px 10px; 
+    padding: 5px 8px; 
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 1rem;
+    font-size: 0.9rem; 
     transition: background-color 0.3s;
-    margin-top: 10px;
-    display: inline-flex; 
-    width: fit-content; 
-    justify-content: center; 
-    align-items: center; 
+    margin-left: 10px; 
+    align-self: flex-start; 
 }
-
 
 .btn-remove:hover {
     background-color: #c0392b;
 }
 
 .cart-summary {
+    padding-bottom: 20px;
     margin-top: 20px;
     font-size: 1.2rem;
     display: flex;
@@ -107,7 +102,6 @@
     background-color: #2980b9;
 }
 
-/* Danh sách sản phẩm */
 .cart-items-list {
     list-style: none;
     padding: 0;

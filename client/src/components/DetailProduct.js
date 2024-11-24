@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
 import { apiGetProductById } from '../apis/product';
-import { apiAddToUserCart, apiChangeUserCartProductQuantity } from '../apis/cart'
+import { apiAddToUserCart } from '../apis/cart'
 import { apiGetCurrent } from '../apis/user'
 import ProductPhone from './ProductPhone';
 import ProductLaptop from './ProductLaptop';
