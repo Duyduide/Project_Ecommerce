@@ -1,135 +1,172 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
+import { apiFetchUserCart, apiDeleteProductFromUserCart, apiChangeUserCartProductQuantity } from '../apis/cart';
+import { apiGetCurrent } from '../apis/user'
 import '../css/Cart.css';
 
 const DetailCart = () => {
-  const [cart, setCart] = useState(JSON.parse(localStorage.getItem('cart')) || []);
+  const [cart, setCart] = useState([]);
+  const [currentUser, setCurrentUser] = useState(null);
+  const [error, setError] = useState(null);
 
+  // Lấy thông tin người dùng hiện tại
+  const fetchCurrentUser = async () => {
+    try {
+      const results = await apiGetCurrent();
+      if (results.success) {
+        setCurrentUser(results.rs);
+      } else {
+        setError(results.message);
+      }
+    } catch (err) {
+      setError('Lỗi khi tải thông tin người dùng');
+    }
+  };
+
+  // Lấy danh sách sản phẩm trong giỏ hàng
+  const fetchCartProducts = async (userId) => {
+    try {
+      const response = await apiFetchUserCart(userId);
+      if (response.success) {
+        setCart(response.cartData);
+      } else {
+        setError(response.message || 'Không thể tải giỏ hàng');
+      }
+    } catch (error) {
+      console.error('Failed to fetch cart products:', error);
+      setError('Lỗi kết nối đến server');
+    }
+  };
+
+  // Xử lý khi component được render
   useEffect(() => {
-   
-    const storedCart = JSON.parse(localStorage.getItem('cart')) || [];
-    setCart(storedCart);
+    fetchCurrentUser();
   }, []);
 
   useEffect(() => {
+    if (currentUser?._id) {
+      fetchCartProducts(currentUser._id);
+    }
+  }, [currentUser]);
 
-    localStorage.setItem('cart', JSON.stringify(cart));
-  }, [cart]);
+  // Xóa sản phẩm khỏi giỏ hàng
+  const handleRemoveItem = async (productId) => {
+    try {
+      await apiDeleteProductFromUserCart({ userId: currentUser._id, productId });
+      setCart((prevCart) => prevCart.filter((item) => item.productId._id !== productId));
+    } catch (error) {
+      console.error('Failed to remove item:', error);
+    }
+  };
 
-  const handleRemoveItem = (productId, productAttributes) => {
-    const { name, price, imageLink } = productAttributes;
-    const updatedCart = cart.filter(
-      (item) =>
-        !(
-          item.id === productId &&
-          item.name === name &&
-          item.price === price &&
-          item.imageLink === imageLink
+  // Cập nhật số lượng sản phẩm
+  const handleChangeQuantity = async (productId, newQuantity) => {
+    try {
+      await apiChangeUserCartProductQuantity({
+        userId: currentUser._id,
+        productId,
+        quantity: newQuantity,
+      });
+
+      setCart((prevCart) =>
+        prevCart.map((item) =>
+          item.productId._id === productId
+            ? { ...item, quantity: Math.max(1, Math.min(newQuantity, item.productId.stock)) }
+            : item
         )
-    );
-    setCart(updatedCart);
+      );
+    } catch (error) {
+      console.error('Failed to update quantity:', error);
+    }
   };
 
-  const handleChangeQuantity = (productId, newQuantity, productAttributes) => {
-    const { name, price, imageLink } = productAttributes;
-
-    const updatedCart = cart.map((item) => {
-
-      if (
-        item.id === productId &&
-        item.name === name &&
-        item.price === price &&
-        item.imageLink === imageLink
-      ) {
-        const validQuantity = Math.max(1, Math.min(newQuantity, item.stock));
-        return { ...item, quantity: validQuantity };
-      }
-      return item;
-    });
-
-    setCart(updatedCart);
-  };
-
+  // Tính tổng giá trị giỏ hàng
   const calculateTotal = useMemo(() => {
-    return cart.reduce((total, item) => total + item.price * item.quantity, 0);
+    return cart.reduce((total, item) => total + item.productId.price * item.quantity, 0);
   }, [cart]);
 
+  // Định dạng tiền tệ
   const formatCurrency = (value) => {
     return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(value);
   };
 
   return (
     <div className="cart-container">
-      <h1>Giỏ Hàng</h1>
+      <h1 className="cart-title">Giỏ hàng của bạn</h1>
+
+      {/* Hiển thị lỗi nếu có */}
+      {error && <p className="error-message">{error}</p>}
+
+      {/* Kiểm tra nếu giỏ hàng trống */}
       {cart.length === 0 ? (
-        <p>
-          Giỏ hàng của bạn hiện trống. Hãy <Link to="/products">mua sắm</Link> ngay!
-        </p>
+        <p className="empty-cart-message">Giỏ hàng trống.</p>
       ) : (
-        <div>
-          <ul className="cart-items-list">
-            {cart.map((item) => (
-              <li key={item.id} className="cart-item">
-                <div className="cart-item-details">
-                  <img src={item.imageLink} alt={item.name} className="cart-item-image" />
-                  <div className="cart-item-info">
-                    <p className="cart-item-name">{item.name}</p>
-                    <p className="cart-item-price">{formatCurrency(item.price)}</p>
-                    <div className="cart-item-quantity">
-                      <button
-                        onClick={() =>
-                          handleChangeQuantity(item.id, item.quantity - 1, {
-                            name: item.name,
-                            price: item.price,
-                            imageLink: item.imageLink,
-                          })
-                        }
-                        disabled={item.quantity <= 1}
-                      >
-                        -
-                      </button>
-                      <span>Số lượng: {item.quantity}</span>
-                      <button
-                        onClick={() =>
-                          handleChangeQuantity(item.id, item.quantity + 1, {
-                            name: item.name,
-                            price: item.price,
-                            imageLink: item.imageLink,
-                          })
-                        }
-                        disabled={item.quantity >= item.stock}
-                      >
-                        +
-                      </button>
-                    </div>
+        <ul className="cart-items-list">
+          {cart.map((item, index) => (
+            <li key={index} className="cart-item">
+              <div className="cart-item-details">
+                <div className="cart-item-left">
+                  {/* Hình ảnh sản phẩm */}
+                  <img
+                    src={item.productId.imageLink}
+                    alt={item.productId.name}
+                    className="cart-item-image"
+                  />
+                </div>
+
+                <div className="cart-item-middle"></div>
+
+                <div className="cart-item-right">
+                  <h3 className="cart-item-name">{item.productId.name}</h3>
+
+                  <div className="cart-item-price">
+                    <p>Giá: {formatCurrency(item.productId.price)}</p>
+                  </div>
+
+                  {/* Điều chỉnh số lượng sản phẩm */}
+                  <div className="cart-item-quantity">
                     <button
-                      className="btn-remove"
-                      onClick={() =>
-                        handleRemoveItem(item.id, {
-                          name: item.name,
-                          price: item.price,
-                          imageLink: item.imageLink,
-                        })
-                      }
+                      onClick={() => handleChangeQuantity(item.productId._id, item.quantity - 1)}
+                      disabled={item.quantity <= 1}
+                      className="quantity-button"
                     >
-                      Xóa
+                      -
+                    </button>
+                    <span className="quantity-display">Số lượng: {item.quantity}</span>
+                    <button
+                      onClick={() => handleChangeQuantity(item.productId._id, item.quantity + 1)}
+                      disabled={item.quantity >= item.productId.stock}
+                      className="quantity-button"
+                    >
+                      +
                     </button>
                   </div>
-                </div>
-              </li>
-            ))}
-          </ul>
 
-          <div className="cart-summary">
-            <p>
-              <strong>Tổng cộng:</strong> {formatCurrency(calculateTotal)}
-            </p>
-            <Link to="/checkout">
-              <button className="btn-checkout">Phương thức thanh toán</button>
-            </Link>
-          </div>
-        </div>
+                  {/* Nút xóa sản phẩm */}
+                  <button
+                    className="btn-remove"
+                    onClick={() => handleRemoveItem(item.productId._id)}
+                  >
+                    Xóa
+                  </button>
+                </div>
+              </div>
+            </li>
+          ))}
+        </ul>
       )}
+
+      {/* Tóm tắt giỏ hàng */}
+      <div className="cart-summary">
+        <p className="cart-total">
+          <strong>Tổng cộng:</strong> {formatCurrency(calculateTotal)}
+        </p>
+
+        {/* Nút thanh toán */}
+        <Link to="/checkout">
+          <button className="btn-checkout">Tạo Đơn Hàng</button>
+        </Link>
+      </div>
     </div>
   );
 };
