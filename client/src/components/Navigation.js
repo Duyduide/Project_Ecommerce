@@ -16,6 +16,7 @@ import { IoMdSearch } from "react-icons/io";
 import { FaShoppingCart } from "react-icons/fa";
 import { IoCartOutline } from "react-icons/io5";
 import { RiAdminFill } from "react-icons/ri";
+import { apiFetchUserCart } from '../apis/cart'
 
 const categories = [
   {
@@ -77,18 +78,31 @@ const Navigation = () => {
   const dispatch = useDispatch();
 
   const { isLoggedIn, current }  = useSelector(state => state.user)
+
   useEffect(() => { 
     if (isLoggedIn) {
       dispatch(getCurrent())
     }
   }, [dispatch, isLoggedIn])
-  
 
-  const updateCartCount = () => {
-    // cart
-    const storedCart = JSON.parse(localStorage.getItem('cart')) || [];
-    setCartCount(storedCart.length); 
-  };
+
+  const updateCartCount = async () => {
+    try {
+        const response = await apiFetchUserCart(current._id);
+
+        if (response.success) {
+            const cartItems = response.cartData; 
+            const totalQuantity = cartItems.reduce((total, item) => total + item.quantity, 0);
+            setCartCount(totalQuantity); 
+        } else {
+            setCartCount(0); 
+        }
+    } catch (error) {
+        console.error("Error fetching user cart:", error);
+        setCartCount(0); 
+    }
+  };  
+    //setCartCount(storedCart.length); 
 
   useEffect(() => {
     updateCartCount(); 
