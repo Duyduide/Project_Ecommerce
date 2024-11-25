@@ -21,7 +21,7 @@ const queryProductMain = async (req, res) => {
         const { page, sortField, sortOrder, pageSize = 20 } = req.query;
         let sort = {};
         sort[sortField] = sortOrder === 'ascend' ? 1 : -1;
-        if (category==='All') {
+        if (category==='all') {
             const products = await Product.find().sort(sort).skip((page - 1) * pageSize).limit(pageSize);
             res.status(200).json({
                 success: products? true: false,
@@ -68,34 +68,34 @@ const queryProductByType = async (req, res) => {
 
         let products;
         switch (productType) {
-            case 'Phone':
+            case 'phone':
                 products = await Phone.find().sort({ createdAt: -1 });
                 break;
-            case 'Laptop':
+            case 'laptop':
                 products = await Laptop.find().sort({ createdAt: -1 });
                 break;
-            case 'Tablet':
+            case 'tablet':
                 products = await Tablet.find().sort({ createdAt: -1 });
                 break;
-            case 'SmartWatch':
+            case 'smartwatch':
                 products = await SmartWatch.find().sort({ createdAt: -1 });
                 break;
-            case 'PowerBank':
+            case 'powerbank':
                 products = await PowerBank.find().sort({ createdAt: -1 });
                 break;
-            case 'Headphone':
+            case 'headphone':
                 products = await Headphone.find().sort({ createdAt: -1 });
                 break;
-            case 'Charger':
+            case 'charger':
                 products = await Charger.find().sort({ createdAt: -1 });
                 break;
-            case 'Case':
+            case 'case':
                 products = await Case.find().sort({ createdAt: -1 });
                 break;
-            case 'Mouse':
+            case 'mouse':
                 products = await Mouse.find().sort({ createdAt: -1 });
                 break;
-            case 'Keyboard':
+            case 'keyboard':
                 products = await Keyboard.find().sort({ createdAt: -1 });
                 break;
             default:

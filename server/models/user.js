@@ -30,11 +30,11 @@ let userSchema = new mongoose.Schema({
         default: 'user',
     },
     cart: [{
-        productId: { type: mongoose.Types.ObjectId, ref: 'Product' },
+        productId: { type: mongoose.Types.ObjectId, ref: 'product' },
         quantity: { type: Number, required: true }
     }],
     address: [{ type: mongoose.Types.ObjectId, ref: 'Address'}],
-    wishlist: [{ type: mongoose.Types.ObjectId, ref: 'Product'}],
+    wishlist: [{ type: mongoose.Types.ObjectId, ref: 'product'}],
     refreshToken: {
         type: String,
     },

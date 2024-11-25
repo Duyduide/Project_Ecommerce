@@ -55,17 +55,17 @@ export const apiUpdateProduct = (data) => axios({
 
 //Fetch sản phẩm
 export const apiFetchProductByPage = (category, page, sortField, sortOrder, pageSize=20) => axios({
-    url: '/getProductMain/' + category, 
+    url: 'queryProduct/getProductMain/' + category, 
     method:'get',
     params: {page, sortField, sortOrder, pageSize}
 })
 
 export const apiFetchProductById = (id) => axios({
-    url: '/getProductById/' + id, 
+    url: 'queryProduct/getProductById/' + id, 
     method:'get',
 })
 
 export const apiFetchProductBySlug = (slug) => axios({
-    url: '/getProductBySlug/' + slug, 
+    url: 'queryProduct/getProductBySlug/' + slug, 
     method:'get',
 })

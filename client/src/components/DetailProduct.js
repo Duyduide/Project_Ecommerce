@@ -115,7 +115,7 @@ const DetailProduct = () => {
   }
 
   const renderProductDetails = () => {
-    if (products.__t === "Phone") {
+    if (products.__t === "phone") {
       return (
         <>
           <div className="detail-product-item">
@@ -144,7 +144,7 @@ const DetailProduct = () => {
           </div>
         </>
       );
-    } else if (products.__t === "Laptop") {
+    } else if (products.__t === "laptop") {
       return (
         <>
           <div className="detail-product-item">
@@ -177,7 +177,7 @@ const DetailProduct = () => {
           </div>
         </>
       );
-    } else if (products.__t === "Headphone") {
+    } else if (products.__t === "headphone") {
       return (
         <>
           <div className="detail-product-item">
@@ -198,7 +198,7 @@ const DetailProduct = () => {
           </div>
         </>
       );
-    } else if (products.__t === "Tablet") {
+    } else if (products.__t === "tablet") {
       return (
         <>
           <div className="detail-product-item">
@@ -311,12 +311,11 @@ const DetailProduct = () => {
 
         <div className="related-products">
           <h3 class="related-products">Sản phẩm liên quan</h3>
-          {products.__t === "Phone" && <ProductPhone />}
-          {products.__t === "Laptop" && <ProductLaptop />}
-          {products.__t === "Headphone" && <ProductHeadphone />}
-          {products.__t === "Tablet" && <ProductTablet />}
+          {products.__t === "phone" && <ProductPhone />}
+          {products.__t === "laptop" && <ProductLaptop />}
+          {products.__t === "headphone" && <ProductHeadphone />}
+          {products.__t === "tablet" && <ProductTablet />}
         </div>
-
       </div>
 
     </>

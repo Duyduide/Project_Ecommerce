@@ -6,34 +6,34 @@ const createProduct = async (req, res) => {
 
         let product;
         switch (productType) {
-            case 'Phone':
+            case 'phone':
                 product = new Phone(productData);
                 break;
-            case 'Laptop':
+            case 'laptop':
                 product = new Laptop(productData);
                 break;
-            case 'Tablet':
+            case 'tablet':
                 product = new Tablet(productData);
                 break;
-            case 'SmartWatch':
+            case 'smartWatch':
                 product = new SmartWatch(productData);
                 break;
-            case 'PowerBank':
+            case 'powerbank':
                 product = new PowerBank(productData);
                 break;
-            case 'Headphone':
+            case 'headphone':
                 product = new Headphone(productData);
                 break;
-            case 'Charger':
+            case 'charger':
                 product = new Charger(productData);
                 break;
-            case 'Case':
+            case 'case':
                 product = new Case(productData);
                 break;
-            case 'Mouse':
+            case 'mouse':
                 product = new Mouse(productData);
                 break;
-            case 'Keyboard':
+            case 'keyboard':
                 product = new Keyboard(productData);
                 break;
             default:
@@ -107,7 +107,6 @@ const updateProductById = async (req, res) => {
         if (!product) {
             return res.status(404).json({ success: false, productData: 'Product not found' });
         }
-
         res.status(200).json({ success: true, productData: product? product : 'Cannot update product' });
     } catch (error) {
         res.status(500).json({ success: false, productData: error.message });
