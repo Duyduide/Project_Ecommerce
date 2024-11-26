@@ -15,7 +15,7 @@ const createProduct = async (req, res) => {
             case 'tablet':
                 product = new Tablet(productData);
                 break;
-            case 'smartWatch':
+            case 'smartwatch':
                 product = new SmartWatch(productData);
                 break;
             case 'powerbank':
