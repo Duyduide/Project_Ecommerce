@@ -39,6 +39,10 @@ const orderSchema = new mongoose.Schema({
         ref: 'User' ,
         required: true
     },
+    payOSOrderId: {
+        type: String,
+        default: ''
+    },
     productList: [{
         productId: {
             type: mongoose.Schema.Types.ObjectId,
