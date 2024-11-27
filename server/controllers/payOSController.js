@@ -4,7 +4,7 @@ const { Product } = require('../models/product');
 const User = require('../models/user');
 const asyncHandler = require('express-async-handler');
 
-const payOS = new PayOS(process.env.PAYOS_CLIENT_ID,process.env.PAYOS_API_KEY,process.env.PAYOS_CHECKSUM_ID);
+const payOS = new PayOS(process.env.PAYOS_CLIENT_ID, process.env.PAYOS_API_KEY, process.env.PAYOS_CHECKSUM_ID);
 
 const createPayment = asyncHandler(async (req, res) => {
     const { price, payOSCode } = req.body;
