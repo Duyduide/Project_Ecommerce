@@ -4,6 +4,7 @@ import { Address } from '../../components';
 import { apiGetCurrent } from '../../apis/user';
 import { apiFetchUserCart, apiDeleteAllProductsFromUserCart } from '../../apis/cart';
 import { apiCreateOrder } from '../../apis/order';
+import { apiCreatePayment } from '../../apis/payOS';
 import path from '../../utils/path';
 import Swal from 'sweetalert2';
 
@@ -69,26 +70,40 @@ const CheckOut = () => {
         paymentMethod,
         paymentStatus: paymentMethod === 'COD' ? 'Pending' : 'Processing',
         productList: cart.map(item => ({
-          productId: item._id,
+          productId: item.productId,
           quantity: item.quantity
         })),
         createdBy: userId,
       };
 
+      if (paymentMethod === 'bank'){
+        orderData.payOSOrderId = Number(String(Date.now()).slice(-6)); // Tạo mã đơn hàng ngẫu nhiên
+      }
+      else {orderData.payOSOrderId = '';}
+
       const response = await apiCreateOrder( {orderData} );
 
       if (response.success) {
-        Swal.fire('Thành công', 'Đặt hàng thành công', 'success').then(async () => {
-            // Gọi API để xóa giỏ hàng
-            const deleteResponse = await apiDeleteAllProductsFromUserCart({ userId });
-            if (deleteResponse.success) {
-                setCart([]); 
-            } else {
-                console.error('Failed to clear cart:', deleteResponse.cartData);
-            }
-            navigate(`\${path.HOME}`);
-            window.location.reload(); // Reload trang
-        });
+        if (paymentMethod === 'bank') {
+          const paymentLink=await apiCreatePayment({
+            price: totalPrice,
+            payOSCode: orderData.payOSOrderId
+          })
+          
+          window.location.href=paymentLink.url;
+        } else {
+          Swal.fire('Thành công', 'Đặt hàng thành công', 'success').then(async () => {
+              // Gọi API để xóa giỏ hàng
+              const deleteResponse = await apiDeleteAllProductsFromUserCart({ userId });
+              if (deleteResponse.success) {
+                  setCart([]); 
+              } else {
+                  console.error('Failed to clear cart:', deleteResponse.cartData);
+              }
+              navigate(`\${path.HOME}`);
+              window.location.reload(); // Reload trang
+          });
+        }
     } else {
         Swal.fire('Thất bại', 'Đặt hàng thất bại, vui lòng thử lại', 'error');
     }
