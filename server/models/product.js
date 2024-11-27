@@ -250,7 +250,7 @@ const caseSchema=new mongoose.Schema({
         type: String,
         trim: true
     },
-    typeOfCase: {
+    productSupported: {
         type: String,
         trim: true
     }

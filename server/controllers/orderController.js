@@ -1,10 +1,18 @@
 const {Order} = require('../models/order');
+const {Product} = require('../models/product');
 
 const createOrder = async (req, res) => {
     try {
         const { orderData } = req.body;
 
         const order = new Order(orderData);
+        for (let item of order.productList) {
+            const product = await Product.findById(item.productId);
+            if (product) {
+                product.stock -= item.quantity;
+                await product.save();
+            }
+        }
         await order.save();
         res.status(201).json({
             success: order? true : false,
@@ -53,6 +61,13 @@ const cancelOrderById = async (req, res) => {
         const order = await Order.findByIdAndUpdate(orderId, { status: 'Cancelled' });
         if (!order) {
             return res.status(404).json({ success: false,  orderData: 'Order not found' });
+        }
+        for (let item of order.productList) {
+            const product = await Product.findById(item.productId);
+            if (product) {
+                product.stock += item.quantity;
+                await product.save();
+            }
         }
 
         res.status(200).json({
