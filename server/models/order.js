@@ -13,7 +13,7 @@ const orderSchema = new mongoose.Schema({
         required: true,
         trim: true,
         default: 'Processing',
-        enum: ['Processing', 'Delivering', 'Delivered', 'Cancelled']
+        enum: ['Processing', 'Paid', 'Delivering', 'Delivered', 'Cancelled']
     },
     address: {
         type: String,
@@ -38,6 +38,10 @@ const orderSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId, 
         ref: 'User' ,
         required: true
+    },
+    payOSOrderId: {
+        type: String,
+        default: ''
     },
     productList: [{
         productId: {
