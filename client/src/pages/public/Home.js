@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Sidebar, Banner, RightBanner, ProductPhone, ProductTablet, ProductHeadphone, ProductLaptop} from '../../components/index'
+import { Sidebar, Banner, RightBanner, ProductPhone, ProductTablet, ProductHeadphone, ProductLaptop, YourNeed} from '../../components/index'
 // import { useSelector, useDispatch } from 'react-redux'
 // import {getProduct} from '../../store/product/asyncActions'
 // import {apiGetProduct, apiGetPhone } from '../../apis'
@@ -28,6 +28,9 @@ const Home = () => {
         </div>
       </div>
       <div className='w-main flex flex-col py-10'>
+        <YourNeed />
+      </div>
+      <div className='w-main flex flex-col py-10 mt-10'>
         <ProductPhone />
         <ProductLaptop />
         <ProductTablet />
