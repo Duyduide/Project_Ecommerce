@@ -1,9 +1,8 @@
 import React, {Fragment, memo, useState } from 'react'
 import logo from 'assets/logoabc.png'
 import {adminSidebar} from 'utils/contants'
-import { NavLink, Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import clsx from 'clsx'
-import path from 'utils/path'
 import { FaChevronDown, FaChevronRight  } from "react-icons/fa";
 
 const activedStyle = 'px-4 py-2 flex items-center gap-2 text-xl bg-gray-300 rounded-xl'
