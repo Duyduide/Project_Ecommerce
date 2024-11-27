@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react'
 import { useParams } from 'react-router-dom'
 import { apiFetchProductByPage } from 'apis/product'
 import { useNavigate } from 'react-router-dom';
-import { YourNeed } from '../../components/index'
+import { YourNeed, BannerProduct } from '../../components/index';
 
 export const Product = () => {
 
@@ -36,7 +36,17 @@ export const Product = () => {
     <>
       <div className="w-full p-6 mt-6">
         {error && <p className="text-red-500 text-center font-bold mb-5">Error: {error}</p>}
-        <div className="grid grid-cols-5 gap-6">
+
+        <div className="mb-6">
+          <BannerProduct />
+        </div>
+
+        <div className="mb-48">
+          <YourNeed />
+        </div>
+        
+
+        <div className="grid grid-cols-5 gap-6 ">
           {products.length === 0 ? (
             <p className="text-center text-lg font-medium col-span-full">Chưa có sản phẩm</p>
           ) : (
