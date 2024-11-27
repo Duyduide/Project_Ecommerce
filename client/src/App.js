@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import { Public, Login, Home, Product, DetailProduct, FinalRegister, ResetPassword, DetailCart } from './pages/public';
+import { Public, Login, Home, Product, DetailProduct, FinalRegister, ResetPassword, DetailCart, Cancel, Success  } from './pages/public';
 import { ManageOrders, ManageUsers, Dashboard, CreateProducts, ManageProducts, AdminLayout } from './pages/admin';
 import { CheckOut, Personal, MemberLayout } from './pages/member';
 import path from './utils/path';
@@ -25,7 +25,6 @@ function App() {
           <Route path = {path.PRODUCT} element={<Product />} />
           <Route path = {path.DETAIL_PRODUCT} element={<DetailProduct />} />
           <Route path = {path.DETAIL_CART} element={<DetailCart />} />
-          {/* <Route path = {path.DETAIL_CART} element={<DetailCart />} /> */}
           <Route path = {path.CHECKOUT} element={<CheckOut />} />
           <Route path = {path.ALL} element={<Home/>} />
         </Route>
@@ -42,8 +41,8 @@ function App() {
         <Route path = {path.LOGIN} element={<Login />} />
         <Route path = {path.FINAL_REGISTER} element={<FinalRegister />} />
         <Route path = {path.RESET_PASSWORD} element={<ResetPassword/>} />
-        
-
+        <Route path = {path.CANCEL} element={<Cancel/>} />
+        <Route path = {path.SUCCESS} element={<Success/>} />
      </Routes>
      <ToastContainer
         position="top-right"

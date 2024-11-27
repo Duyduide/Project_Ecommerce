@@ -76,7 +76,7 @@ const CreatProduct = () => {
       case: [
           { name: 'material', label: 'Chất liệu' },
           { name: 'color', label: 'Màu' },
-          { name: 'typeOfCase', label: 'Loại vỏ' }
+          { name: 'productSupported', label: 'Tương thích với thiết bị' }
       ],
       mouse: [
           { name: 'connection', label: 'Hỗ trợ kết nối' },

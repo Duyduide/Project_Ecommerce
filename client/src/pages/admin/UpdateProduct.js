@@ -76,7 +76,7 @@ const UpdateProduct = ({ productId, setEditProduct }) => {
         case: [
             { name: 'material', label: 'Chất liệu' },
             { name: 'color', label: 'Màu sắc' },
-            { name: 'typeOfCase', label: 'Loại ốp lưng' }
+            { name: 'productSupported', label: 'Tương thích với thiết bị' }
         ],
         mouse: [
             { name: 'connection', label: 'Kết nối' },
