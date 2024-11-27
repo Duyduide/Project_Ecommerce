@@ -9,8 +9,9 @@ const path = {
     RESET_PASSWORD: 'reset-password/:token',
     DETAIL_CART: '/detail-cart',
     CHECKOUT: '/checkout',
-    SUCCESS: '/success',
-    CANCEL: '/cancel',
+    PAYMENT_SUCCESS: '/payment-success/:orderCode',
+    PAYMENT_CANCELLED: '/payment-cancelled/:orderCode',
+
 
     // ADMIN
     ADMIN: 'admin',
