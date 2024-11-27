@@ -2,7 +2,11 @@ import React from 'react'
 
 const ManageOrders = () => {
   return (
-    <div>ManageOrders</div>
+    <div className='w-full'>
+      <div className='p-4 flex justify-center py-[75px] justify-center'>
+        manage orders
+      </div>
+    </div>
   )
 }
 

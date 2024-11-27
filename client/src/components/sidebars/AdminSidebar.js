@@ -3,7 +3,6 @@ import logo from 'assets/logoabc.png'
 import {adminSidebar} from 'utils/contants'
 import { NavLink, Link } from 'react-router-dom'
 import clsx from 'clsx'
-import path from 'utils/path'
 import { FaChevronDown, FaChevronRight  } from "react-icons/fa";
 
 const activedStyle = 'px-4 py-2 flex items-center gap-2 text-xl bg-gray-300 rounded-xl'
@@ -18,8 +17,10 @@ const AdminSidebar = () => {
   return (
     <div className='p-4 bg-sky-200 h-full'>
         <div className='flex flex-col justify-center items-center py-4 gap-2'>
-            <img src={logo} alt='logo' className='w-[150px] object-contain'></img>
-            <span>Trang quản lý của admin</span>
+            <Link to="/" className="cursor-pointer hover:opacity-80 transition-opacity">
+                <img src={logo} alt='logo' className='w-[150px] object-contain'></img>
+            </Link>
+            <span className='text-bold'>Trang quản lý của admin</span>
         </div>
         <div className='flex flex-col justify gap-6 pt-6'>
             {adminSidebar.map(el => (

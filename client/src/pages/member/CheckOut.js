@@ -161,9 +161,9 @@ const CheckOut = () => {
       <div className='w-1/3'>
         <div className="border border-blue-500 border-2 p-4 rounded-md flex flex-col gap-8 mb-10">
           <h2 className="text-xl font-semibold text-blue-600 text-center">ĐƠN HÀNG CỦA BẠN</h2>
-          <div className="max-h-[150px] overflow-y-auto border border-gray-300 p-3 mb-5">
+          <div className="max-h-[150px] overflow-y-auto border rounded-md border-gray-300 p-3 mb-5">
             {cart.map((item, index) => (
-              <div key={index} className="flex items-center gap-4 py-2 border-b">
+              <div key={index} className="flex items-center gap-4 py-2">
                 <img src={item.productId.imageLink || 'https://via.placeholder.com/50'} alt={item.productId.name} className="w-12 h-12 border rounded-md" />
                 <div className="flex-1">
                   <p className="font-semibold">{item.productId.name}</p>

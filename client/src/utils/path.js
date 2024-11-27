@@ -12,6 +12,7 @@ const path = {
     PAYMENT_SUCCESS: '/payment-success/:orderCode',
     PAYMENT_CANCELLED: '/payment-cancelled/:orderCode',
 
+
     // ADMIN
     ADMIN: 'admin',
     DASHBOARD: 'dasboard',

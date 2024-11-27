@@ -37,18 +37,18 @@ export const apiGetProductById = (productID) => axios({
 // })
 //chỉnh sửa database sản phẩm (chỉ dành cho admin)
 export const apiAddProduct = (data) => axios({
-    url: '/createProduct', 
+    url: '/product/createProduct', 
     method:'post',
     data
 })
 
 export const apiDeleteProduct = (id) => axios({
-    url: '/deleteProduct/' + id, 
+    url: '/product/deleteProduct/' + id, 
     method:'delete',
 })
 
 export const apiUpdateProduct = (data) => axios({
-    url: '/updateProduct', 
+    url: '/product/updateProduct', 
     method:'put',
     data
 })
@@ -67,5 +67,10 @@ export const apiFetchProductById = (id) => axios({
 
 export const apiFetchProductBySlug = (slug) => axios({
     url: 'queryProduct/getProductBySlug/' + slug, 
+    method:'get',
+})
+
+export const apiFetchProductByName = (name) => axios({
+    url: 'queryProduct/getProductByName/' + name, 
     method:'get',
 })

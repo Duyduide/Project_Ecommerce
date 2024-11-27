@@ -1,5 +1,4 @@
 const { Product, Phone, Laptop, Tablet, SmartWatch, PowerBank, Headphone, Charger, Case, Mouse, Keyboard } = require('../models/product');
-const asyncHandler = require('express-async-handler');  
 
 const queryAllProducts = async (req, res) => {
     try {
