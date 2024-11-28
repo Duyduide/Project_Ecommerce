@@ -18,6 +18,7 @@ const CheckOut = () => {
   const [paymentMethod, setPaymentMethod] = useState('COD');
   const [cart, setCart] = useState([]);
   const [userId, setUserId] = useState('');
+  
   const navigate = useNavigate();
 
   // Tải thông tin user và giỏ hàng khi component được mount
@@ -26,7 +27,13 @@ const CheckOut = () => {
       try {
         const userResponse = await apiGetCurrent();
         const userId = userResponse.rs?._id;
+        const name = `${userResponse.rs.firstname} ${userResponse.rs.lastname}`;
+        const phone = userResponse.rs?.mobile;
+        const email = userResponse.rs?.email;
         setUserId(userId);
+        setName(name);
+        setPhone(phone);
+        setEmail(email);
 
         if (userId) {
           const cartResponse = await apiFetchUserCart(userId);
