@@ -19,7 +19,7 @@ const Banner = () => {
   };
 
   return (
-    <div className='flex flex-col pl-5 flex-auto'>
+    <div className='flex flex-col flex-auto'>
       <div className='w-full relative'>
         <Slider {...settings} ref={sliderRef}>
           <div>
@@ -53,7 +53,7 @@ const Banner = () => {
         </Slider>
 
         <div className='w-full overflow-hidden mt-4'>
-          <div className='w-full h-full flex flex-col items-center justify-between border-x rounded-b-md shadow-xl p-4 relative'>
+          <div className='w-full h-full flex flex-col items-center justify-between rounded-b-md shadow-xl p-4 relative'>
             <div className='flex flex-row justify-between w-full z-10'>
               <span 
                 onClick={() => goToSlide(0)} 

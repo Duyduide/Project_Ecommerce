@@ -7,7 +7,7 @@ function YourNeed() {
         <div className="chapter">
             <div className="chapter-line"></div>
             <div className="chapter-name">
-                Nhu cầu của bạn là gì!
+                Nhu cầu của bạn là gì?
             </div>
         </div>
 

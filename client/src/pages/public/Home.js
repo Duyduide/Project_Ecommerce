@@ -7,17 +7,17 @@ import { Sidebar, Banner, RightBanner, ProductPhone, ProductTablet, ProductHeadp
 const Home = () => {
   return (
     <>
-      <div className="w-main flex flex-row p-4">
+      <div className="w-main flex flex-row">
         {/* Sidebar */}
-        <div className='flex flex-col gap-5 w-[20%] flex-auto'>
+        <div className='flex flex-col w-[20%] flex-auto'>
           <Sidebar />
         </div>
         {/* Slider banner */}
-        <div className='flex flex-col pl-5 w-[50%] flex-auto'>
+        <div className='flex flex-col pl-4 pr-4 w-[50%] flex-auto'>
           <Banner />
         </div>
         {/* Right Banner */}
-        <div className='flex flex-col gap-5 pl-5 w-[30%] flex-auto'>
+        <div className='flex flex-col  w-[30%] flex-auto'>
           <RightBanner />
         </div>
       </div>

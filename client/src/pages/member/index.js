@@ -1,3 +1,5 @@
 export { default as CheckOut } from './CheckOut'
 export { default as Personal } from './Personal'
 export { default as MemberLayout } from './MemberLayout'
+export { default as OrderHistory } from './OrderHistory'
+export { default as OrderHistoryDetail } from './OrderHistoryDetail'

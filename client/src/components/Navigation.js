@@ -13,7 +13,6 @@ import { logout } from '../store/user/userSlice'
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { IoChatbubbleEllipsesOutline } from "react-icons/io5";
 import { IoMdSearch } from "react-icons/io";
-import { FaShoppingCart } from "react-icons/fa";
 import { IoCartOutline } from "react-icons/io5";
 import { RiAdminFill } from "react-icons/ri";
 import { apiFetchUserCart } from '../apis/cart'
