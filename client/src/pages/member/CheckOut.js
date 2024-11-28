@@ -244,11 +244,11 @@ const CheckOut = () => {
                   checked={paymentMethod === 'bank'}
                   onChange={() => setPaymentMethod('bank')}
                 />
-                Thanh toán qua ví MoMo
+                Thanh toán qua
                 <img
-                  src="momo.png" 
+                  src="https://payos.vn/docs/img/logo.svg" 
                   alt="Ví MoMo"
-                  className="w-5 h-5" 
+                  className="w-9 h-6" 
                 />
               </label>
             </div>
