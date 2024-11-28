@@ -21,6 +21,24 @@ const createOrder = async (req, res) => {
     } catch (error) {
         res.status(500).json({ success: false, orderData: error.message });
     }
+};
+
+const queryAllOrders = async (req, res) => {
+    try {
+        const { page, limit, sortField, sortOrder } = req.query;
+
+        let sort = {};
+        sort[sortField] = sortOrder === 'ascend' ? 1 : -1;
+
+        const orders = await Order.find().sort(sort).limit(limit * 1).skip((page - 1) * limit);
+
+        res.status(200).json({
+            success: orders? true : false,
+            orderData: orders? orders : 'Cannot get order'
+        });
+    } catch (error) {
+        res.status(500).json({ success: false, orderData: error.message });
+    }
 }
 
 const queryOrderOfUser = async (req, res) => {
@@ -50,6 +68,22 @@ const queryOrderById = async (req, res) => {
         });
     }
     catch (error) {
+        res.status(500).json({ success: false, orderData: error.message });
+    }
+};
+
+const updateOrderById = async (req, res) => {
+    try {
+        const { orderId } = req.params;
+        const { orderData } = req.body;
+
+        const order = await Order.findByIdAndUpdate(orderId, orderData, { new: true });
+
+        res.status(200).json({
+            success: order? true : false,
+            orderData: order? order : 'Cannot update order'
+        });
+    } catch (error) {
         res.status(500).json({ success: false, orderData: error.message });
     }
 };
@@ -99,8 +133,10 @@ const deleteOrderById = async (req, res) => {
 
 module.exports = {
     createOrder,
+    queryAllOrders,
     queryOrderOfUser,
     queryOrderById,
     cancelOrderById,
-    deleteOrderById
+    deleteOrderById,
+    updateOrderById
 }
