@@ -10,6 +10,8 @@ const Banner = () => {
     speed: 500,         
     slidesToShow: 1,    
     slidesToScroll: 1,  
+    autoplay: true,         // Tự động chuyển đổi
+    autoplaySpeed: 2000,    // Tốc độ tự động chuyển đổi (ms)
   };
 
   const goToSlide = (index) => {
