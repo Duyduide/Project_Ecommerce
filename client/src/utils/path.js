@@ -11,7 +11,6 @@ const path = {
     CHECKOUT: '/checkout',
     PAYMENT_RESULT: '/payment-result/:orderCode',
 
-
     // ADMIN
     ADMIN: 'admin',
     DASHBOARD: 'dasboard',

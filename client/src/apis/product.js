@@ -30,7 +30,6 @@ export const apiGetProductById = (productID) => axios({
     url: `/queryProduct/getProductById/${productID}`,
     method: 'get',
 });
-
 // export const apiGetProduct = () => axios({
 //     url: '/queryProduct/getAllProduct',
 //     method: 'get'

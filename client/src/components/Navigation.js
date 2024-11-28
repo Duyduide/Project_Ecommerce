@@ -17,7 +17,7 @@ import { FaShoppingCart } from "react-icons/fa";
 import { IoCartOutline } from "react-icons/io5";
 import { RiAdminFill } from "react-icons/ri";
 import { apiFetchUserCart } from '../apis/cart'
-
+import { useSearchParams } from 'react-router-dom';
 const categories = [
   {
     name: 'Điện thoại, Tablet',
@@ -78,14 +78,19 @@ const Navigation = () => {
   const dispatch = useDispatch();
 
   const { isLoggedIn, current }  = useSelector(state => state.user)
-
+  const [searchParams, setSearchParams] = useSearchParams(); // Use searchParams to manage query parameters in URL
   useEffect(() => { 
     if (isLoggedIn) {
       dispatch(getCurrent())
     }
   }, [dispatch, isLoggedIn])
 
-
+  useEffect(() => {
+    const query = searchParams.get('query');
+    if (query) {
+      setSearchQuery(query); // If a query exists, populate the searchQuery state
+    }
+  }, [searchParams]);
   const updateCartCount = async () => {
     try {
         const response = await apiFetchUserCart(current._id);
@@ -112,11 +117,15 @@ const Navigation = () => {
     };
   }, []); 
 
-  const handleSearch = () => {
-    if (searchQuery) {
-      navigate(`/search?query=${searchQuery}`); // Điều hướng đến trang tìm kiếm sản phẩm
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      setSearchParams({ query: searchQuery }); // Update the URL query params with search term
+      navigate(`/searchResult?query=${encodeURIComponent(searchQuery)}`);
     }
   };
+
+
   const handleCategoryClick = (subCategory) => {
     navigate(`/category/${subCategory}`); // Điều hướng đến trang sản phẩm của danh mục con
   };
@@ -229,12 +238,12 @@ const Navigation = () => {
       className="px-4 py-1 text-gray-800 w-72 rounded-full outline-none"
       value={searchQuery}
       onChange={(e) => setSearchQuery(e.target.value)}
-      onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
+      onKeyDown={(e) => e.key === 'Enter' && handleSearch(e)}
     />
     <IoMdSearch
       size={20}
       className="cursor-pointer text-gray-800"
-      onClick={handleSearch}
+      onClick={(e) => handleSearch(e)}
     />
           </div>
         </div>

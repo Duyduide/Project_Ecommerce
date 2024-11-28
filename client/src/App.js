@@ -7,7 +7,7 @@ import path from './utils/path';
 import { getCategories } from './store/app/asyncActions'
 import { useDispatch } from 'react-redux'
 import { ToastContainer } from 'react-toastify';
-
+import SearchResult from './components/ProductName'; 
 import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
@@ -28,6 +28,7 @@ function App() {
           <Route path = {path.CHECKOUT} element={<CheckOut />} />
           <Route path = {path.ALL} element={<Home/>} />
           <Route path = {path.PAYMENT_RESULT} element={<PaymentResult />} />
+          <Route path = "/searchResult" element={<SearchResult />} />
         </Route>
         <Route path = {path.ADMIN} element={<AdminLayout />}>
           <Route path={path.DASHBOARD} element={<Dashboard/>} />
