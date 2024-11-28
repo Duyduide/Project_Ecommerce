@@ -22,6 +22,8 @@ const path = {
     // MEMBER
     MEMBER: 'member',
     PERSONAL: 'personal',
+    ORDER_HISTORY: 'order-history',
+    ORDER_HISTORY_DETAIL: 'order-history/:orderId',
 }
 
 export default path;

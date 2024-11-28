@@ -7,23 +7,17 @@ import { Sidebar, Banner, RightBanner, ProductPhone, ProductTablet, ProductHeadp
 const Home = () => {
   return (
     <>
-      <div className="w-main flex flex-row p-4">
+      <div className="w-main flex flex-row">
         {/* Sidebar */}
-        <div className='flex flex-col gap-5 w-[20%] flex-auto'>
+        <div className='flex flex-col w-[20%] flex-auto'>
           <Sidebar />
         </div>
         {/* Slider banner */}
-        <div className='flex flex-col pl-5 w-[50%] flex-auto'>
+        <div className='flex flex-col pl-4 pr-4 w-[50%] flex-auto'>
           <Banner />
-          <div className='w-full h-full flex flex-row items-center justify-between border-x rounded-b-md shadow-xl p-4'>
-            <span>Ưu đãi 1</span>
-            <span>Ưu đãi 2</span>
-            <span>Ưu đãi 3</span>
-            <span>Ưu đãi 4</span>
-          </div>
         </div>
         {/* Right Banner */}
-        <div className='flex flex-col gap-5 pl-5 w-[30%] flex-auto'>
+        <div className='flex flex-col  w-[30%] flex-auto'>
           <RightBanner />
         </div>
       </div>

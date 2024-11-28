@@ -81,6 +81,7 @@ const SearchResult = () => {
                 </p>
               </div>
             </div>
+            
           ))
         )}
       </div>
