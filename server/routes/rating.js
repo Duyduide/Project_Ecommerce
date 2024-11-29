@@ -7,6 +7,6 @@ router.get('/queryRatingOfProduct/:productId', ratingController.queryRatingOfPro
 router.get('/queryRatingOfUser/:userId', ratingController.queryRatingOfUser);
 router.get('/queryRatingOfOrder/:orderId', verifyAccessToken, ratingController.queryRatingOfOrder);
 router.put('/updateRating/:ratingId', verifyAccessToken, ratingController.updateRating);
-router.delete('/deleteRating/:ratingId', [ verifyAccessToken, isAdmin ], ratingController.deleteRating);
+router.delete('/deleteRating/:ratingId', verifyAccessToken, ratingController.deleteRating);
 
 module.exports = router;
