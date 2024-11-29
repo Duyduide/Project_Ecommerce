@@ -9,9 +9,9 @@ import path from '../../utils/path';
 import Swal from 'sweetalert2';
 
 const CheckOut = () => {
-  const [name, setName] = useState('');
-  const [phone, setPhone] = useState('');
-  const [email, setEmail] = useState('');
+  const [userName, setName] = useState('');
+  const [userPhone, setPhone] = useState('');
+  const [userEmail, setEmail] = useState('');
   const [note, setNote] = useState('');
   const [deliveryAddress, setDeliveryAddress] = useState('');
   const [shippingFee, setShippingFee] = useState(20000);
@@ -27,13 +27,13 @@ const CheckOut = () => {
       try {
         const userResponse = await apiGetCurrent();
         const userId = userResponse.rs?._id;
-        const name = `${userResponse.rs.firstname} ${userResponse.rs.lastname}`;
-        const phone = userResponse.rs?.mobile;
-        const email = userResponse.rs?.email;
+        const userName = `${userResponse.rs.firstname} ${userResponse.rs.lastname}`;
+        const userPhone = userResponse.rs?.mobile;
+        const userEmail = userResponse.rs?.email;
         setUserId(userId);
-        setName(name);
-        setPhone(phone);
-        setEmail(email);
+        setName(userName);
+        setPhone(userPhone);
+        setEmail(userEmail);
 
         if (userId) {
           const cartResponse = await apiFetchUserCart(userId);
@@ -59,7 +59,7 @@ const CheckOut = () => {
 
   // Hàm xác nhận đặt hàng
   const handleOrderConfirmation = async () => {
-    if (!name || !phone || !email || !deliveryAddress) {
+    if (!userName || !userPhone || !userEmail || !deliveryAddress) {
       Swal.fire('Thiếu thông tin', 'Vui lòng điền đầy đủ thông tin thanh toán', 'error');
       return;
     }
@@ -75,6 +75,9 @@ const CheckOut = () => {
         status: 'Processing',
         address: deliveryAddress,
         paymentMethod,
+        name: userName, 
+        email: userEmail,  
+        phone: userPhone,
         paymentStatus: paymentMethod === 'COD' ? 'Pending' : 'Processing',
         productList: cart.map(item => ({
           productId: item.productId,
@@ -133,7 +136,7 @@ const CheckOut = () => {
               id="name"
               placeholder="Nhập họ và tên"
               className="border border-gray-200 shadow-inner outline-none rounded-md p-2 w-full"
-              value={name}
+              value={userName}
               onChange={(e) => setName(e.target.value)}
             />
           </div>
@@ -145,7 +148,7 @@ const CheckOut = () => {
                 id="phone"
                 placeholder="Nhập số điện thoại"
                 className="border border-gray-200 shadow-inner outline-none rounded-md p-2 w-full"
-                value={phone}
+                value={userPhone}
                 onChange={(e) => setPhone(e.target.value)}
               />
             </div>
@@ -156,7 +159,7 @@ const CheckOut = () => {
                 id="email"
                 placeholder="Nhập địa chỉ email"
                 className="border border-gray-200 shadow-inner outline-none rounded-md p-2 w-full"
-                value={email}
+                value={userEmail}
                 onChange={(e) => setEmail(e.target.value)}
               />
             </div>
