@@ -135,7 +135,7 @@ const Navigation = () => {
 
   const handleOrderLookup = () => {
     if (isLoggedIn) {
-      navigate('/order-lookup'); // Điều hướng đến trang tra cứu đơn hàng
+      navigate('/member/order-history'); 
     } else {
       navigate('/login'); // Nếu chưa đăng nhập, điều hướng đến trang đăng nhập
     }

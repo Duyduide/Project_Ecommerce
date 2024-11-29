@@ -297,4 +297,3 @@ const keyboardSchema=new mongoose.Schema({
 const Keyboard = Product.discriminator('keyboard', keyboardSchema);
 
 module.exports = { Product, Phone, Laptop, Tablet, SmartWatch, PowerBank, Headphone, Charger, Case, Mouse, Keyboard };
-
