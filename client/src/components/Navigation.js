@@ -137,13 +137,13 @@ const Navigation = () => {
     if (isLoggedIn) {
       navigate('/member/order-history'); 
     } else {
-      navigate('/login'); // Nếu chưa đăng nhập, điều hướng đến trang đăng nhập
+      navigate(path.LOGIN); // Nếu chưa đăng nhập, điều hướng đến trang đăng nhập
     }
   };
   const handleCartClick = () => {
     if (!isLoggedIn) {
       // Nếu chưa đăng nhập, điều hướng đến trang đăng nhập
-      navigate('/login');
+      navigate(path.LOGIN);
     } else {
       // Nếu đã đăng nhập, điều hướng đến trang giỏ hàng
       navigate('/detail-cart');
