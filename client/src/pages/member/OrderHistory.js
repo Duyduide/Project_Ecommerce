@@ -115,7 +115,7 @@ const OrderHistory = () => {
           key={order._id}
           className="border p-4 mb-4 bg-gray-50 rounded-lg shadow-md"
         >
-       <div className="bg-orange-400 text-white p-2 rounded-md mb-4 flex justify-between items-center">
+       <div className="bg-blue-300 text-white p-2 rounded-md mb-4 flex justify-between items-center">
   <span><strong>Mã đơn hàng: </strong>{order._id}</span>
   <span className="bg-white text-green-700 px-4 py-1 rounded-full mr-6 font-bold">{order.status}</span>
 </div>
@@ -148,7 +148,7 @@ const OrderHistory = () => {
           <div className="flex">
             {/* Nút "Xem chi tiết" */}
             <button
-              className="border-2 border-orange-500 text-red-500 py-2 px-6 rounded-full hover:bg-orange-500 hover:text-white mr-6"
+              className="border-2 border-blue-500 text-blue-500 py-2 px-6 rounded-full hover:bg-cyan-200 hover:text-white mr-6"
               onClick={() => handleOrderClick(order._id)} // Xử lý sự kiện Xem chi tiết
             >
               Xem chi tiết
@@ -156,7 +156,7 @@ const OrderHistory = () => {
 
             {/* Nút "Hỗ trợ" */}
             <button
-              className="border-2 border-orange-500 text-red-500 py-2 px-6 rounded-full hover:bg-orange-500 hover:text-white mr-6"
+              className="border-2 border-blue-500 text-blue-500 py-2 px-6 rounded-full hover:bg-cyan-200 hover:text-white mr-6"
               onClick={() => handleSupportClick(order._id)} // Xử lý sự kiện Hỗ trợ
             >
               Hỗ trợ
@@ -164,7 +164,7 @@ const OrderHistory = () => {
 
             {/* Nút "Mua lại" */}
             <button
-              className="bg-orange-500 text-white py-2 px-6 rounded-full hover:bg-orange-700"
+              className="bg-blue-500 text-white py-2 px-6 rounded-full hover:bg-cyan-200"
               onClick={() => handleReorderClick(order._id)} // Xử lý sự kiện Mua lại
             >
               Mua lại
