@@ -135,15 +135,15 @@ const Navigation = () => {
 
   const handleOrderLookup = () => {
     if (isLoggedIn) {
-      navigate('/order-lookup'); // Điều hướng đến trang tra cứu đơn hàng
+      navigate('member/order-lookup'); // Điều hướng đến trang tra cứu đơn hàng
     } else {
-      navigate('/login'); // Nếu chưa đăng nhập, điều hướng đến trang đăng nhập
+      navigate(path.LOGIN); // Nếu chưa đăng nhập, điều hướng đến trang đăng nhập
     }
   };
   const handleCartClick = () => {
     if (!isLoggedIn) {
       // Nếu chưa đăng nhập, điều hướng đến trang đăng nhập
-      navigate('/login');
+      navigate(path.LOGIN);
     } else {
       // Nếu đã đăng nhập, điều hướng đến trang giỏ hàng
       navigate('/detail-cart');
