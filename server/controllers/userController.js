@@ -199,12 +199,25 @@ const resetPassword = asyncHandler(async (req, res) => {
 
 // Hàm lấy thông tin tất cả người dùng [quyền admin]
 const getUsers = asyncHandler(async (req, res) => {
-    const response = await User.find().select('-refreshToken -password -role')
+    const { page, limit, sortField, sortOrder } = req.query;
+    let sort = {};
+    sort[sortField] = sortOrder === 'ascend' ? 1 : -1;
+    const users = await User.find()
+        .sort(sort)
+        .select('-refreshToken -password')
+        .limit(limit * 1)
+        .skip((page - 1) * limit);
+
+    const totalUsers = await User.countDocuments();
+
     return res.status(200).json({
-        success: response ? true : false,
-        users: response
-    })
-})
+        success: users ? true : false,
+        data: {
+            users,
+            totalUsers
+        }
+    });
+});
 
 module.exports = {
     register,

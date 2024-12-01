@@ -13,7 +13,7 @@ const orderSchema = new mongoose.Schema({
         required: true,
         trim: true,
         default: 'Processing',
-        enum: ['Processing', 'Paid', 'Delivering', 'Delivered', 'Cancelled']
+        enum: ['Processing', 'Delivering', 'Delivered', 'Cancelled']
     },
     address: {
         type: String,
@@ -36,11 +36,6 @@ const orderSchema = new mongoose.Schema({
         trim: true
     },
     phone: {
-        type: String,
-        required: true,
-        trim: true
-    },
-    paymentStatus: {
         type: String,
         required: true,
         trim: true

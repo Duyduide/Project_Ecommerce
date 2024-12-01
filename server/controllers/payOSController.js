@@ -56,7 +56,6 @@ const checkPaymentStatus = asyncHandler(async (req, res) => {
             }
             }
             else if (paymentStatusResponse.status === "PAID") {
-              order.status = "Paid";
               const user = await User.findById(order.createdBy);
               if (user) {
                 user.cart = [];

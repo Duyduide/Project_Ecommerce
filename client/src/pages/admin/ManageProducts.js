@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { apiFetchProductByPage, apiFetchProductByName, apiDeleteProduct } from 'apis'
 import Swal from 'sweetalert2';
 import UpdateProduct from './UpdateProduct'
+import { set } from 'react-hook-form';
 
 const ManageProduct = () => {
     const [products, setProducts] = useState([]);
@@ -11,7 +12,7 @@ const ManageProduct = () => {
     const [sortField, setSortField] = useState('updatedAt');
     const [sortOrder, setSortOrder] = useState('descend');
     const [editProduct, setEditProduct] = useState(null);
-
+    const [totalPages, setTotalPages] = useState(0);
     const pageSize = 10;
 
     useEffect(() => {
@@ -27,6 +28,7 @@ const ManageProduct = () => {
         const response = await apiFetchProductByPage('all', currentPage, sortField, sortOrder, pageSize);
         if (response.success) {
             setProducts(response.productData);
+            setTotalPages(Math.ceil(response.totalProducts / pageSize));
             setLoading(false);
         } 
     };
@@ -212,7 +214,7 @@ const ManageProduct = () => {
                     Trang trước
                 </button>
                 <span className="px-4 py-2">
-                    Trang {currentPage}
+                    Trang {currentPage} của {totalPages}
                 </span>
                 <button
                     className={`px-4 py-2 rounded transition-colors ${
