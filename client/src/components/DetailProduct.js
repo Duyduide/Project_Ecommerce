@@ -231,48 +231,54 @@ const DetailProduct = () => {
   return (
     <>
       <div className="detail-container">
-        <div className="center">
-          <img src={products.imageLink} alt={`${products.name}`} />
-        </div>
-        <div className="name-product">{products.name}</div>
-        <div className="under">
-          <div className="price">
-            <ion-icon className="price-tag-icon" name="pricetags-outline" />
-            <div className="price-self">{products.price.toLocaleString()}đ</div>
+        <div className="product-container">
+          <div className="image-container">
+            <img src={products.imageLink} alt={`${products.name}`} />
           </div>
-        </div>
-        
-        <div className="product-action">
-          <div className="quantity-selector">
-            <label htmlFor="quantity">Số lượng: </label>
-            <div className="quantity-input">
-              <button className="quantity-btn" onClick={decreaseQuantity}>-</button>
-              <input
-                type="number"
-                id="quantity"
-                min="1"
-                value={quantity}
-                onChange={handleQuantityChange}
-              />
-              <button className="quantity-btn" onClick={increaseQuantity}>+</button>
+          
+          <div className="product-info">
+            <div className="name-product">{products.name}</div>
+            <div className="under">
+              <div className="price">
+                <ion-icon className="price-tag-icon" name="pricetags-outline" />
+                <div className="price-self">{products.price.toLocaleString()}đ</div>
+              </div>
+            </div>
+
+            <div className="product-action">
+              <div className="quantity-selector">
+                <label htmlFor="quantity">Số lượng: </label>
+                <div className="quantity-input">
+                  <button className="quantity-btn" onClick={decreaseQuantity}>-</button>
+                  <input
+                    type="text"
+                    id="quantity"
+                    min="1"
+                    value={quantity}
+                    onChange={handleQuantityChange}
+                  />
+                  <button className="quantity-btn" onClick={increaseQuantity}>+</button>
+                </div>
+              </div>
+
+              <button 
+                className="btn-shopping btn-add-to-card" 
+                onClick={() => handleAddToCart(products)}
+              >
+                <ion-icon name="cart-outline" className="shopping-cart" /> Thêm vào giỏ hàng
+              </button>
+
+              {isAdded && (
+                <div className="cart-notification">
+                  <p>Sản phẩm đã được thêm vào giỏ hàng</p>
+                </div>
+              )}
             </div>
           </div>
-
-          <button 
-            className="btn-shopping btn-add-to-card" 
-            onClick={() => handleAddToCart(products)}
-          >
-            <ion-icon name="cart-outline" className="shopping-cart" /> Thêm vào giỏ hàng
-          </button>
-
-          {isAdded && (
-            <div className="cart-notification">
-              <p>Sản phẩm đã được thêm vào giỏ hàng</p>
-            </div>
-          )}
         </div>
+
         
-        <div className="product-describe bg-gray-100 p-4 rounded-md shadow-md my-6 mx-4">
+        <div className="product-describe bg-gray-100 p-4 rounded-md shadow-md mt-2">
           <h2 className="text-lg font-semibold text-gray-800 mb-2">Thông tin mô tả</h2>
           <ul className="list-disc list-inside text-gray-600">
             <p>{products.description}</p>

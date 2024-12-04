@@ -231,7 +231,7 @@ const Navigation = () => {
 
           {/* Login/User Info */}
           {isLoggedIn ? (
-          <Menu as="div" className="relative inline-block text-left">
+          <Menu as="div" className="relative z-10 inline-block text-left">
             <MenuButton className={userButtonClasses}>
               <FaRegUserCircle className="text-xl" />
               <span className="text-sm">{`${current?.firstname}`}</span>
