@@ -238,46 +238,75 @@ const DetailProduct = () => {
           
           <div className="product-info">
             <div className="name-product">{products.name}</div>
-            <div className="under">
-              <div className="price">
-                <ion-icon className="price-tag-icon" name="pricetags-outline" />
-                <div className="price-self">{products.price.toLocaleString()}đ</div>
+            
+            <div className="product-detail-wrapper">
+              {/* Bên trái */}
+              <div className="detail-product-container">
+                <div className="under">
+                  <div className="price">
+                    <ion-icon className="price-tag-icon" name="pricetags-outline" />
+                    <div className="price-self">{products.price.toLocaleString()}đ</div>
+                  </div>
+                </div>
+
+                <div className="product-action">
+                  <div className="quantity-selector">
+                    <label htmlFor="quantity">Số lượng: </label>
+                    <div className="quantity-input">
+                      <button className="quantity-btn" onClick={decreaseQuantity}>-</button>
+                      <input
+                        type="text"
+                        id="quantity"
+                        min="1"
+                        value={quantity}
+                        onChange={handleQuantityChange}
+                      />
+                      <button className="quantity-btn" onClick={increaseQuantity}>+</button>
+                    </div>
+                  </div>
+
+                  <button 
+                    className="btn-shopping btn-add-to-card" 
+                    onClick={() => handleAddToCart(products)}
+                  >
+                    <ion-icon name="cart-outline" className="shopping-cart" /> Thêm vào giỏ hàng
+                  </button>
+
+                  {isAdded && (
+                    <div className="cart-notification">
+                      <p>Sản phẩm đã được thêm vào giỏ hàng</p>
+                    </div>
+                  )}
+                </div>
+              </div>
+              
+              {/* Bên phải */}
+              <div className="extra-content">
+                <div className="promotion-container">
+                  <div className="promotion-header">
+                    <ion-icon name="gift-outline" className="promotion-icon" />
+                    <span className="promotion-title">Khuyến mãi</span>
+                  </div>
+                  <ul className="promotion-list">
+                    <li>Trả góp 0% đến 12 tháng, 0đ trả trước</li>
+                    <li>Trợ giá tối đa đến 2.000.000đ khi thu cũ đổi mới</li>
+                    <li>Giảm thêm 500K khi thanh toán qua Techcombank, VIB, VPBank, MoMo</li>
+                  </ul>
+                </div>
               </div>
             </div>
 
-            <div className="product-action">
-              <div className="quantity-selector">
-                <label htmlFor="quantity">Số lượng: </label>
-                <div className="quantity-input">
-                  <button className="quantity-btn" onClick={decreaseQuantity}>-</button>
-                  <input
-                    type="text"
-                    id="quantity"
-                    min="1"
-                    value={quantity}
-                    onChange={handleQuantityChange}
-                  />
-                  <button className="quantity-btn" onClick={increaseQuantity}>+</button>
-                </div>
-              </div>
-
-              <button 
-                className="btn-shopping btn-add-to-card" 
-                onClick={() => handleAddToCart(products)}
-              >
-                <ion-icon name="cart-outline" className="shopping-cart" /> Thêm vào giỏ hàng
-              </button>
-
-              {isAdded && (
-                <div className="cart-notification">
-                  <p>Sản phẩm đã được thêm vào giỏ hàng</p>
-                </div>
-              )}
+            <div className="flex justify-between items-center gap-4 px-5 py-5">
+              <img src="/1.png" alt="Image 1" className="w-24 h-24 object-cover rounded-lg shadow-md" />
+              <img src="/2.png" alt="Image 2" className="w-24 h-24 object-cover rounded-lg shadow-md" />
+              <img src="/3.png" alt="Image 3" className="w-24 h-24 object-cover rounded-lg shadow-md" />
+              <img src="/4.png" alt="Image 4" className="w-24 h-24 object-cover rounded-lg shadow-md" />
+              <img src="/5.png" alt="Image 5" className="w-24 h-24 object-cover rounded-lg shadow-md" />
             </div>
+
           </div>
         </div>
 
-        
         <div className="product-describe bg-gray-100 p-4 rounded-md shadow-md mt-2">
           <h2 className="text-lg font-semibold text-gray-800 mb-2">Thông tin mô tả</h2>
           <ul className="list-disc list-inside text-gray-600">
@@ -300,19 +329,13 @@ const DetailProduct = () => {
           </div>
         )}
 
-        <div className="extra-info">
-          <div className="info-item">
-            <span>Giao Hàng Siêu Tốc 24H</span>
-          </div>
-          <div className="info-item">
-            <span>Đổi trả 15 ngày</span>
-          </div>
-          <div className="info-item">
-            <span>Đa Dạng Thanh Toán</span>
-          </div>
-          <div className="info-item">
-            <span>Chính Hãng</span>
-          </div>
+        <div className="flex justify-between items-center gap-4 py-4">
+          <img src="/6.png" alt="Anh" className="w-36 h-12 object-cover rounded-lg shadow-md" />
+          <img src="/7.png" alt="Anh" className="w-36 h-12 object-cover rounded-lg shadow-md" />
+          <img src="/8.png" alt="Anh" className="w-36 h-12 object-cover rounded-lg shadow-md" />
+          <img src="/9.png" alt="Anh" className="w-36 h-12 object-cover rounded-lg shadow-md" />
+          <img src="/10.png" alt="Anh" className="w-36 h-12 object-cover rounded-lg shadow-md" />
+          <img src="/11.png" alt="Anh" className="w-50 h-12 object-cover rounded-lg shadow-md" />
         </div>
 
         <div className="related-products">
