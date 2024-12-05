@@ -13,15 +13,7 @@ const OrderHistory = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
-  const handleSupportClick = (orderId) => {
-    console.log("Hỗ trợ cho đơn hàng:", orderId);
-    // Bạn có thể chuyển hướng đến một trang hỗ trợ hoặc mở modal hỗ trợ.
-  };
-  
-  const handleReorderClick = (orderId) => {
-    console.log("Mua lại đơn hàng:", orderId);
-    // Bạn có thể tạo một yêu cầu để mua lại sản phẩm trong đơn hàng này.
-  };
+ 
   const handleOrderClick = async (orderId) => {
     try {
       const details = await fetchOrderDetails(orderId);
@@ -116,10 +108,10 @@ const OrderHistory = () => {
           className="border p-4 mb-4 bg-gray-50 rounded-lg shadow-md"
         >
        <div className="bg-blue-300 text-white p-2 rounded-md mb-4 flex justify-between items-center">
-  <span><strong>Mã đơn hàng: </strong>{order._id}</span>
+       <span className="ml-2"><strong>Mã đơn hàng: </strong>{order.payOSOrderId}</span>
   <span className="bg-white text-green-700 px-4 py-1 rounded-full mr-6 font-bold">{order.status}</span>
 </div>
-          <p className="mb-4"><strong>Thời điểm tạo đơn hàng:</strong> {new Date(order.createdAt).toLocaleDateString("vi-VN")}</p>
+          <p className="mb-4 ml-4"><strong>Thời điểm tạo đơn hàng:</strong> {new Date(order.createdAt).toLocaleDateString("vi-VN")}</p>
   
           {/* Hiển thị sản phẩm từ chi tiết đơn hàng */}
           <div className="p-4 bg-gray-50">
@@ -148,27 +140,12 @@ const OrderHistory = () => {
           <div className="flex">
             {/* Nút "Xem chi tiết" */}
             <button
-              className="border-2 border-blue-500 text-blue-500 py-2 px-6 rounded-full hover:bg-cyan-200 hover:text-white mr-6"
+              className=" ml-5 border-2 border-blue-500 text-blue-500 py-2 px-6 rounded-full hover:bg-cyan-200 hover:text-white mr-6"
               onClick={() => handleOrderClick(order._id)} // Xử lý sự kiện Xem chi tiết
             >
               Xem chi tiết
             </button>
 
-            {/* Nút "Hỗ trợ" */}
-            <button
-              className="border-2 border-blue-500 text-blue-500 py-2 px-6 rounded-full hover:bg-cyan-200 hover:text-white mr-6"
-              onClick={() => handleSupportClick(order._id)} // Xử lý sự kiện Hỗ trợ
-            >
-              Hỗ trợ
-            </button>
-
-            {/* Nút "Mua lại" */}
-            <button
-              className="bg-blue-500 text-white py-2 px-6 rounded-full hover:bg-cyan-200"
-              onClick={() => handleReorderClick(order._id)} // Xử lý sự kiện Mua lại
-            >
-              Mua lại
-            </button>
           </div>
 
           <p className="font-bold mr-5">{order.totalPrice ? order.totalPrice.toLocaleString() : "Chưa có giá"}đ</p>

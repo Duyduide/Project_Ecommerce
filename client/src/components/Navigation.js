@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { ChevronDown } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
@@ -15,57 +15,25 @@ import { IoMdSearch } from "react-icons/io";
 import { IoCartOutline } from "react-icons/io5";
 import { RiAdminFill } from "react-icons/ri";
 import { useSearchParams } from 'react-router-dom';
+import {  MdLaptopWindows   , MdMouse} from "react-icons/md";
+ import { IoIosPhonePortrait } from "react-icons/io";
+ import { FaTabletAlt, FaHeadphonesAlt, FaKeyboard } from "react-icons/fa";
+ import { IoBatteryCharging } from "react-icons/io5";
+ import { AiOutlineUsb } from "react-icons/ai";
+ import { BiSolidDevices } from "react-icons/bi";
+  const categories = [
+    { name: 'Điện thoại', path: '/phone', icon: <IoIosPhonePortrait className="text-blue-500"/> },
+    { name: 'Máy tính xách tay', path: '/laptop' ,icon: <MdLaptopWindows className="text-blue-500"/> },
+    { name: 'Máy tính bảng', path: '/tablet', icon: <FaTabletAlt  className="text-blue-500"/> },
+    { name: 'Đồng hồ thông minh', path: '/smartwatch', icon: <MdLaptopWindows className="text-blue-500"/> },
+    { name: 'Pin dự phòng', path: '/powerback', icon: <IoBatteryCharging  className="text-blue-500"/> },
+    { name: 'Tai nghe', path: '/headphone', icon: <FaHeadphonesAlt  className="text-blue-500"/> },
+    { name: 'Bộ sạc', path: '/charger' ,icon: <AiOutlineUsb className="text-blue-500"/> },
+    { name: 'Ốp bảo vệ', path: '/case', icon: <BiSolidDevices className="text-blue-500" /> },
 
-const categories = [
-  {
-    name: 'Điện thoại, Tablet',
-    subCategories: ['iPhone', 'Samsung', 'Oppo', 'Xiaomi', 'iPad', 'Samsung Tab']
-  },
-  {
-    name: 'Laptop',
-    subCategories: ['MacBook', 'Dell', 'HP', 'Lenovo', 'Asus', 'Gaming Laptop']
-  },
-  {
-    name: 'Âm thanh',
-    subCategories: ['Tai nghe', 'Loa bluetooth', 'Soundbar', 'Micro']
-  },
-  {
-    name: 'Đồng hồ, Camera',
-    subCategories: ['Apple Watch', 'Samsung Watch', 'Camera DSLR', 'Camera Mirrorless']
-  },
-  {
-    name: 'Đồ gia dụng',
-    subCategories: ['Nồi cơm điện', 'Máy lọc không khí', 'Quạt điện', 'Máy hút bụi']
-  },
-  {
-    name: 'Phụ kiện',
-    subCategories: ['Sạc dự phòng', 'Cáp sạc', 'Ốp lưng', 'Bàn phím']
-  },
-  {
-    name: 'PC, Màn hình, Máy in',
-    subCategories: ['PC Gaming', 'PC Văn phòng', 'Màn hình Gaming', 'Máy in']
-  },
-  {
-    name: 'Tivi',
-    subCategories: ['Samsung', 'LG', 'Sony', 'TCL']
-  },
-  {
-    name: 'Thu cũ đổi mới',
-    subCategories: ['Thu iPhone cũ', 'Thu iPad cũ', 'Thu laptop cũ']
-  },
-  {
-    name: 'Hàng cũ',
-    subCategories: ['iPhone cũ', 'iPad cũ', 'Laptop cũ', 'Đồng hồ cũ']
-  },
-  {
-    name: 'Khuyến mãi',
-    subCategories: ['Flash Sale', 'Giảm sốc', 'Ưu đãi', 'Combo tiết kiệm']
-  },
-  {
-    name: 'Tin công nghệ',
-    subCategories: ['Tin tức', 'Đánh giá', 'Mẹo hay', 'Thủ thuật']
-  }
-];
+    { name: 'Chuột', path: '/mouse' ,icon: <MdMouse className="text-blue-500"/>},
+    { name: 'Bàn phím', path: '/keyboard', icon: <FaKeyboard className="text-blue-500"/> }
+  ];
 
 const Navigation = () => {
   const [showProducts, setShowProducts] = useState(false);
@@ -73,11 +41,10 @@ const Navigation = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const navigate = useNavigate();  
   const dispatch = useDispatch();
-
+  const menuRef = useRef(null); // Tạo tham chiếu đến menu
   const { isLoggedIn, current }  = useSelector(state => state.user)
   console.log(current)
   const [searchParams, setSearchParams] = useSearchParams(); // Use searchParams to manage query parameters in URL
-  
   useEffect(() => { 
     const setTimeoutId = setTimeout(() => { 
       if (isLoggedIn) dispatch(getCurrent())
@@ -102,9 +69,36 @@ const Navigation = () => {
     }
   };
 
-  const handleCategoryClick = (subCategory) => {
-    navigate(`/category/${subCategory}`); // Điều hướng đến trang sản phẩm của danh mục con
+  const toggleProducts = () => {
+    setShowProducts(!showProducts);
   };
+
+  const handleCategoryClick = (path) =>  {
+    navigate(path);
+  window.location.reload(); // Tải lại trang
+
+    setShowProducts(false); // Đóng menu sau khi chọn
+  };
+
+  const handleClickOutside = (event) => {
+    // Nếu click xảy ra bên ngoài menu, ẩn menu
+    if (menuRef.current && !menuRef.current.contains(event.target)) {
+      setShowProducts(false);
+    }
+  };
+
+  useEffect(() => {
+    if (showProducts) {
+      document.addEventListener('mousedown', handleClickOutside);
+    } else {
+      document.removeEventListener('mousedown', handleClickOutside);
+    }
+
+    // Dọn dẹp sự kiện khi component unmount
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [showProducts]);
 
   const handleLogin = () => {
     navigate(path.LOGIN); // Điều hướng đến trang đăng nhập
@@ -138,53 +132,34 @@ const Navigation = () => {
         <Link to={path.HOME} className="hover:text-gray-200">
           Trang chủ
         </Link>
+
           {/* Products Dropdown */}
-          <div className="relative">
+          <div className="relative" ref={menuRef}>
             <button
               className="flex items-center space-x-1 hover:text-gray-200"
-              onMouseEnter={() => setShowProducts(true)}
-              onClick={() => setShowProducts(!showProducts)}
+              onClick={toggleProducts}
             >
               <span>Sản phẩm</span>
               <ChevronDown size={20} />
             </button>
-  
+
             {/* Products Menu */}
-            {showProducts && (
-              <div
-                className="absolute left-0 mt-2 w-64 bg-white rounded-md shadow-lg z-50"
-                onMouseLeave={() => {
-                  setShowProducts(false);
-                  setActiveCategory(null);
-                }}
-              >
-                {categories.map((category, index) => (
-                  <div
-                    key={index}
-                    className="relative"
-                    onMouseEnter={() => setActiveCategory(index)}
-                  >
-                    <div className="px-4 py-2 text-gray-800 hover:bg-gray-100 cursor-pointer">
-                      {category.name}
-                    </div>
-                    {/* Subcategories */}
-                    {activeCategory === index && (
-                      <div className="absolute left-full top-0 w-64 bg-white rounded-md shadow-lg">
-                        {category.subCategories.map((sub, subIndex) => (
-                          <div
-                            key={subIndex}
-                            className="px-4 py-2 text-gray-800 hover:bg-gray-100 cursor-pointer"
-                            onClick={() => handleCategoryClick(sub)}
-                          >
-                            {sub}
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                ))}
-              </div>
-            )}
+          {showProducts && (
+            <div className="absolute left-0 mt-2 w-64 bg-white rounded-md shadow-lg z-50">
+              {categories.map((category, index) => (
+  <div
+    key={index}
+    className="px-4 py-2 text-gray-800 hover:bg-gray-100 cursor-pointer flex items-center space-x-2"
+    onClick={() => handleCategoryClick(category.path)}
+  >
+    {/* Biểu tượng */}
+    <span className="text-xl">{category.icon}</span> {/* Hiển thị icon */}
+    {/* Tên danh mục */}
+    <span>{category.name}</span>
+  </div>
+))}
+            </div>
+          )}
           </div>
   
           {/* Order Lookup */}

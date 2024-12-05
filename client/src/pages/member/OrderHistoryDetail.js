@@ -32,7 +32,7 @@ const OrderHistoryDetail = () => {
 
   return (
     <div className="p-6 font-sans">
-      <h1 className="text-2xl font-bold mb-4 pl-4 text-blue-600">Thông tin đơn hàng #{order.orderId || orderId}</h1>
+      <h1 className="text-2xl font-bold mb-4 pl-4 text-blue-600">Thông tin đơn hàng #{order.payOSOrderId || orderId}</h1>
       <div className="bg-white shadow-lg rounded-lg p-6">
         <div className="mb-4 space-y-2">
           <p><strong>Ngày đặt hàng:</strong> {new Date(order.createdAt).toLocaleDateString("vi-VN")}</p>
@@ -43,27 +43,7 @@ const OrderHistoryDetail = () => {
           <p><strong>Địa chỉ giao hàng:</strong> {order.address || 'Không có thông tin'}</p>
         </div>
   
-        {/* Ba nút hỗ trợ */}
-        <div className="mt-4 flex space-x-4">
-          <button
-            className="px-6 py-2 bg-white-500 border border-black text-black rounded-full hover:bg-cyan-100"
-            onClick={() => alert('Liên hệ hỗ trợ')}
-          >
-            Cần hỗ trợ
-          </button>
-          <button
-            className="px-6 py-2 bg-black text-white rounded-full hover:bg-cyan-200"
-            onClick={() => alert('Mua lại sản phẩm')}
-          >
-            Mua lại
-          </button>
-          <button
-            className="px-6 py-2 bg-black text-white rounded-full hover:bg-cyan-200"
-            onClick={() => alert('Đánh giá sản phẩm')}
-          >
-            Đánh giá
-          </button>
-        </div>
+       
       </div>
   
       {/* Bảng thông tin sản phẩm */}
