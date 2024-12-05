@@ -7,7 +7,6 @@ import { getCurrent } from '../store/user/asyncActions'
 import { useSelector, useDispatch } from 'react-redux'
 import { IoLogOut } from "react-icons/io5";
 import { MdManageAccounts } from "react-icons/md";
-//import { LuMenuSquare } from "react-icons/lu";
 import { FaRegUserCircle } from "react-icons/fa";
 import { logout } from '../store/user/userSlice'
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
@@ -15,8 +14,8 @@ import { IoChatbubbleEllipsesOutline } from "react-icons/io5";
 import { IoMdSearch } from "react-icons/io";
 import { IoCartOutline } from "react-icons/io5";
 import { RiAdminFill } from "react-icons/ri";
-import { apiFetchUserCart } from '../apis/cart'
 import { useSearchParams } from 'react-router-dom';
+
 const categories = [
   {
     name: 'Điện thoại, Tablet',
@@ -72,15 +71,19 @@ const Navigation = () => {
   const [showProducts, setShowProducts] = useState(false);
   const [activeCategory, setActiveCategory] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
-  const navigate = useNavigate(); 
-  const [cartCount, setCartCount] = useState(0); 
+  const navigate = useNavigate();  
   const dispatch = useDispatch();
 
   const { isLoggedIn, current }  = useSelector(state => state.user)
+  console.log(current)
   const [searchParams, setSearchParams] = useSearchParams(); // Use searchParams to manage query parameters in URL
+  
   useEffect(() => { 
-    if (isLoggedIn) {
-      dispatch(getCurrent())
+    const setTimeoutId = setTimeout(() => { 
+      if (isLoggedIn) dispatch(getCurrent())
+    }, 300)
+    return () => { 
+      clearTimeout(setTimeoutId)
     }
   }, [dispatch, isLoggedIn])
 
@@ -90,31 +93,6 @@ const Navigation = () => {
       setSearchQuery(query); // If a query exists, populate the searchQuery state
     }
   }, [searchParams]);
-  const updateCartCount = async () => {
-    try {
-        const response = await apiFetchUserCart(current._id);
-
-        if (response.success) {
-            const cartItems = response.cartData; 
-            const totalQuantity = cartItems.reduce((total, item) => total + item.quantity, 0);
-            setCartCount(totalQuantity); 
-        } else {
-            setCartCount(0); 
-        }
-    } catch (error) {
-        console.error("Error fetching user cart:", error);
-        setCartCount(0); 
-    }
-  };  
-    //setCartCount(storedCart.length); 
-
-  useEffect(() => {
-    updateCartCount(); 
-    window.addEventListener('storage', updateCartCount);
-    return () => {
-      window.removeEventListener('storage', updateCartCount); 
-    };
-  }, []); 
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -123,7 +101,6 @@ const Navigation = () => {
       navigate(`/searchResult?query=${encodeURIComponent(searchQuery)}`);
     }
   };
-
 
   const handleCategoryClick = (subCategory) => {
     navigate(`/category/${subCategory}`); // Điều hướng đến trang sản phẩm của danh mục con
@@ -149,12 +126,7 @@ const Navigation = () => {
       navigate('/detail-cart');
     }
   };
-  // useEffect(() => {
-  //   window.addEventListener('storage', updateCartCount); // Lắng nghe thay đổi trong localStorage
-  //   return () => {
-  //     window.removeEventListener('storage', updateCartCount); // Hủy sự kiện khi component bị hủy
-  //   };
-  // }, []);
+
   const userButtonClasses = 
   "flex items-center gap-2 rounded-md bg-slate-500 bg-opacity-20 px-1 py-2 hover:text-gray-200 text-xs";
   return (
@@ -162,12 +134,10 @@ const Navigation = () => {
       {/* Khung giới hạn nội dung thanh điều hướng */}
       <div className="w-main h-[48px] py-2 mx-auto flex items-center justify-between">
         <div className="flex items-center space-x-8">
-
            {/* Trang chủ */}
         <Link to={path.HOME} className="hover:text-gray-200">
           Trang chủ
         </Link>
-        
           {/* Products Dropdown */}
           <div className="relative">
             <button
@@ -197,7 +167,6 @@ const Navigation = () => {
                     <div className="px-4 py-2 text-gray-800 hover:bg-gray-100 cursor-pointer">
                       {category.name}
                     </div>
-  
                     {/* Subcategories */}
                     {activeCategory === index && (
                       <div className="absolute left-full top-0 w-64 bg-white rounded-md shadow-lg">
@@ -228,45 +197,41 @@ const Navigation = () => {
         </div>
   
      {/* Căn giữa Search Bar */}
-<div className="flex items-center justify-center flex-grow">
-  <div className="flex items-center border border-white rounded-full bg-white p-1 space-x-2">
-    {/* Kính lúp và Search Bar */}
-    <input
-      type="search"
-      placeholder="Tìm kiếm sản phẩm"
-      className="px-4 py-1 text-gray-800 w-72 rounded-full outline-none"
-      value={searchQuery}
-      onChange={(e) => setSearchQuery(e.target.value)}
-      onKeyDown={(e) => e.key === 'Enter' && handleSearch(e)}
-    />
-    <IoMdSearch
-      size={20}
-      className="cursor-pointer text-gray-800"
-      onClick={(e) => handleSearch(e)}
-    />
-          </div>
+      <div className="flex items-center justify-center flex-grow">
+        <div className="flex items-center border border-white rounded-full bg-white p-1 space-x-2">
+          {/* Kính lúp và Search Bar */}
+            <input
+              placeholder="Tìm kiếm sản phẩm"
+              className="px-4 py-1 text-gray-800 w-72 rounded-full outline-none"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              onKeyDown={(e) => e.key === 'Enter' && handleSearch(e)}
+            />
+            <IoMdSearch
+              size={20}
+              className="cursor-pointer text-gray-800"
+              onClick={(e) => handleSearch(e)}
+            />
         </div>
-  
+      </div>
+    
         <div className="flex items-center space-x-8">
-          {/*Chat ngay*/}
-          
-        <div className="flex items-center space-x-2 cursor-pointer hover:text-gray-200">
-  <IoChatbubbleEllipsesOutline color='red' size={20} className="text--800 h-6" />
-  <span className="text-base">Liên hệ</span> {/* Sử dụng text-base thay vì text-sm */}
-</div>
-
-         
+            {/*Chat ngay*/}
+          <div className="flex items-center space-x-2 cursor-pointer hover:text-gray-200">
+            <IoChatbubbleEllipsesOutline color='red' size={20} className="text--800 h-6" />
+            <span className="text-base">Liên hệ</span> {/* Sử dụng text-base thay vì text-sm */}
+          </div>
           {/* Cart */}
           <div className="relative cursor-pointer hover:text-gray-200" onClick={handleCartClick}>
             <IoCartOutline size={25}/>
             <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
-              {cartCount} {/* Hiển thị số sản phẩm */}
+              { isLoggedIn ? current?.cart?.reduce((total, item) => total + item.quantity, 0) : 0 }
             </span>
           </div>
 
           {/* Login/User Info */}
           {isLoggedIn ? (
-          <Menu as="div" className="relative inline-block text-left">
+          <Menu as="div" className="relative z-10 inline-block text-left">
             <MenuButton className={userButtonClasses}>
               <FaRegUserCircle className="text-xl" />
               <span className="text-sm">{`${current?.firstname}`}</span>

@@ -34,18 +34,17 @@ export const Product = () => {
   
   return (
     <>
-      <div className="w-full p-6 mt-6">
+      <div className="w-full mb-6">
         {error && <p className="text-red-500 text-center font-bold mb-5">Error: {error}</p>}
 
         <div className="mb-6">
           <BannerProduct />
-        </div>
+        </div> 
 
-        <div className="mb-48">
+        <div className="mb-48 pt-6">
           <YourNeed />
         </div>
         
-
         <div className="grid grid-cols-5 gap-6 ">
           {products.length === 0 ? (
             <p className="text-center text-lg font-medium col-span-full">Chưa có sản phẩm</p>

@@ -31,7 +31,7 @@ const ProductHeadphone = () => {
   };
 
   return (
-    <div className="w-full p-6">
+    <div className="w-full pt-6">
       <h1 className="text-left text-2xl font-bold uppercase mb-5">Tai nghe</h1>
       {error && <p className="text-red-500 text-center font-bold mb-5">Error: {error}</p>}
       <div className="grid grid-cols-5 gap-6">

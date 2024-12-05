@@ -23,7 +23,7 @@ export const apiCancelOrder = (orderID) => axios({
 
 //chỉ dành cho admin
 
-export const apiQueryAllOrders = (page=1, limit=20, sortField= 'createdAt',sortOrder = 'descend' ) => axios({
+export const apiQueryAllOrders = (page=1, limit=20, sortField= 'createdAt',sortOrder = 'descend') => axios({
     url: '/order/queryAllOrders', 
     method:'get',
     params: {page, limit, sortField, sortOrder}
@@ -38,4 +38,9 @@ export const apiUpdateOrder = (orderID, orderData) => axios({
 export const apiDeleteOrder = (orderID) => axios({
     url: '/order/deleteOrder/' + orderID, 
     method:'delete'
+})
+
+export const apiGetOrderById = (orderID) => axios({
+    url: '/order/queryOrderById/' + orderID,
+    method: 'get'
 })

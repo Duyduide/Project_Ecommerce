@@ -28,3 +28,18 @@ export const apiGetCurrent = () => axios({
     url: '/user/current', 
     method:'get',
 })
+export const apiGetAllUsers = (page=1, limit=10, sortField= 'createdAt',sortOrder = 'descend' ) => axios({
+    url: '/user', 
+    method:'get',
+    params: {page, limit, sortField, sortOrder}
+})
+export const apiDeleteUser = (userID) => axios({
+    url: '/user/', 
+    params: {_id: userID},
+    method:'delete',
+})
+export const apiUpdateUser = (userId ,data) => axios({
+    url: '/user/' + userId, 
+    method:'put',
+    data
+})

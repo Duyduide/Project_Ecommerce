@@ -5,7 +5,6 @@ import { apiGetCurrent } from '../../apis/user';
 import { apiFetchUserCart, apiDeleteAllProductsFromUserCart } from '../../apis/cart';
 import { apiCreateOrder } from '../../apis/order';
 import { apiCreatePayment } from '../../apis/payOS';
-import path from '../../utils/path';
 import Swal from 'sweetalert2';
 
 const CheckOut = () => {
@@ -78,29 +77,22 @@ const CheckOut = () => {
         name: userName, 
         email: userEmail,  
         phone: userPhone,
-        paymentStatus: paymentMethod === 'COD' ? 'Pending' : 'Processing',
         productList: cart.map(item => ({
           productId: item.productId,
           quantity: item.quantity
         })),
+        payOSOrderId: Number(String(Date.now()).slice(-6)),
         createdBy: userId,
       };
-
-      if (paymentMethod === 'bank'){
-        orderData.payOSOrderId = Number(String(Date.now()).slice(-6)); // Tạo mã đơn hàng ngẫu nhiên
-      }
-      else {orderData.payOSOrderId = '';}
-
       const response = await apiCreateOrder( {orderData} );
-
+      
       if (response.success) {
         if (paymentMethod === 'bank') {
-          const paymentLink=await apiCreatePayment({
+          const paymentLink = await apiCreatePayment({
             price: totalPrice,
             payOSCode: orderData.payOSOrderId
           })
-          
-          window.location.href=paymentLink.url;
+          window.location.href = paymentLink.url;
         } else {
           Swal.fire('Thành công', 'Đặt hàng thành công', 'success').then(async () => {
               // Gọi API để xóa giỏ hàng
@@ -250,21 +242,21 @@ const CheckOut = () => {
                 <input
                   type="radio"
                   name="payment"
-                  value="bank"
+                  value="PayOs"
                   checked={paymentMethod === 'bank'}
                   onChange={() => setPaymentMethod('bank')}
                 />
                 Thanh toán qua
                 <img
                   src="https://payos.vn/docs/img/logo.svg" 
-                  alt="Ví MoMo"
+                  alt="Cổng thanh toán PayOs"
                   className="w-9 h-6" 
                 />
               </label>
             </div>
           </div>
 
-          <button onClick={handleOrderConfirmation} className="bg-blue-600 text-white p-3 rounded-md mt-4 w-full">
+          <button onClick={() => { handleOrderConfirmation() } } className="bg-blue-600 text-white p-3 rounded-md mt-4 w-full">
             XÁC NHẬN ĐẶT HÀNG
           </button>
         </div>

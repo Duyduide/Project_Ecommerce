@@ -22,8 +22,10 @@ const queryProductMain = async (req, res) => {
         sort[sortField] = sortOrder === 'ascend' ? 1 : -1;
         if (category==='all') {
             const products = await Product.find().sort(sort).skip((page - 1) * pageSize).limit(pageSize);
+            const totalProducts = await Product.countDocuments();
             res.status(200).json({
                 success: products? true: false,
+                totalProducts: totalProducts ? totalProducts : 0,
                 productData: products? products: 'Cannot get products'
             });
         }

@@ -31,9 +31,10 @@ const queryAllOrders = async (req, res) => {
         sort[sortField] = sortOrder === 'ascend' ? 1 : -1;
 
         const orders = await Order.find().sort(sort).limit(limit * 1).skip((page - 1) * limit);
-
+        const totalOrders = await Order.countDocuments();
         res.status(200).json({
             success: orders? true : false,
+            totalOrders: totalOrders,
             orderData: orders? orders : 'Cannot get order'
         });
     } catch (error) {
