@@ -27,14 +27,14 @@ const BannerProduct = () => {
   return (
     <div className="flex gap-4 mb-12">
       {/* Slider 1 */}
-      <div className="w-1/2">
+      <div className="w-1/2 overflow-hidden">
         <Slider {...settings}>
           {banners.map((banner) => (
             <div key={banner.id}>
               <img
                 src={banner.image}
                 alt={banner.alt}
-                className="object-contain rounded-lg shadow-md"
+                className="object-cover rounded-lg shadow-md"
               />
             </div>
           ))}
@@ -42,14 +42,14 @@ const BannerProduct = () => {
       </div>
   
       {/* Slider 2 */}
-      <div className="w-1/2">
+      <div className="w-1/2 overflow-hidden">
         <Slider {...settings}>
           {secondBanners.map((banner) => (
             <div key={banner.id}>
               <img
                 src={banner.image}
                 alt={banner.alt}
-                className="object-contain rounded-lg shadow-md"
+                className="object-cover rounded-lg shadow-md"
               />
             </div>
           ))}

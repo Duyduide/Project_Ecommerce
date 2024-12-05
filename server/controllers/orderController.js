@@ -61,14 +61,22 @@ const queryOrderById = async (req, res) => {
     try {
         const { orderId } = req.params;
 
-        const order = await Order.find({ payOSOrderId: orderId });
+        // Lấy đơn hàng và populate thông tin sản phẩm từ mô hình Product
+        const order = await Order.findById(orderId)
+            .populate({
+                path: 'productList.productId',  // Tên trường trong productList chứa productId
+                select: 'name price imageLink'       // Chỉ chọn các trường cần thiết của Product
+            });
+
+        if (!order) {
+            return res.status(404).json({ success: false, orderData: 'Order not found' });
+        }
 
         res.status(200).json({
-            success: order? true : false,
-            orderData: order? order : 'Cannot get order'
+            success: true,
+            orderData: order
         });
-    }
-    catch (error) {
+    } catch (error) {
         res.status(500).json({ success: false, orderData: error.message });
     }
 };

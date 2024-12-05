@@ -1,7 +1,7 @@
 .YourNeed {
-    margin: -120px 0; 
-    padding: 10px; 
-  }
+  margin: -120px 0; 
+  padding: 0px; 
+}
 
 .chapter {
   position: relative;
@@ -22,7 +22,6 @@
   z-index: 1;
   height: 50px;
   background-color: #fff;
-  /* border: #b4b4b4 solid 1px; */
   text-align: center;
   font-size: 22px;
   font-weight: 900;
@@ -31,11 +30,15 @@
 
 .YN-container {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between; 
+  padding: 0; 
+  margin: 0; 
+  width: 100%; 
+  box-sizing: border-box; 
 }
 
 .YN-item {
-  width: 18%;
+  width: calc((100% - (4 * 10px)) / 5); 
   max-height: 45vh;
   border-radius: 20px;
   background-color: #fff;
@@ -43,6 +46,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin: 0; 
 }
 
 .YN-item:hover {

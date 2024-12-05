@@ -24,6 +24,7 @@ const Home = () => {
       <div className='w-main flex flex-col py-10'>
         <YourNeed />
       </div>
+      
       <div className='w-main flex flex-col py-10 mt-10'>
         <ProductPhone />
         <ProductLaptop />
