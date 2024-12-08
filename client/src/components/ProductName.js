@@ -9,7 +9,6 @@ const SearchResult = () => {
   const navigate = useNavigate();
   // Get search query from URL
   const searchQuery = searchParams.get('query') || '';
-  console.log('Search Query from URL:', searchQuery); // Log giá trị của searchQuery lấy từ URL
   const fetchProducts = async () => {
     if (!searchQuery) return;
     
@@ -42,20 +41,20 @@ const SearchResult = () => {
 
   return (
     <div className="w-full p-6">
-      <h1 className="text-left text-2xl font-bold uppercase mb-5">
+      <h1 className="mb-5 text-2xl font-bold text-left uppercase">
         Kết quả tìm kiếm cho: "{searchQuery}"
       </h1>
-      {error && <p className="text-red-500 text-center font-bold mb-5">Error: {error}</p>}
+      {error && <p className="mb-5 font-bold text-center text-red-500">Error: {error}</p>}
       <div className="grid grid-cols-5 gap-6">
         {products.length === 0 ? (
-          <p className="text-center text-lg font-medium col-span-full">
+          <p className="text-lg font-medium text-center col-span-full">
             Không có sản phẩm nào phù hợp với "{searchQuery}"
           </p>
         ) : (
           products.map((product) => (
             <div
               key={product._id}
-              className="bg-white border border-gray-200 rounded-lg shadow-md hover:shadow-lg hover:-translate-y-2 transition-transform cursor-pointer hover:border-gray-400 relative"
+              className="relative transition-transform bg-white border border-gray-200 rounded-lg shadow-md cursor-pointer hover:shadow-lg hover:-translate-y-2 hover:border-gray-400"
               onClick={() => handleProductClick(product._id)}
             >
               {/* Rest of the product card remains the same */}
@@ -63,20 +62,20 @@ const SearchResult = () => {
                 <img
                   src={product.imageLink}
                   alt={product.name}
-                  className="w-48 h-48 object-contain bg-white rounded-md"
+                  className="object-contain w-48 h-48 bg-white rounded-md"
                 />
               </div>
               <div className="p-4">
-                <h2 className="text-lg font-semibold mb-2 h-12 overflow-hidden uppercase">
+                <h2 className="h-12 mb-2 overflow-hidden text-lg font-semibold uppercase">
                   {product.name}
                 </h2>
-                <p className="text-red-600 text-xl font-extrabold mb-2">
+                <p className="mb-2 text-xl font-extrabold text-red-600">
                   {product.price.toLocaleString()}đ
                 </p>
-                <p className="text-lg text-gray-700 font-bold uppercase mb-2">
+                <p className="mb-2 text-lg font-bold text-gray-700 uppercase">
                   <span className="text-lg text-gray-600">{product.origin.toUpperCase()}</span>
                 </p>
-                <p className="text-yellow-500 text-base font-medium">
+                <p className="text-base font-medium text-yellow-500">
                   {renderStars(product.rating || 0)}
                 </p>
               </div>

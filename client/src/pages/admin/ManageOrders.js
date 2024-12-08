@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { apiQueryAllOrders, apiUpdateOrder, apiGetOrderById, apiDeleteOrder } from 'apis';
+import { apiQueryAllOrders, apiUpdateOrder, apiDeleteOrder, apiGetOrdersByPayOSOrderId } from 'apis';
 import Swal from 'sweetalert2';
 
 const ManageOrders = () => {
@@ -157,14 +157,13 @@ const ManageOrders = () => {
 
         setLoading(true);
         try {
-            const response = await apiGetOrderById(searchTerm);
+            const response = await apiGetOrdersByPayOSOrderId(searchTerm);
             if (response.success) {
                 setOrders(response.orderData);
             } else {
                 setOrders([]);
             }
         } catch (error) {
-            console.error('Error searching order:', error);
             setOrders([]);
         } finally {
             setLoading(false);
@@ -209,13 +208,12 @@ const ManageOrders = () => {
     };
 
     return (
-        <div className="w-main flex relative flex-col py-10 container mx-auto p-6">
+        <div className="container relative flex flex-col p-6 py-10 mx-auto w-main">
             {/* Search Bar */}
             <div className="mb-6">
                 <input
-                    type="text"
-                    placeholder="Tìm kiếm đơn hàng..."
-                    className="w-full px-4 py-2 border-2 border-sky-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    placeholder="Tìm kiếm đơn hàng theo mã đơn hàng..."
+                    className="w-full px-4 py-2 border-2 rounded-lg border-sky-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                     onKeyDown={handleKeyDown}
@@ -226,7 +224,7 @@ const ManageOrders = () => {
             <div className="overflow-x-auto bg-white rounded-lg shadow">
                 <table className="min-w-full table-auto">
                     <thead>
-                        <tr className="bg-sky-800 text-white">
+                        <tr className="text-white bg-sky-800">
                             <th className="px-4 py-3 text-left">Mã đơn hàng</th>
                             <th className="px-4 py-3 text-left">Khách hàng</th>
                             <th className="px-6 py-3 text-right">Tổng tiền</th>
@@ -259,7 +257,7 @@ const ManageOrders = () => {
                                         <div>{order.name}</div>
                                         <div className="text-sm text-gray-500">{order.email}</div>
                                     </td>
-                                    <td className="px-6 py-4 text-right font-medium">
+                                    <td className="px-6 py-4 font-medium text-right">
                                             {new Intl.NumberFormat('vi-VN', {
                                                 style: 'currency',
                                                 currency: 'VND'
@@ -292,16 +290,16 @@ const ManageOrders = () => {
                                     <td className="px-6 py-4 text-center whitespace-nowrap">
                                         {new Date(order.createdAt).toLocaleDateString('vi-VN')}
                                     </td>
-                                    <td className=" px-6 py-4">
+                                    <td className="px-6 py-4 ">
                                         <div className='flex flex-col space-y-2'>
                                             <button
-                                                className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 transition-colors"
+                                                className="px-3 py-1 text-white transition-colors bg-blue-500 rounded hover:bg-blue-600"
                                                 onClick={() => { handleUpdate(order._id) }}
                                             >
                                                 Sửa
                                             </button>
                                             <button
-                                                className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 transition-colors"
+                                                className="px-3 py-1 text-white transition-colors bg-red-500 rounded hover:bg-red-600"
                                                 onClick={() => { handleDelete(order._id) }}
                                             >
                                                 Xóa
@@ -316,7 +314,7 @@ const ManageOrders = () => {
             </div>
 
             {/* Pagination */}
-            <div className="mt-6 flex justify-center space-x-2">
+            <div className="flex justify-center mt-6 space-x-2">
                 <button
                     className={`px-4 py-2 rounded transition-colors ${
                         currentPage === 1 

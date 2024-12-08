@@ -16,6 +16,11 @@ export const apiQueryOrderById = (orderID) => axios({
     method:'get'
 })
 
+export const apiGetOrdersByPayOSOrderId = (payOSOrderId) => axios({
+    url: '/order/getOrdersByPayOSOrderId/' + payOSOrderId, 
+    method:'get'
+})
+
 export const apiCancelOrder = (orderID) => axios({
     url: '/order/cancelOrder/' + orderID, 
     method:'put'

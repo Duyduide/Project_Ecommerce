@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect } from 'react'
-import { InputField, Button, Loading } from 'components'
+import { InputField, Button } from 'components'
 import { apiRegister, apiLogin, apiForgotPassword, apiFinalRegister } from 'apis/user'
 import Swal from 'sweetalert2'
 import { useNavigate, Link } from 'react-router-dom'
@@ -55,9 +55,7 @@ const Login = () => {
     const invalids = isRegister ? validate(payLoad, setInvalidFields) : validate(data, setInvalidFields);
     if(invalids === 0) {
       if(isRegister) {
-        
-        const response = await apiRegister(payLoad);
-       
+        const response = await apiRegister(payLoad);       
         if(response.success) {
           setIsVerifiedEmail(true)
         }
@@ -71,10 +69,9 @@ const Login = () => {
           dispatch(login({
             isLoggedIn: true,
             token: response.accessToken,
-            userData: response.userData
+            current: response.userData
           }))
           Navigate(`/${path.HOME}`);
-          Navigate(0);
         }
         else {
           Swal.fire('Đăng nhập thất bại' , response.mes, 'error');
@@ -97,19 +94,19 @@ const Login = () => {
     setToken('');
   }
   return (
-    <div className='w-screen h-screen relative'>
+    <div className='relative w-screen h-screen'>
       {isVerifiedEmail && 
-        <div className='absolute top-0 left-0 right-0 bottom-0 bg-overlay z-50 flex flex-col justify-center items-center'>
+        <div className='absolute top-0 bottom-0 left-0 right-0 z-50 flex flex-col items-center justify-center bg-overlay'>
           <div className='bg-white w-[500px] rounded-md p-8'>
             <h4>Chúng tôi đã gửi mã xác thực tài khoản qua email của bạn. Vui lòng kiểm tra email và nhập mã: </h4>
-            <input type='text'
+            <input 
               value={token}
               onChange={e => setToken(e.target.value)}
-              className='p-2 border rounded-md outline-none border-2'
+              className='p-2 border-2 rounded-md outline-none'
             />
             <button 
               type='button'
-              className='px-4 py-2 bg-blue-500 font-semibold text-white rounded-md ml-4'
+              className='px-4 py-2 ml-4 font-semibold text-white bg-blue-500 rounded-md'
               onClick={finalRegister}
             > 
               Xác nhận
@@ -118,11 +115,10 @@ const Login = () => {
         </div>
       }
       {isForgotPassword && 
-        <div className='absolute top-0 left-0 bottom-0 right-0 bg-white flex flex-col items-center py-8 z-50'>
+        <div className='absolute top-0 bottom-0 left-0 right-0 z-50 flex flex-col items-center py-8 bg-white'>
           <div className='flex flex-col gap-4'>
               <label htmlFor='email'>Vui lòng nhập email:</label>
               <input 
-                type='text'
                 id='email'
                 className='w-[800px] pb-2 border-b outline-none placeholder:text-sm'
                 placeholder='VD: email@gmail.com'
@@ -143,7 +139,7 @@ const Login = () => {
           </div>
         </div>
       }
-      <div className='absolute top-1/2 bottom-1/2 left-1/2 right-1/2 items-center justify-center flex'>
+      <div className='absolute flex items-center justify-center top-1/2 bottom-1/2 left-1/2 right-1/2'>
         <div className='p-8 bg-white rounded-md min-w-[500px]  shadow-2xl border border-cyan-800'>
           <h1 className='text-[28px] font-semibold flex flex-col items-center mb-8'>{isRegister? 'Đăng ký' : 'Đăng nhập'}</h1>
           {isRegister && <div className='flex flex-col gap-2'>
@@ -151,6 +147,7 @@ const Login = () => {
                 value={payLoad.firstname}
                 setValue={setPayLoad}
                 nameKey='firstname'
+                placeholder='Tên'
                 invalidFields={invalidFields}
                 setInvalidFields={setInvalidFields}
               />
@@ -158,6 +155,7 @@ const Login = () => {
                 value={payLoad.lastname}
                 setValue={setPayLoad}
                 nameKey='lastname'
+                placeholder='Họ'
                 invalidFields={invalidFields}
                 setInvalidFields={setInvalidFields}
               />
@@ -167,6 +165,7 @@ const Login = () => {
             value={payLoad.email}
             setValue={setPayLoad}
             nameKey='email'
+            placeholder='Email'
             type='mail'
             invalidFields={invalidFields}
             setInvalidFields={setInvalidFields}
@@ -176,6 +175,7 @@ const Login = () => {
               value={payLoad.mobile}
               setValue={setPayLoad}
               nameKey='mobile'
+              placeholder='Số điện thoại'
               invalidFields={invalidFields}
               setInvalidFields={setInvalidFields}
             />
@@ -185,6 +185,7 @@ const Login = () => {
             setValue={setPayLoad}
             nameKey='password'
             type='password'
+            placeholder='Mật khẩu'
             invalidFields={invalidFields}
             setInvalidFields={setInvalidFields}
           />
@@ -195,17 +196,17 @@ const Login = () => {
             fw
           />
 
-          <div className='flex flex-row items-center justify-between my-2 w-full text-sm'>
-            {!isRegister && <span onClick={() => setIsForgotPassword(true)} className='text-blue-500 hover:underline cursor-pointer'>Quên mật khẩu?</span>}
+          <div className='flex flex-row items-center justify-between w-full my-2 text-sm'>
+            {!isRegister && <span onClick={() => setIsForgotPassword(true)} className='text-blue-500 cursor-pointer hover:underline'>Quên mật khẩu?</span>}
             {!isRegister && <span 
-              className='text-blue-500 hover:underline cursor-pointer' onClick={() => setIsRegister(true)}
+              className='text-blue-500 cursor-pointer hover:underline' onClick={() => setIsRegister(true)}
               >Đăng ký tài khoản</span>}
             {isRegister && <span 
-              className='text-blue-500 hover:underline cursor-pointer w-full text-center' 
+              className='w-full text-center text-blue-500 cursor-pointer hover:underline' 
               onClick={() => setIsRegister(false)}
               >Đăng nhập ngay</span>}
           </div>
-          <Link className='text-blue-500 hover:underline cursor-pointer text-sm flex flex-col items-center' to={`/${path.HOME}`}>Trở về trang chủ</Link>
+          <Link className='flex flex-col items-center text-sm text-blue-500 cursor-pointer hover:underline' to={`/${path.HOME}`}>Trở về trang chủ</Link>
         </div>
       </div>
     </div>

@@ -7,18 +7,18 @@ import { AiFillTikTok } from "react-icons/ai";
 const Footer = () => {
     return (
       <div className="w-full">
-        <div className="bg-blue-100 w-full">
+        <div className="w-full bg-blue-100">
           <div className="w-main h-[103px] mx-auto flex items-center justify-start">
-            <div className="w-main flex items-center justify-between">
+            <div className="flex items-center justify-between w-main">
               <div className="flex flex-col flex-1">
                 <span className="text-[20px] text-gray-300">ƯU ĐÃI VỚI THÀNH VIÊN</span>
                 <small className="text-[13px] text-gray-400">Đăng kí ngay và nhận tin tức ưu đãi hấp dẫn hàng tuần </small>
               </div>
-              <div className="flex-1 flex items-center">
+              <div className="flex items-center flex-1">
                 <input
                   className="p-4 pr-0 rounded-l-full w-full bg-[#F2F2F2] outline-none text-black-400
                     placeholder:text-sm placeholder:text-[#6E6E6E] placeholder:italic placeholder:opacity-50"
-                  type="text"
+                  // type="text"
                   placeholder="Địa chỉ email"
                 />
                 <div className="h-[56px] w-[56px] bg-[#F2F2F2] rounded-r-full flex items-center justify-center text-black-200">
@@ -29,7 +29,7 @@ const Footer = () => {
           </div>
         </div>
   
-        <div className="bg-gray-300 w-full">
+        <div className="w-full bg-gray-300">
   <div className="w-main h-[307px] mx-auto flex items-start justify-start text-2E2E2E text-[13px]">
     <div className='flex-1'>
       <h3 className='mb-[20px] text-[15px] font-medium border-l-2 border-main pl-[15px] mt-[65px]'>VỀ CHÚNG TÔI</h3> {/* Thêm mt-[20px] */}
@@ -85,37 +85,34 @@ const Footer = () => {
             </span>
     </div>
     <div className='flex-1'>
-  <h3 className='mb-[20px] text-[15px] font-medium border-l-2 border-main pl-[15px] mt-[65px]'>
-    ABC - GIAO HÀNG TẬN NƠI
-  </h3>
-
-  <div className="social-links">
-    <span className="block mb-[5px] flex items-center">
-      <a href="https://www.facebook.com" target="_blank" className="flex items-center hover:underline">
-        <i className="fab fa-facebook mr-2"></i> {<FaFacebookSquare />} <span className="ml-2">Facebook</span>
-      </a>
-    </span>
-    <span className="block mb-[5px] flex items-center">
-      <a href="https://www.instagram.com" target="_blank" className="flex items-center hover:underline">
-        <i className="fab fa-instagram mr-2"></i>{<FaInstagramSquare />}  <span className="ml-2">Instagram</span>
-      </a>
-    </span>
-    <span className="block mb-[5px] flex items-center">
-      <a href="https://www.twitter.com" target="_blank" className="flex items-center hover:underline">
-        <i className="fab fa-twitter mr-2"></i>{<FaTwitterSquare />}  <span className="ml-2">Twitter</span>
-      </a>
-    </span>
-    <span className="block mb-[5px] flex items-center">
-      <a href="https://www.tiktok.com" target="_blank" className="flex items-center hover:underline">
-        <i className="fab fa-tiktok mr-2"></i> {<AiFillTikTok />} <span className="ml-2">TikTok</span>
-      </a>
-    </span>
-  </div>
-</div>
-
-  </div>
-</div>
-
+        <h3 className='mb-[20px] text-[15px] font-medium border-l-2 border-main pl-[15px] mt-[65px]'>
+          ABC - GIAO HÀNG TẬN NƠI
+        </h3>
+        <div className="social-links">
+          <span className="mb-[5px] flex items-center">
+            <a href="https://www.facebook.com" target="_blank" className="flex items-center hover:underline">
+              <i className="mr-2 fab fa-facebook"></i> {<FaFacebookSquare />} <span className="ml-2">Facebook</span>
+            </a>
+          </span>
+          <span className="mb-[5px] flex items-center">
+            <a href="https://www.instagram.com" target="_blank" className="flex items-center hover:underline">
+              <i className="mr-2 fab fa-instagram"></i>{<FaInstagramSquare />}  <span className="ml-2">Instagram</span>
+            </a>
+          </span>
+          <span className="mb-[5px] flex items-center">
+            <a href="https://www.twitter.com" target="_blank" className="flex items-center hover:underline">
+              <i className="mr-2 fab fa-twitter"></i>{<FaTwitterSquare />}  <span className="ml-2">Twitter</span>
+            </a>
+          </span>
+          <span className="mb-[5px] flex items-center">
+            <a href="https://www.tiktok.com" target="_blank" className="flex items-center hover:underline">
+              <i className="mr-2 fab fa-tiktok"></i> {<AiFillTikTok />} <span className="ml-2">TikTok</span>
+            </a>
+          </span>
+        </div>
+      </div>
+        </div>
+      </div>
     </div>
     );
   };

@@ -33,7 +33,6 @@ const DetailCart = () => {
         setError(response.message || 'Không thể tải giỏ hàng');
       }
     } catch (error) {
-      console.error('Failed to fetch cart products:', error);
       setError('Lỗi kết nối đến server');
     }
   };
@@ -55,7 +54,6 @@ const DetailCart = () => {
       await apiDeleteProductFromUserCart({ userId: currentUser._id, productId });
       setCart((prevCart) => prevCart.filter((item) => item.productId._id !== productId));
     } catch (error) {
-      console.error('Failed to remove item:', error);
     }
     window.location.reload();
   };
@@ -77,7 +75,6 @@ const DetailCart = () => {
         )
       );
     } catch (error) {
-      console.error('Failed to update quantity:', error);
     }
     window.location.reload();
   };

@@ -56,7 +56,20 @@ const queryOrderOfUser = async (req, res) => {
         res.status(500).json({ success: false, orderData: error.message });
     }
 }
+const getOrdersByPayOSOrderId = async (req, res) => {
+    try {
+        const { payOSOrderId } = req.params;
 
+        const orders = await Order.find({ payOSOrderId: payOSOrderId });
+
+        res.status(200).json({
+            success: orders? true : false,
+            orderData: orders? orders : 'Cannot get order'
+        });
+    } catch (error) {
+        res.status(500).json({ success: false, orderData: error.message });
+    }
+}
 const queryOrderById = async (req, res) => {
     try {
         const { orderId } = req.params;
@@ -147,5 +160,6 @@ module.exports = {
     queryOrderById,
     cancelOrderById,
     deleteOrderById,
-    updateOrderById
+    updateOrderById,
+    getOrdersByPayOSOrderId
 }

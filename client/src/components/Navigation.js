@@ -15,12 +15,12 @@ import { IoMdSearch } from "react-icons/io";
 import { IoCartOutline } from "react-icons/io5";
 import { RiAdminFill } from "react-icons/ri";
 import { useSearchParams } from 'react-router-dom';
-import {  MdLaptopWindows   , MdMouse} from "react-icons/md";
- import { IoIosPhonePortrait } from "react-icons/io";
- import { FaTabletAlt, FaHeadphonesAlt, FaKeyboard } from "react-icons/fa";
- import { IoBatteryCharging } from "react-icons/io5";
- import { AiOutlineUsb } from "react-icons/ai";
- import { BiSolidDevices } from "react-icons/bi";
+import { MdLaptopWindows, MdMouse } from "react-icons/md";
+import { IoIosPhonePortrait } from "react-icons/io";
+import { FaTabletAlt, FaHeadphonesAlt, FaKeyboard } from "react-icons/fa";
+import { IoBatteryCharging } from "react-icons/io5";
+import { AiOutlineUsb } from "react-icons/ai";
+import { BiSolidDevices } from "react-icons/bi";
   const categories = [
     { name: 'Điện thoại', path: '/phone', icon: <IoIosPhonePortrait className="text-blue-500"/> },
     { name: 'Máy tính xách tay', path: '/laptop' ,icon: <MdLaptopWindows className="text-blue-500"/> },
@@ -37,13 +37,11 @@ import {  MdLaptopWindows   , MdMouse} from "react-icons/md";
 
 const Navigation = () => {
   const [showProducts, setShowProducts] = useState(false);
-  const [activeCategory, setActiveCategory] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
   const navigate = useNavigate();  
   const dispatch = useDispatch();
   const menuRef = useRef(null); // Tạo tham chiếu đến menu
   const { isLoggedIn, current }  = useSelector(state => state.user)
-  console.log(current)
   const [searchParams, setSearchParams] = useSearchParams(); // Use searchParams to manage query parameters in URL
   useEffect(() => { 
     const setTimeoutId = setTimeout(() => { 
@@ -124,7 +122,7 @@ const Navigation = () => {
   const userButtonClasses = 
   "flex items-center gap-2 rounded-md bg-slate-500 bg-opacity-20 px-1 py-2 hover:text-gray-200 text-xs";
   return (
-    <div className="bg-blue-200 w-full">
+    <div className="w-full bg-blue-200">
       {/* Khung giới hạn nội dung thanh điều hướng */}
       <div className="w-main h-[48px] py-2 mx-auto flex items-center justify-between">
         <div className="flex items-center space-x-8">
@@ -145,11 +143,11 @@ const Navigation = () => {
 
             {/* Products Menu */}
           {showProducts && (
-            <div className="absolute left-0 mt-2 w-64 bg-white rounded-md shadow-lg z-50">
+            <div className="absolute left-0 z-50 w-64 mt-2 bg-white rounded-md shadow-lg">
               {categories.map((category, index) => (
   <div
     key={index}
-    className="px-4 py-2 text-gray-800 hover:bg-gray-100 cursor-pointer flex items-center space-x-2"
+    className="flex items-center px-4 py-2 space-x-2 text-gray-800 cursor-pointer hover:bg-gray-100"
     onClick={() => handleCategoryClick(category.path)}
   >
     {/* Biểu tượng */}
@@ -173,18 +171,18 @@ const Navigation = () => {
   
      {/* Căn giữa Search Bar */}
       <div className="flex items-center justify-center flex-grow">
-        <div className="flex items-center border border-white rounded-full bg-white p-1 space-x-2">
+        <div className="flex items-center p-1 space-x-2 bg-white border border-white rounded-full">
           {/* Kính lúp và Search Bar */}
             <input
               placeholder="Tìm kiếm sản phẩm"
-              className="px-4 py-1 text-gray-800 w-72 rounded-full outline-none"
+              className="px-4 py-1 text-gray-800 rounded-full outline-none w-72"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && handleSearch(e)}
             />
             <IoMdSearch
               size={20}
-              className="cursor-pointer text-gray-800"
+              className="text-gray-800 cursor-pointer"
               onClick={(e) => handleSearch(e)}
             />
         </div>
@@ -193,13 +191,13 @@ const Navigation = () => {
         <div className="flex items-center space-x-8">
             {/*Chat ngay*/}
           <div className="flex items-center space-x-2 cursor-pointer hover:text-gray-200">
-            <IoChatbubbleEllipsesOutline color='red' size={20} className="text--800 h-6" />
+            <IoChatbubbleEllipsesOutline color='red' size={20} className="h-6 text--800" />
             <span className="text-base">Liên hệ</span> {/* Sử dụng text-base thay vì text-sm */}
           </div>
           {/* Cart */}
           <div className="relative cursor-pointer hover:text-gray-200" onClick={handleCartClick}>
             <IoCartOutline size={25}/>
-            <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
+            <span className="absolute flex items-center justify-center w-4 h-4 text-xs text-white bg-red-600 rounded-full -top-2 -right-2">
               { isLoggedIn ? current?.cart?.reduce((total, item) => total + item.quantity, 0) : 0 }
             </span>
           </div>
@@ -210,10 +208,10 @@ const Navigation = () => {
             <MenuButton className={userButtonClasses}>
               <FaRegUserCircle className="text-xl" />
               <span className="text-sm">{`${current?.firstname}`}</span>
-              <ChevronDown className="h-5 w-5 text-gray-400" />
+              <ChevronDown className="w-5 h-5 text-gray-400" />
             </MenuButton>
             <MenuItems
-              className="absolute right-0 mt-2 w-48 bg-white border rounded-md shadow-lg"
+              className="absolute right-0 w-48 mt-2 bg-white border rounded-md shadow-lg"
             >
               <div className="py-1">
               {current?.role === 'admin' && (
@@ -225,7 +223,7 @@ const Navigation = () => {
                           active ? 'bg-gray-100 text-gray-900' : 'text-gray-700'
                         } block w-full text-left px-4 py-2 text-sm`}
                       >
-                        <RiAdminFill className="mr-2 h-5 w-5 text-gray-500" />
+                        <RiAdminFill className="w-5 h-5 mr-2 text-gray-500" />
                         Trang admin
                       </button>
                     )}
@@ -239,7 +237,7 @@ const Navigation = () => {
                           active ? 'bg-gray-100 text-gray-900' : 'text-gray-700'
                         } block w-full text-left px-4 py-2 text-sm`}
                       >
-                        <MdManageAccounts className="mr-2 h-5 w-5 text-gray-500" />
+                        <MdManageAccounts className="w-5 h-5 mr-2 text-gray-500" />
                         Thông tin tài khoản
                       </button>
                     )}
@@ -253,7 +251,7 @@ const Navigation = () => {
                           active ? 'bg-gray-100 text-gray-900' : 'text-gray-700'
                         } block w-full text-left px-4 py-2 text-sm border-t`}
                       >
-                        <IoLogOut className="mr-2 h-5 w-5 text-gray-500" />
+                        <IoLogOut className="w-5 h-5 mr-2 text-gray-500" />
                         Đăng xuất
                       </button>
                     )}

@@ -5,6 +5,7 @@ const { verifyAccessToken, isAdmin } = require('../middlewares/verifyToken');
 router.post('/createOrder', verifyAccessToken, orderController.createOrder);
 router.get('/queryOrderOfUser/:userId', verifyAccessToken, orderController.queryOrderOfUser);
 router.get('/queryOrderById/:orderId', verifyAccessToken, orderController.queryOrderById);
+router.get('/getOrdersByPayOSOrderId/:payOSOrderId', verifyAccessToken, orderController.getOrdersByPayOSOrderId);
 router.put('/cancelOrder/:orderId', verifyAccessToken, orderController.cancelOrderById);
 //admin only
 router.get('/queryAllOrders', [verifyAccessToken, isAdmin], orderController.queryAllOrders); 

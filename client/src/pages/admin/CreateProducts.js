@@ -134,8 +134,6 @@ const CreatProduct = () => {
                 icon: 'error'
               });
             }
-            console.log(response)
-            console.log(payload)
         } catch (error) {
             Swal.fire({
                 title: 'Lỗi',
@@ -148,21 +146,21 @@ const CreatProduct = () => {
     };
 
     return (
-        <div className="w-main p-6 border-sky-600 border-2 container mx-auto bg-white mt-10 rounded-lg shadow-lg">
-            <div className="border-b pb-4">
+        <div className="container p-6 mx-auto mt-10 bg-white border-2 rounded-lg shadow-lg w-main border-sky-600">
+            <div className="pb-4 border-b">
                 <h2 className="text-2xl font-semibold text-gray-800">Thông tin chung của sản phẩm</h2>
             </div>
 
             <form onSubmit={handleSubmit} className="mt-6 space-y-6">
                 {/* Product Type Selection */}
                 <div className="space-y-2">
-                    <label className="block text-sm font-semibold font-medium text-gray-700">
+                    <label className="block text-sm font-semibold text-gray-700">
                         Loại sản phẩm
                     </label>
                     <select
                         value={productType}
                         onChange={(e) => setProductType(e.target.value)}
-                        className="w-full px-3 py-2 border border-sky-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        className="w-full px-3 py-2 border rounded-md shadow-sm border-sky-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                     >
                         <option value="">Vui lòng chọn loại sản phẩm</option>
                         {Object.keys(specificAttributes).map((type) => (
@@ -179,7 +177,7 @@ const CreatProduct = () => {
                         <div key={attr.name} className="space-y-2">
                             <label 
                                 htmlFor={attr.name}
-                                className="block text-sm font-semibold font-medium text-gray-700"
+                                className="block text-sm font-semibold text-gray-700"
                             >
                                 {attr.label}
                                 {attr.required && <span className="text-red-500">*</span>}
@@ -190,7 +188,7 @@ const CreatProduct = () => {
                                 required={attr.required}
                                 onChange={handleInputChange}
                                 value={productData[attr.name] || ''}
-                                className="w-full px-3 py-2 border border-sky-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                className="w-full px-3 py-2 border rounded-md shadow-sm border-sky-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                             />
                         </div>
                     ))}
@@ -199,8 +197,8 @@ const CreatProduct = () => {
                 {/* Specific Attributes */}
                 {productType && (
                     <div className="space-y-6">
-                        <div className="border-t pt-6">
-                            <h3 className="text-lg font-semibold text-gray-800 mb-4">
+                        <div className="pt-6 border-t">
+                            <h3 className="mb-4 text-lg font-semibold text-gray-800">
                                 Thông tin cụ thể
                             </h3>
                             <div className="grid grid-cols-2 gap-6">
@@ -215,10 +213,9 @@ const CreatProduct = () => {
                                         <input
                                             id={attr.name}
                                             name={attr.name}
-                                            type="text"
                                             onChange={handleInputChange}
                                             value={productData[attr.name] || ''}
-                                            className="w-full px-3 py-2 border border-sky-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                            className="w-full px-3 py-2 border rounded-md shadow-sm border-sky-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                                         />
                                     </div>
                                 ))}

@@ -52,7 +52,6 @@ const DetailProduct = () => {
 
   const handleAddToCart = async (products) => {
     if (!user) {
-      console.error('User không hợp lệ');
       return;
     }
     const newProduct = {
@@ -76,7 +75,6 @@ const DetailProduct = () => {
         setIsAdded(false);
       }, 3000);
     } catch (error) {
-      console.error("Lỗi khi thêm sản phẩm vào giỏ hàng:", error);
     }
     window.location.reload();
   };
@@ -296,20 +294,20 @@ const DetailProduct = () => {
               </div>
             </div>
 
-            <div className="flex justify-between items-center gap-4 px-5 py-5">
-              <img src="/1.png" alt="Image 1" className="w-24 h-24 object-cover rounded-lg shadow-md" />
-              <img src="/2.png" alt="Image 2" className="w-24 h-24 object-cover rounded-lg shadow-md" />
-              <img src="/3.png" alt="Image 3" className="w-24 h-24 object-cover rounded-lg shadow-md" />
-              <img src="/4.png" alt="Image 4" className="w-24 h-24 object-cover rounded-lg shadow-md" />
-              <img src="/5.png" alt="Image 5" className="w-24 h-24 object-cover rounded-lg shadow-md" />
+            <div className="flex items-center justify-between gap-4 px-5 py-5">
+              <img src="/1.png" alt="Image 1" className="object-cover w-24 h-24 rounded-lg shadow-md" />
+              <img src="/2.png" alt="Image 2" className="object-cover w-24 h-24 rounded-lg shadow-md" />
+              <img src="/3.png" alt="Image 3" className="object-cover w-24 h-24 rounded-lg shadow-md" />
+              <img src="/4.png" alt="Image 4" className="object-cover w-24 h-24 rounded-lg shadow-md" />
+              <img src="/5.png" alt="Image 5" className="object-cover w-24 h-24 rounded-lg shadow-md" />
             </div>
 
           </div>
         </div>
 
-        <div className="product-describe bg-gray-100 p-4 rounded-md shadow-md mt-2">
-          <h2 className="text-lg font-semibold text-gray-800 mb-2">Thông tin mô tả</h2>
-          <ul className="list-disc list-inside text-gray-600">
+        <div className="p-4 mt-2 bg-gray-100 rounded-md shadow-md product-describe">
+          <h2 className="mb-2 text-lg font-semibold text-gray-800">Thông tin mô tả</h2>
+          <ul className="text-gray-600 list-disc list-inside">
             <p>{products.description}</p>
           </ul>
         </div>
@@ -329,13 +327,13 @@ const DetailProduct = () => {
           </div>
         )}
 
-        <div className="flex justify-between items-center gap-4 py-4">
-          <img src="/6.png" alt="Anh" className="w-36 h-12 object-cover rounded-lg shadow-md" />
-          <img src="/7.png" alt="Anh" className="w-36 h-12 object-cover rounded-lg shadow-md" />
-          <img src="/8.png" alt="Anh" className="w-36 h-12 object-cover rounded-lg shadow-md" />
-          <img src="/9.png" alt="Anh" className="w-36 h-12 object-cover rounded-lg shadow-md" />
-          <img src="/10.png" alt="Anh" className="w-36 h-12 object-cover rounded-lg shadow-md" />
-          <img src="/11.png" alt="Anh" className="w-50 h-12 object-cover rounded-lg shadow-md" />
+        <div className="flex items-center justify-between gap-4 py-4">
+          <img src="/6.png" alt="Anh" className="object-cover h-12 rounded-lg shadow-md w-36" />
+          <img src="/7.png" alt="Anh" className="object-cover h-12 rounded-lg shadow-md w-36" />
+          <img src="/8.png" alt="Anh" className="object-cover h-12 rounded-lg shadow-md w-36" />
+          <img src="/9.png" alt="Anh" className="object-cover h-12 rounded-lg shadow-md w-36" />
+          <img src="/10.png" alt="Anh" className="object-cover h-12 rounded-lg shadow-md w-36" />
+          <img src="/11.png" alt="Anh" className="object-cover h-12 rounded-lg shadow-md w-50" />
         </div>
 
         <div className="related-products">

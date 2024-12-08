@@ -60,23 +60,21 @@ const Address = ({ onAddressChange }) => {
           <Select reset={reset} type="district" value={district} setValue={setDistrict} label="Quận/Huyện" options={districts} />
         </div>
         <div className="flex flex-col gap-2">
-          <label className="font-medium font-semibold" htmlFor="house-number">Số nhà, tên đường</label>
+          <label className="font-semibold" htmlFor="house-number">Số nhà, tên đường</label>
           <input
-            type="text"
             id="house-number"
             placeholder="Ví dụ: 268 Lý Thường Kiệt, Phường 14"
-            className="border border-gray-200 shadow-inner outline-none rounded-md p-2 w-full"
+            className="w-full p-2 border border-gray-200 rounded-md shadow-inner outline-none"
             value={houseNumber}
             onChange={(e) => setHouseNumber(e.target.value)}
           />
         </div>
         <div className="flex flex-col gap-2">
-          <label className="font-medium font-semibold" htmlFor="exactly-address">Địa chỉ giao hàng</label>
+          <label className="font-semibold" htmlFor="exactly-address">Địa chỉ giao hàng</label>
           <input
-            type="text"
             id="exactly-address"
             readOnly
-            className="border border-gray-200 bg-gray-300 shadow-inner outline-none rounded-md p-2 w-full"
+            className="w-full p-2 bg-gray-300 border border-gray-200 rounded-md shadow-inner outline-none"
             value={deliveryAddress}
           />
         </div>

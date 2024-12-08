@@ -101,7 +101,7 @@ const ManageProduct = () => {
     };
 
     return (
-        <div className="w-main flex relative flex-col py-10 container mx-auto p-6">
+        <div className="container relative flex flex-col p-6 py-10 mx-auto w-main">
           { editProduct && <div className='absolute inset-0 min-h-screen bg-white'>
               <UpdateProduct 
                 productId={editProduct}
@@ -113,9 +113,8 @@ const ManageProduct = () => {
             {/* Search Bar */}
             <div className="mb-6">
                 <input
-                    type="text"
-                    placeholder="Tìm kiếm sản phẩm..."
-                    className="w-full px-4 py-2 border-2 border-sky-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    placeholder="Tìm kiếm sản phẩm theo tên..."
+                    className="w-full px-4 py-2 border-2 rounded-lg border-sky-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
                     value={searchTerm}
                     onChange={(e) => {setSearchTerm(e.target.value);}}
                     onKeyDown={handleKeyDown}
@@ -126,7 +125,7 @@ const ManageProduct = () => {
             <div className="overflow-x-auto bg-white rounded-lg shadow">
                 <table className="min-w-full table-auto">
                     <thead>
-                        <tr className="bg-sky-800 text-white">
+                        <tr className="text-white bg-sky-800">
                             <th className="px-6 py-3 text-left">STT</th>
                             <th className="px-6 py-3 text-left">Hình ảnh</th>
                             <th className="px-6 py-3 text-left">Tên sản phẩm</th>
@@ -161,7 +160,7 @@ const ManageProduct = () => {
                                         <img
                                             src={product.imageLink || '/placeholder-image.jpg'}
                                             alt={product.name}
-                                            className="w-12 h-12 object-cover rounded"
+                                            className="object-cover w-12 h-12 rounded"
                                         />
                                     </td>
                                     <td className="px-6 py-4 font-medium">{product.name}</td>
@@ -180,13 +179,13 @@ const ManageProduct = () => {
                                     <td className="px-6 py-4 text-center">
                                         <div className="flex justify-center space-x-2">
                                             <button
-                                                className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 transition-colors"
+                                                className="px-3 py-1 text-white transition-colors bg-blue-500 rounded hover:bg-blue-600"
                                                 onClick={() => {handleEditProduct(product._id)}}
                                             >
                                                 Sửa
                                             </button>
                                             <button
-                                                className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 transition-colors"
+                                                className="px-3 py-1 text-white transition-colors bg-red-500 rounded hover:bg-red-600"
                                                 onClick={() => {handleDeleteProduct(product._id);}}
                                             >
                                                 Xóa
@@ -201,7 +200,7 @@ const ManageProduct = () => {
             </div>
 
             {/* Pagination */}
-            <div className="mt-6 flex justify-center space-x-2">
+            <div className="flex justify-center mt-6 space-x-2">
                 <button
                     className={`px-4 py-2 rounded transition-colors ${
                         currentPage === 1 

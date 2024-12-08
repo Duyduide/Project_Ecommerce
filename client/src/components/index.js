@@ -15,7 +15,6 @@ export { default as Footer } from './Footer';
 export { default as Address } from './Address';
 export { default as Select } from './Select';
 export { default as DetailCart } from './DetailCart';
-export { default as Loading } from './Loading';
 export { default as AdminSidebar } from './sidebars/AdminSidebar';
 export { default as YourNeed } from './YourNeed';
 export { default as BannerProduct } from './BannerProduct'
