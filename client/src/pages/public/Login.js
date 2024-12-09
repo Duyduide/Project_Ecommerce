@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useEffect } from 'react'
 import { InputField, Button } from 'components'
-import { apiRegister, apiLogin, apiForgotPassword, apiFinalRegister } from 'apis/user'
+import { apiRegister, apiLogin, apiForgotPassword, apiFinalRegister, apiGetCredentialsFromAccessToken, apiLoginWithGoogle } from 'apis/user'
 import Swal from 'sweetalert2'
 import { useNavigate, Link } from 'react-router-dom'
 import path from 'utils/path'
@@ -8,12 +8,11 @@ import { login } from 'store/user/userSlice'
 import { useDispatch } from 'react-redux'
 import { toast } from 'react-toastify'
 import { validate } from 'utils/helper'
-
+import { useGoogleLogin } from '@react-oauth/google'
 
 const Login = () => {
   const Navigate = useNavigate();
   const dispatch = useDispatch();
-
   const [payLoad, setPayLoad] = useState({
     email: '',
     password: '',
@@ -25,7 +24,6 @@ const Login = () => {
   const [invalidFields, setInvalidFields] = useState([]);
   const [isRegister, setIsRegister] = useState(false);
   const [isForgotPassword, setIsForgotPassword] = useState(false);
-  
   const resetPayload = () => {   
     setPayLoad({
       email: '',
@@ -49,7 +47,31 @@ const Login = () => {
   useEffect(() => { 
     resetPayload();
   }, [isRegister])
-
+  const handleSigninGoogle = useGoogleLogin({
+    onSuccess: async(tokenResponse) => {
+      const response = await apiGetCredentialsFromAccessToken(tokenResponse.access_token);
+      if(response) {
+      const googleLoginResponse = await apiLoginWithGoogle(response);
+        if(googleLoginResponse) {
+          dispatch(login({
+            isLoggedIn: true,
+            token: googleLoginResponse.accessToken,
+            current: googleLoginResponse.userData
+          }));
+          toast.success('Đăng nhập thành công!');
+          // Redirect to home page
+          Navigate(`/${path.HOME}`);
+        }
+        else {
+          toast.error(googleLoginResponse.mes || 'Đăng nhập thất bại');
+        }
+      }
+      console.log(response)
+    },
+    onFailure: error => console.log(error),
+  }
+)
+  
   const handleSubmit = useCallback(async () => {
     const {firstname, lastname, mobile, ...data} = payLoad;
     const invalids = isRegister ? validate(payLoad, setInvalidFields) : validate(data, setInvalidFields);
@@ -195,7 +217,20 @@ const Login = () => {
             handleOnClick={handleSubmit}
             fw
           />
-
+          <div className="flex items-center my-4">
+            <div className="flex-grow border border-t border-gray-300"></div>
+            <span className="mx-4 font-semibold text-gray-500">
+              hoặc
+            </span>
+            <div className="flex-grow border border-t border-gray-300"></div>
+          </div>
+          <button
+            className="flex items-center justify-center w-full px-4 py-2 mb-4 text-sm font-semibold text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-100"
+            onClick={handleSigninGoogle}
+          >
+            <img src='https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/768px-Google_%22G%22_logo.svg.png' alt='Google' className="w-5 h-5 mr-2" />
+            Đăng nhập bằng Google
+          </button>
           <div className='flex flex-row items-center justify-between w-full my-2 text-sm'>
             {!isRegister && <span onClick={() => setIsForgotPassword(true)} className='text-blue-500 cursor-pointer hover:underline'>Quên mật khẩu?</span>}
             {!isRegister && <span 

@@ -10,7 +10,6 @@ const OrderHistory = () => {
   const [currentUser, setCurrentUser] = useState(null);
   const [orders, setOrders] = useState([]);
   const [orderDetails, setOrderDetails] = useState({});  // State để lưu chi tiết đơn hàng
-  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
  

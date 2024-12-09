@@ -3,6 +3,11 @@ const bcrypt = require('bcrypt');
 const crypto = require('crypto');
 // Declare the Schema of the Mongo model
 let userSchema = new mongoose.Schema({
+    googleId: {
+        type: String,
+        unique: true,
+        sparse: true  // Allows null/undefined values
+      },
     firstname:{
         type:String,
         required:true,
@@ -19,11 +24,10 @@ let userSchema = new mongoose.Schema({
     mobile:{
         type:String,
         unique:true,
-        required:true,
     },
     password:{
         type:String,
-        required:true,
+        required: () => { !this.googleId }, // Only required if not OAuth
     },
     role: {
         type: String,

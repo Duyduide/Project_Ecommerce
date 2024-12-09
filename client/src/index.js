@@ -12,7 +12,7 @@ const container = document.getElementById('root');
 const root = createRoot(container);
 
 root.render(
-  <GoogleOAuthProvider clientId='{process.env.REACT_APP_GOOGLE_CLIENT_ID}'>
+  <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}>
       <Provider store={store}> 
       <PersistGate loading={null} persistor={persistor}>
         <BrowserRouter>

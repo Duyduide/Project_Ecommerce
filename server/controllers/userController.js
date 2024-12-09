@@ -1,6 +1,6 @@
 const User = require('../models/user');
 const asyncHandler = require('express-async-handler');
-const {generateAccessToken, generateRefreshToken} = require('../middlewares/jwt');
+const { generateAccessToken, generateRefreshToken } = require('../middlewares/jwt');
 const jwt = require('jsonwebtoken');
 const sendMail = require('../utils/sendMail');
 const crypto = require('crypto');
@@ -219,6 +219,30 @@ const getUsers = asyncHandler(async (req, res) => {
     });
 });
 
+const loginWithGoogle = asyncHandler(async (req, res) => {
+    const { id, given_name, family_name, email } = req.body;
+    let user = await User.findOne({ email });
+    if(!user) {
+        user = await User.create({
+            googleId: id,
+            firstname: given_name,
+            lastname: family_name,
+            email
+        })
+    }
+    else {
+        user.googleId = id;
+        user.firstname = given_name;
+        user.lastname = family_name
+        await user.save();
+    }
+    const accessToken = generateAccessToken(user._id, user.role);
+    return res.json({
+        success: true,
+        accessToken,
+        userData: user
+    })
+});
 module.exports = {
     register,
     login,
@@ -231,5 +255,6 @@ module.exports = {
     deleteUser,
     updateUser,
     updateUserByAdmin,
-    finalRegister
+    finalRegister,
+    loginWithGoogle
 }

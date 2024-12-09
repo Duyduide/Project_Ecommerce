@@ -1,4 +1,4 @@
-import axios from '../axios';
+import axios, {endpoints} from '../axios';
 
 export const apiRegister = (data) => axios({
     url: '/user/register', 
@@ -41,5 +41,14 @@ export const apiDeleteUser = (userID) => axios({
 export const apiUpdateUser = (userId ,data) => axios({
     url: '/user/' + userId, 
     method:'put',
+    data
+})
+export const apiGetCredentialsFromAccessToken = (accessToken) => axios({
+    method: 'get',
+    url: endpoints.auth.getCredentialFromAccessToken + accessToken,
+})   
+export const apiLoginWithGoogle = (data) => axios({
+    url: '/user/loginWithGoogle', 
+    method:'post',
     data
 })
