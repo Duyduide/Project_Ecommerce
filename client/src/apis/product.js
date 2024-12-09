@@ -26,6 +26,31 @@ export const apiGetHeadPhone = () => axios({
     method: 'get',
 });
 
+export const apiGetSmartWatch = () => axios({
+    url: '/queryProduct/getSmartWatch',
+    method: 'get',
+});
+
+export const apiGetCharger = () => axios({
+    url: '/queryProduct/getCharger',
+    method: 'get',
+});
+
+export const apiGetMouse = () => axios({
+    url: '/queryProduct/getMouse',
+    method: 'get',
+});
+
+export const apiGetKeyboard = () => axios({
+    url: '/queryProduct/getKeyboard',
+    method: 'get',
+});
+
+export const apiGetPowerBank = () => axios({
+    url: '/queryProduct/getPowerBank',
+    method: 'get',
+});
+
 export const apiGetProductById = (productID) => axios({
     url: `/queryProduct/getProductById/${productID}`,
     method: 'get',

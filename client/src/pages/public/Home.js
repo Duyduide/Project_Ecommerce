@@ -1,8 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import { Sidebar, Banner, RightBanner, ProductPhone, ProductTablet, ProductHeadphone, ProductLaptop, YourNeed} from '../../components/index'
-// import { useSelector, useDispatch } from 'react-redux'
-// import {getProduct} from '../../store/product/asyncActions'
-// import {apiGetProduct, apiGetPhone } from '../../apis'
+import React from 'react'
+import { Sidebar, Banner, RightBanner, ProductPhone, ProductTablet, ProductHeadphone, ProductLaptop, ProductCharger, ProductKeyboard, ProductMouse, ProductPowerBank, ProductSmartWatch, YourNeed} from '../../components/index'
 
 const Home = () => {
   return (
@@ -30,6 +27,11 @@ const Home = () => {
         <ProductLaptop />
         <ProductTablet />
         <ProductHeadphone />
+        <ProductCharger />
+        <ProductKeyboard />
+        <ProductPowerBank />
+        <ProductSmartWatch />
+        <ProductMouse />
       </div>
     </>
   )
