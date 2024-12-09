@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { apiFetchUserCart, apiDeleteProductFromUserCart, apiChangeUserCartProductQuantity } from '../apis/cart';
 import { apiGetCurrent } from '../apis/user'
 import '../css/Cart.css';
+import { AiFillDelete } from 'react-icons/ai'; 
+import { MdOutlineDelete } from "react-icons/md";
 
 const DetailCart = () => {
   const [cart, setCart] = useState([]);
@@ -33,6 +35,7 @@ const DetailCart = () => {
         setError(response.message || 'Không thể tải giỏ hàng');
       }
     } catch (error) {
+      console.error('Failed to fetch cart products:', error);
       setError('Lỗi kết nối đến server');
     }
   };
@@ -54,6 +57,7 @@ const DetailCart = () => {
       await apiDeleteProductFromUserCart({ userId: currentUser._id, productId });
       setCart((prevCart) => prevCart.filter((item) => item.productId._id !== productId));
     } catch (error) {
+      console.error('Failed to remove item:', error);
     }
     window.location.reload();
   };
@@ -75,6 +79,7 @@ const DetailCart = () => {
         )
       );
     } catch (error) {
+      console.error('Failed to update quantity:', error);
     }
     window.location.reload();
   };
@@ -90,7 +95,11 @@ const DetailCart = () => {
   };
 
   return (
-    <div className="cart-container">
+<div className="cart-container">
+      <Link to="/" className="btn-back-home">
+    &larr; Quay về trang chủ
+  </Link>
+
       <h1 className="cart-title">Giỏ hàng của bạn</h1>
 
       {/* Hiển thị lỗi nếu có */}
@@ -101,69 +110,70 @@ const DetailCart = () => {
         <p className="empty-cart-message">Giỏ hàng trống.</p>
       ) : (
         <ul className="cart-items-list">
-          {cart.map((item, index) => (
-            <li key={index} className="cart-item">
-              <div className="cart-item-details">
-                <div className="cart-item-left">
-                  {/* Hình ảnh sản phẩm */}
-                  <img
-                    src={item.productId.imageLink}
-                    alt={item.productId.name}
-                    className="cart-item-image"
-                  />
-                </div>
-
-                <div className="cart-item-middle"></div>
-
-                <div className="cart-item-right">
-                  <h3 className="cart-item-name">{item.productId.name}</h3>
-
-                  <div className="cart-item-price">
-                    <p>Giá: {formatCurrency(item.productId.price)}</p>
-                  </div>
-
-                  {/* Điều chỉnh số lượng sản phẩm */}
-                  <div className="cart-item-quantity">
-                    <button
-                      onClick={() => handleChangeQuantity(item.productId._id, item.quantity - 1)}
-                      disabled={item.quantity <= 1}
-                      className="quantity-button"
-                    >
-                      -
-                    </button>
-                    <span className="quantity-display">Số lượng: {item.quantity}</span>
-                    <button
-                      onClick={() => handleChangeQuantity(item.productId._id, item.quantity + 1)}
-                      disabled={item.quantity >= item.productId.stock}
-                      className="quantity-button"
-                    >
-                      +
-                    </button>
-                  </div>
-
-                  {/* Nút xóa sản phẩm */}
+        {cart.map((item, index) => (
+          <li key={index} className="cart-item">
+            <div className="cart-item-details">
+              {/* Phần bên trái: Ảnh */}
+              <div className="cart-item-left">
+           
+                <img
+                  src={item.productId.imageLink}
+                  alt={item.productId.name}
+                  className="cart-item-image"
+                />
+              </div>
+      
+              {/* Phần bên giữa: Tên và Giá */}
+              <div className="cart-item-middle">
+                <h3 className="cart-item-name">{item.productId.name}</h3>
+                <p className="cart-item-price">Giá: {formatCurrency(item.productId.price)}</p>
+              </div>
+      
+              {/* Phần bên phải: Nút xóa và Số lượng */}
+              <div className="cart-item-right">
+                {/* Điều chỉnh số lượng sản phẩm */}
+                <div className="cart-item-quantity">
                   <button
-                    className="btn-remove"
-                    onClick={() => handleRemoveItem(item.productId._id)}
+                    onClick={() => handleChangeQuantity(item.productId._id, item.quantity - 1)}
+                    disabled={item.quantity <= 1}
+                    className="quantity-button"
                   >
-                    Xóa
+                    -
+                  </button>
+                  <span className="quantity-display">{item.quantity}</span>
+                  <button
+                    onClick={() => handleChangeQuantity(item.productId._id, item.quantity + 1)}
+                    disabled={item.quantity >= item.productId.stock}
+                    className="quantity-button"
+                  >
+                    +
                   </button>
                 </div>
+      
+                {/* Nút xóa sản phẩm */}
+                <button
+                  className="btn-remove"
+                  onClick={() => handleRemoveItem(item.productId._id)}
+                >
+                  <MdOutlineDelete />
+
+                </button>
               </div>
-            </li>
-          ))}
-        </ul>
+            </div>
+          </li>
+        ))}
+      </ul>
       )}
 
-      {/* Tóm tắt giỏ hàng */}
-      <div className="cart-summary">
+          {/* Tóm tắt giỏ hàng */}
+          <div className="cart-summary">
         <p className="cart-total">
-          <strong>Tổng cộng:</strong> {formatCurrency(calculateTotal)}
+          <strong>Tạm tính:</strong> {formatCurrency(calculateTotal)}
         </p>
 
         {/* Nút thanh toán */}
         <Link to="/checkout">
-          <button className="btn-checkout">Tạo Đơn Hàng</button>
+          <button className="btn-checkout">Mua ngay</button>
         </Link>
       </div>
     </div>
