@@ -184,16 +184,16 @@ const DetailProduct = () => {
       return (
         <>
           <div className="detail-product-item">
+            <div className="field">Chứng nhận:</div>
+            <div className="desc">{products.certificate}</div>
+          </div>
+          <div className="detail-product-item">
             <div className="field">Loại tai nghe:</div>
-            <div className="desc">{products.type}</div>
+            <div className="desc">{products.typeOfHeadphone}</div>
           </div>
           <div className="detail-product-item">
             <div className="field">Pin:</div>
             <div className="desc">{products.battery}</div>
-          </div>
-          <div className="detail-product-item">
-            <div className="field">Màu sắc:</div>
-            <div className="desc">{products.color}</div>
           </div>
           <div className="detail-product-item">
             <div className="field">Kết nối:</div>
@@ -223,6 +223,103 @@ const DetailProduct = () => {
           <div className="detail-product-item">
             <div className="field">Kết nối:</div>
             <div className="desc">{products.connection}</div>
+          </div>
+          <div className="detail-product-item">
+            <div className="field">Pin:</div>
+            <div className="desc">{products.battery}</div>
+          </div>
+        </>
+      );
+    } else if (products.__t === "charger") {
+      return (
+        <>
+          <div className="detail-product-item">
+            <div className="field">Cổng vào:</div>
+            <div className="desc">{products.input}</div>
+          </div>
+          <div className="detail-product-item">
+            <div className="field">Cổng ra:</div>
+            <div className="desc">{products.output}</div>
+          </div>
+        </>
+      );
+    } else if (products.__t === "keyboard") {
+      return (
+        <>
+          <div className="detail-product-item">
+            <div className="field">Kích thước:</div>
+            <div className="desc">{products.size}</div>
+          </div>
+          <div className="detail-product-item">
+            <div className="field">Kết nối:</div>
+            <div className="desc">{products.connection}</div>
+          </div>
+          <div className="detail-product-item">
+            <div className="field">Bố cục:</div>
+            <div className="desc">{products.layout}</div>
+          </div>
+        </>
+      );
+    } else if (products.__t === "powerbank") {
+      return (
+        <>
+          <div className="detail-product-item">
+            <div className="field">Dung lượng pin:</div>
+            <div className="desc">{products.capacity}</div>
+          </div>
+          <div className="detail-product-item">
+            <div className="field">Cổng vào:</div>
+            <div className="desc">{products.input}</div>
+          </div>
+          <div className="detail-product-item">
+            <div className="field">Cổng ra:</div>
+            <div className="desc">{products.output}</div>
+          </div>
+          <div className="detail-product-item">
+            <div className="field">Số cổng sạc:</div>
+            <div className="desc">{products.numOfPorts}</div>
+          </div>
+        </>
+      );
+    } else if (products.__t === "smartwatch") {
+      return (
+        <>
+          <div className="detail-product-item">
+            <div className="field">Màn hình:</div>
+            <div className="desc">{products.screen}</div>
+          </div>
+          <div className="detail-product-item">
+            <div className="field">Pin:</div>
+            <div className="desc">{products.battery}</div>
+          </div>
+          <div className="detail-product-item">
+            <div className="field">Chứng nhận:</div>
+            <div className="desc">{products.certificate}</div>
+          </div>
+          <div className="detail-product-item">
+            <div className="field">Kết nối:</div>
+            <div className="desc">{products.connection}</div>
+          </div>
+        </>
+      );
+    } else if (products.__t === "mouse") {
+      return (
+        <>
+          <div className="detail-product-item">
+            <div className="field">Pin:</div>
+            <div className="desc">{products.battery}</div>
+          </div>
+          <div className="detail-product-item">
+            <div className="field">Kết nối:</div>
+            <div className="desc">{products.connection}</div>
+          </div>
+          <div className="detail-product-item">
+            <div className="field">Cảm biến:</div>
+            <div className="desc">{products.sensor}</div>
+          </div>
+          <div className="detail-product-item">
+            <div className="field">Trọng lượng:</div>
+            <div className="desc">{products.weight}</div>
           </div>
         </>
       );
