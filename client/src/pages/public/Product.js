@@ -1,51 +1,63 @@
-import React, {useEffect, useState} from 'react'
-import { useParams } from 'react-router-dom'
-import { apiFetchProductByPage } from 'apis/product'
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { apiFetchProductByPage } from 'apis/product';
 import { useNavigate } from 'react-router-dom';
 import { YourNeed, BannerProduct } from '../../components/index';
 
 export const Product = () => {
-
-  const {category} = useParams();
-
+  const { category } = useParams();
   const [products, setProducts] = useState([]);
-
-  const [error, setError] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
+  const [loading, setLoading] = useState(false);
+  const pageSize = 5; 
   const navigate = useNavigate();
 
   const fetchProduct = async () => {
-    const response = await apiFetchProductByPage(category);
-    if(response.success) {
-      setProducts(response.productData); 
+    setLoading(true);
+    const response = await apiFetchProductByPage(category, currentPage, 'updatedAt', 'descend', pageSize);
+    if (response.success) {
+      setProducts(response.productData);
+      setTotalPages(Math.ceil(response.totalProducts / pageSize));
+      setLoading(false);
     }
-  }
+  };
 
-  useEffect(() => { 
-    fetchProduct(); 
-  }, [])
+  useEffect(() => {
+    fetchProduct();
+  }, [currentPage]);
 
   const handleProductClick = (id) => {
     window.scrollTo(0, 0);
     navigate(`/product/${id}`);
   };
+
   const renderStars = (rating) => {
-    return '★'.repeat(rating) + '☆'.repeat(5 - rating); 
+    return '★'.repeat(rating) + '☆'.repeat(5 - rating);
   };
-  
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) setCurrentPage((prev) => prev + 1);
+  };
+
+  const handlePreviousPage = () => {
+    if (currentPage > 1) setCurrentPage((prev) => prev - 1);
+  };
+
   return (
     <>
       <div className="w-full mb-6">
-        {error && <p className="text-red-500 text-center font-bold mb-5">Error: {error}</p>}
+        {loading && <p className="text-center text-lg font-medium col-span-full">Đang tải...</p>}
 
         <div className="mb-6">
           <BannerProduct />
-        </div> 
+        </div>
 
         <div className="mb-48 pt-6">
           <YourNeed />
         </div>
-        
-        <div className="grid grid-cols-5 gap-6 ">
+
+        <div className="grid grid-cols-5 gap-6">
           {products.length === 0 ? (
             <p className="text-center text-lg font-medium col-span-full">Chưa có sản phẩm</p>
           ) : (
@@ -71,7 +83,9 @@ export const Product = () => {
                   <h2 className="text-lg font-semibold mb-2 h-12 overflow-hidden uppercase">
                     {product.name}
                   </h2>
-                  <p className="text-red-600 text-xl font-extrabold mb-2">{product.price.toLocaleString()}đ</p>
+                  <p className="text-red-600 text-xl font-extrabold mb-2">
+                    {product.price.toLocaleString()}đ
+                  </p>
                   <p className="text-lg text-gray-700 font-bold uppercase mb-2">
                     <span className="text-lg text-gray-600">{product.origin.toUpperCase()}</span>
                   </p>
@@ -83,9 +97,30 @@ export const Product = () => {
             ))
           )}
         </div>
+
+        {/* Pagination */}
+        <div className="flex justify-center items-center mt-8">
+          <button
+            onClick={handlePreviousPage}
+            disabled={currentPage === 1}
+            className="px-4 py-2 bg-gray-300 rounded-md mx-2 hover:bg-gray-400 disabled:bg-gray-200"
+          >
+            Trang trước
+          </button>
+          <span className="font-bold mx-4">
+            Trang {currentPage} của {totalPages}
+          </span>
+          <button
+            onClick={handleNextPage}
+            disabled={currentPage === totalPages}
+            className="px-4 py-2 bg-gray-300 rounded-md mx-2 hover:bg-gray-400 disabled:bg-gray-200"
+          >
+            Trang sau
+          </button>
+        </div>
       </div>
     </>
-  )
-}
+  );
+};
 
 export default Product;

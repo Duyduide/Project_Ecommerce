@@ -31,8 +31,10 @@ const queryProductMain = async (req, res) => {
         }
         else{
             const products = await Product.find({ __t: category }).sort(sort).skip((page - 1) * pageSize).limit(pageSize);
+            const totalProducts = await Product.countDocuments({ __t: category });
             res.status(200).json({
                 success: products? true: false,
+                totalProducts: totalProducts ? totalProducts : 0,
                 productData: products? products: 'Cannot get products'
             });
         }

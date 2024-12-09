@@ -145,6 +145,10 @@ const DetailProduct = () => {
             <div className="field">RAM/ROM:</div>
             <div className="desc">{products.ramRom}</div>
           </div>
+          <div className="detail-product-item">
+            <div className="field">Thẻ SIM:</div>
+            <div className="desc">{products.sim}</div>
+          </div>
         </>
       );
     } else if (products.__t === "laptop") {
@@ -227,6 +231,10 @@ const DetailProduct = () => {
           <div className="detail-product-item">
             <div className="field">Pin:</div>
             <div className="desc">{products.battery}</div>
+          </div>
+          <div className="detail-product-item">
+            <div className="field">Thẻ SIM:</div>
+            <div className="desc">{products.sim}</div>
           </div>
         </>
       );
