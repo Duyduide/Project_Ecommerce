@@ -10,11 +10,9 @@ let userSchema = new mongoose.Schema({
       },
     firstname:{
         type:String,
-        required:true,
     },
     lastname:{
         type:String,
-        required:true,
     },
     email:{
         type:String,
@@ -22,8 +20,9 @@ let userSchema = new mongoose.Schema({
         unique:true,
     },
     mobile:{
-        type:String,
-        unique:true,
+        type: String,
+        unique: true,
+        sparse: true  // Allows null/undefined values
     },
     password:{
         type:String,

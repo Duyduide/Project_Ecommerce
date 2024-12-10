@@ -237,6 +237,9 @@ const loginWithGoogle = asyncHandler(async (req, res) => {
         await user.save();
     }
     const accessToken = generateAccessToken(user._id, user.role);
+    const refreshToken = generateRefreshToken(user._id);
+    await User.findByIdAndUpdate(user._id, { refreshToken }, { new: true });
+    res.cookie('refreshToken', refreshToken, { httpOnly: true, maxAge: 7*24*60*60*1000 });
     return res.json({
         success: true,
         accessToken,

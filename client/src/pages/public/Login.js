@@ -66,9 +66,8 @@ const Login = () => {
           toast.error(googleLoginResponse.mes || 'Đăng nhập thất bại');
         }
       }
-      console.log(response)
     },
-    onFailure: error => console.log(error),
+    onFailure: error => (console.log(error)),
   }
 )
   
