@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useLocation } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { apiGetProductById } from '../apis/product';
 import { apiAddToUserCart } from '../apis/cart'
 import { apiGetCurrent } from '../apis/user'
@@ -7,6 +7,11 @@ import ProductPhone from './ProductPhone';
 import ProductLaptop from './ProductLaptop';
 import ProductHeadphone from './ProductHeadphone';
 import ProductTablet from './ProductTablet';
+import ProductSmartWatch from './ProductSmartWatch';
+import ProductMouse from './ProductMouse';
+import ProductKeyboard from './ProductKeyboard';
+import ProductCharger from './ProductCharger';
+import ProductPowerBank from './ProductPowerBank';
 import '../css/Detail.css';
 
 const DetailProduct = () => {
@@ -140,6 +145,10 @@ const DetailProduct = () => {
             <div className="field">RAM/ROM:</div>
             <div className="desc">{products.ramRom}</div>
           </div>
+          <div className="detail-product-item">
+            <div className="field">Thẻ SIM:</div>
+            <div className="desc">{products.sim}</div>
+          </div>
         </>
       );
     } else if (products.__t === "laptop") {
@@ -179,16 +188,16 @@ const DetailProduct = () => {
       return (
         <>
           <div className="detail-product-item">
+            <div className="field">Chứng nhận:</div>
+            <div className="desc">{products.certificate}</div>
+          </div>
+          <div className="detail-product-item">
             <div className="field">Loại tai nghe:</div>
-            <div className="desc">{products.type}</div>
+            <div className="desc">{products.typeOfHeadphone}</div>
           </div>
           <div className="detail-product-item">
             <div className="field">Pin:</div>
             <div className="desc">{products.battery}</div>
-          </div>
-          <div className="detail-product-item">
-            <div className="field">Màu sắc:</div>
-            <div className="desc">{products.color}</div>
           </div>
           <div className="detail-product-item">
             <div className="field">Kết nối:</div>
@@ -218,6 +227,107 @@ const DetailProduct = () => {
           <div className="detail-product-item">
             <div className="field">Kết nối:</div>
             <div className="desc">{products.connection}</div>
+          </div>
+          <div className="detail-product-item">
+            <div className="field">Pin:</div>
+            <div className="desc">{products.battery}</div>
+          </div>
+          <div className="detail-product-item">
+            <div className="field">Thẻ SIM:</div>
+            <div className="desc">{products.sim}</div>
+          </div>
+        </>
+      );
+    } else if (products.__t === "charger") {
+      return (
+        <>
+          <div className="detail-product-item">
+            <div className="field">Cổng vào:</div>
+            <div className="desc">{products.input}</div>
+          </div>
+          <div className="detail-product-item">
+            <div className="field">Cổng ra:</div>
+            <div className="desc">{products.output}</div>
+          </div>
+        </>
+      );
+    } else if (products.__t === "keyboard") {
+      return (
+        <>
+          <div className="detail-product-item">
+            <div className="field">Kích thước:</div>
+            <div className="desc">{products.size}</div>
+          </div>
+          <div className="detail-product-item">
+            <div className="field">Kết nối:</div>
+            <div className="desc">{products.connection}</div>
+          </div>
+          <div className="detail-product-item">
+            <div className="field">Bố cục:</div>
+            <div className="desc">{products.layout}</div>
+          </div>
+        </>
+      );
+    } else if (products.__t === "powerbank") {
+      return (
+        <>
+          <div className="detail-product-item">
+            <div className="field">Dung lượng pin:</div>
+            <div className="desc">{products.capacity}</div>
+          </div>
+          <div className="detail-product-item">
+            <div className="field">Cổng vào:</div>
+            <div className="desc">{products.input}</div>
+          </div>
+          <div className="detail-product-item">
+            <div className="field">Cổng ra:</div>
+            <div className="desc">{products.output}</div>
+          </div>
+          <div className="detail-product-item">
+            <div className="field">Số cổng sạc:</div>
+            <div className="desc">{products.numOfPorts}</div>
+          </div>
+        </>
+      );
+    } else if (products.__t === "smartwatch") {
+      return (
+        <>
+          <div className="detail-product-item">
+            <div className="field">Màn hình:</div>
+            <div className="desc">{products.screen}</div>
+          </div>
+          <div className="detail-product-item">
+            <div className="field">Pin:</div>
+            <div className="desc">{products.battery}</div>
+          </div>
+          <div className="detail-product-item">
+            <div className="field">Chứng nhận:</div>
+            <div className="desc">{products.certificate}</div>
+          </div>
+          <div className="detail-product-item">
+            <div className="field">Kết nối:</div>
+            <div className="desc">{products.connection}</div>
+          </div>
+        </>
+      );
+    } else if (products.__t === "mouse") {
+      return (
+        <>
+          <div className="detail-product-item">
+            <div className="field">Pin:</div>
+            <div className="desc">{products.battery}</div>
+          </div>
+          <div className="detail-product-item">
+            <div className="field">Kết nối:</div>
+            <div className="desc">{products.connection}</div>
+          </div>
+          <div className="detail-product-item">
+            <div className="field">Cảm biến:</div>
+            <div className="desc">{products.sensor}</div>
+          </div>
+          <div className="detail-product-item">
+            <div className="field">Trọng lượng:</div>
+            <div className="desc">{products.weight}</div>
           </div>
         </>
       );
@@ -294,20 +404,20 @@ const DetailProduct = () => {
               </div>
             </div>
 
-            <div className="flex items-center justify-between gap-4 px-5 py-5">
-              <img src="/1.png" alt="Image 1" className="object-cover w-24 h-24 rounded-lg shadow-md" />
-              <img src="/2.png" alt="Image 2" className="object-cover w-24 h-24 rounded-lg shadow-md" />
-              <img src="/3.png" alt="Image 3" className="object-cover w-24 h-24 rounded-lg shadow-md" />
-              <img src="/4.png" alt="Image 4" className="object-cover w-24 h-24 rounded-lg shadow-md" />
-              <img src="/5.png" alt="Image 5" className="object-cover w-24 h-24 rounded-lg shadow-md" />
+            <div className="flex justify-between items-center gap-4 px-5 py-5">
+              <img src="/1.png" alt="Image1" className="w-24 h-24 object-cover rounded-lg shadow-md" />
+              <img src="/2.png" alt="Image2" className="w-24 h-24 object-cover rounded-lg shadow-md" />
+              <img src="/3.png" alt="Image3" className="w-24 h-24 object-cover rounded-lg shadow-md" />
+              <img src="/4.png" alt="Image4" className="w-24 h-24 object-cover rounded-lg shadow-md" />
+              <img src="/5.png" alt="Image5" className="w-24 h-24 object-cover rounded-lg shadow-md" />
             </div>
 
           </div>
         </div>
 
-        <div className="p-4 mt-2 bg-gray-100 rounded-md shadow-md product-describe">
-          <h2 className="mb-2 text-lg font-semibold text-gray-800">Thông tin mô tả</h2>
-          <ul className="text-gray-600 list-disc list-inside">
+        <div className="product-describe bg-gray-100 p-4 rounded-md shadow-md mt-2">
+          <h2 className="text-lg font-semibold text-gray-800 mb-2">Thông tin mô tả</h2>
+          <ul className="list-disc list-inside text-gray-600">
             <p>{products.description}</p>
           </ul>
         </div>
@@ -327,13 +437,13 @@ const DetailProduct = () => {
           </div>
         )}
 
-        <div className="flex items-center justify-between gap-4 py-4">
-          <img src="/6.png" alt="Anh" className="object-cover h-12 rounded-lg shadow-md w-36" />
-          <img src="/7.png" alt="Anh" className="object-cover h-12 rounded-lg shadow-md w-36" />
-          <img src="/8.png" alt="Anh" className="object-cover h-12 rounded-lg shadow-md w-36" />
-          <img src="/9.png" alt="Anh" className="object-cover h-12 rounded-lg shadow-md w-36" />
-          <img src="/10.png" alt="Anh" className="object-cover h-12 rounded-lg shadow-md w-36" />
-          <img src="/11.png" alt="Anh" className="object-cover h-12 rounded-lg shadow-md w-50" />
+        <div className="flex justify-between items-center gap-4 py-4">
+          <img src="/6.png" alt="image1" className="w-36 h-12 object-cover rounded-lg shadow-md" />
+          <img src="/7.png" alt="image2" className="w-40 h-12 object-cover rounded-lg shadow-md" />
+          <img src="/8.png" alt="image3" className="w-36 h-12 object-cover rounded-lg shadow-md" />
+          <img src="/9.png" alt="image4" className="w-36 h-12 object-cover rounded-lg shadow-md" />
+          <img src="/10.png" alt="image5" className="w-36 h-12 object-cover rounded-lg shadow-md" />
+          <img src="/11.png" alt="image6" className="w-50 h-12 object-cover rounded-lg shadow-md" />
         </div>
 
         <div className="related-products">
@@ -342,6 +452,11 @@ const DetailProduct = () => {
           {products.__t === "laptop" && <ProductLaptop />}
           {products.__t === "headphone" && <ProductHeadphone />}
           {products.__t === "tablet" && <ProductTablet />}
+          {products.__t === "smartwatch" && <ProductSmartWatch />}
+          {products.__t === "powerbank" && <ProductPowerBank />}
+          {products.__t === "charger" && <ProductCharger />}
+          {products.__t === "keyboard" && <ProductKeyboard />}
+          {products.__t === "mouse" && <ProductMouse />}
         </div>
       </div>
 

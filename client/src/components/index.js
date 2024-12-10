@@ -17,4 +17,9 @@ export { default as Select } from './Select';
 export { default as DetailCart } from './DetailCart';
 export { default as AdminSidebar } from './sidebars/AdminSidebar';
 export { default as YourNeed } from './YourNeed';
-export { default as BannerProduct } from './BannerProduct'
+export { default as BannerProduct } from './BannerProduct';
+export { default as ProductCharger } from './ProductCharger';
+export { default as ProductSmartWatch } from './ProductSmartWatch';
+export { default as ProductPowerBank } from './ProductPowerBank';
+export { default as ProductMouse } from './ProductMouse';
+export { default as ProductKeyboard } from './ProductKeyboard';
