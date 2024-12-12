@@ -30,7 +30,7 @@ const ProductPhone = () => {
   };
 
   return (
-    <div className="w-full p-6">
+    <div className="w-full pt-6">
       <h1 className="text-left text-2xl font-bold uppercase mb-5">Điện Thoại</h1>
       {error && <p className="text-red-500 text-center font-bold mb-5">Error: {error}</p>}
       <div className="grid grid-cols-5 gap-6">
@@ -51,7 +51,7 @@ const ProductPhone = () => {
                 <img
                   src={phone.imageLink}
                   alt={phone.name}
-                  className="w-full h-64 object-cover bg-white rounded-md"
+                  className="w-48 h-48 object-contain bg-white rounded-md"
                 />
               </div>
 

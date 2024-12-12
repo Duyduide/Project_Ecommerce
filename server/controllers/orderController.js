@@ -1,14 +1,41 @@
 const {Order} = require('../models/order');
+const {Product} = require('../models/product');
 
 const createOrder = async (req, res) => {
     try {
         const { orderData } = req.body;
 
         const order = new Order(orderData);
+        for (let item of order.productList) {
+            const product = await Product.findById(item.productId);
+            if (product) {
+                product.stock -= item.quantity;
+                await product.save();
+            }
+        }
         await order.save();
         res.status(201).json({
             success: order? true : false,
             orderData: order? order : 'Cannot create order'
+        });
+    } catch (error) {
+        res.status(500).json({ success: false, orderData: error.message });
+    }
+};
+
+const queryAllOrders = async (req, res) => {
+    try {
+        const { page, limit, sortField, sortOrder } = req.query;
+
+        let sort = {};
+        sort[sortField] = sortOrder === 'ascend' ? 1 : -1;
+
+        const orders = await Order.find().sort(sort).limit(limit * 1).skip((page - 1) * limit);
+        const totalOrders = await Order.countDocuments();
+        res.status(200).json({
+            success: orders? true : false,
+            totalOrders: totalOrders,
+            orderData: orders? orders : 'Cannot get order'
         });
     } catch (error) {
         res.status(500).json({ success: false, orderData: error.message });
@@ -29,19 +56,56 @@ const queryOrderOfUser = async (req, res) => {
         res.status(500).json({ success: false, orderData: error.message });
     }
 }
+const getOrdersByPayOSOrderId = async (req, res) => {
+    try {
+        const { payOSOrderId } = req.params;
 
+        const orders = await Order.find({ payOSOrderId: payOSOrderId });
+
+        res.status(200).json({
+            success: orders? true : false,
+            orderData: orders? orders : 'Cannot get order'
+        });
+    } catch (error) {
+        res.status(500).json({ success: false, orderData: error.message });
+    }
+}
 const queryOrderById = async (req, res) => {
     try {
         const { orderId } = req.params;
 
-        const order = await Order.findById(orderId);
+        // Lấy đơn hàng và populate thông tin sản phẩm từ mô hình Product
+        const order = await Order.findById(orderId)
+            .populate({
+                path: 'productList.productId',  // Tên trường trong productList chứa productId
+                select: 'name price imageLink'       // Chỉ chọn các trường cần thiết của Product
+            });
+
+        if (!order) {
+            return res.status(404).json({ success: false, orderData: 'Order not found' });
+        }
+
+        res.status(200).json({
+            success: true,
+            orderData: order
+        });
+    } catch (error) {
+        res.status(500).json({ success: false, orderData: error.message });
+    }
+};
+
+const updateOrderById = async (req, res) => {
+    try {
+        const { orderId } = req.params;
+        const { orderData } = req.body;
+
+        const order = await Order.findByIdAndUpdate(orderId, orderData, { new: true });
 
         res.status(200).json({
             success: order? true : false,
-            orderData: order? order : 'Cannot get order'
+            orderData: order? order : 'Cannot update order'
         });
-    }
-    catch (error) {
+    } catch (error) {
         res.status(500).json({ success: false, orderData: error.message });
     }
 };
@@ -53,6 +117,13 @@ const cancelOrderById = async (req, res) => {
         const order = await Order.findByIdAndUpdate(orderId, { status: 'Cancelled' });
         if (!order) {
             return res.status(404).json({ success: false,  orderData: 'Order not found' });
+        }
+        for (let item of order.productList) {
+            const product = await Product.findById(item.productId);
+            if (product) {
+                product.stock += item.quantity;
+                await product.save();
+            }
         }
 
         res.status(200).json({
@@ -84,8 +155,11 @@ const deleteOrderById = async (req, res) => {
 
 module.exports = {
     createOrder,
+    queryAllOrders,
     queryOrderOfUser,
     queryOrderById,
     cancelOrderById,
-    deleteOrderById
+    deleteOrderById,
+    updateOrderById,
+    getOrdersByPayOSOrderId
 }

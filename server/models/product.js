@@ -60,7 +60,7 @@ const productSchema = new mongoose.Schema({
 }
 );
 
-const Product = mongoose.model('Product', productSchema);
+const Product = mongoose.model('product', productSchema);
 
 const phoneSchema = new mongoose.Schema({
     camera: {
@@ -93,7 +93,7 @@ const phoneSchema = new mongoose.Schema({
     }
 });
 
-const Phone = Product.discriminator('Phone', phoneSchema);
+const Phone = Product.discriminator('phone', phoneSchema);
 
 const laptopSchema = new mongoose.Schema({
     cpu: {
@@ -126,7 +126,7 @@ const laptopSchema = new mongoose.Schema({
     }
 });
 
-const Laptop = Product.discriminator('Laptop', laptopSchema);
+const Laptop = Product.discriminator('laptop', laptopSchema);
 
 const tabletSchema=new mongoose.Schema({
     camera: {
@@ -159,7 +159,7 @@ const tabletSchema=new mongoose.Schema({
     }
 });
 
-const Tablet = Product.discriminator('Tablet', tabletSchema);
+const Tablet = Product.discriminator('tablet', tabletSchema);
 
 const smartWatchSchema=new mongoose.Schema({
     battery: {
@@ -180,7 +180,7 @@ const smartWatchSchema=new mongoose.Schema({
     }
 });
 
-const SmartWatch = Product.discriminator('SmartWatch', smartWatchSchema);
+const SmartWatch = Product.discriminator('smartwatch', smartWatchSchema);
 
 const powerbankSchema=new mongoose.Schema({
     capacity: {
@@ -201,7 +201,7 @@ const powerbankSchema=new mongoose.Schema({
     }
 });
 
-const PowerBank = Product.discriminator('PowerBank', powerbankSchema);
+const PowerBank = Product.discriminator('powerbank', powerbankSchema);
 
 const headphoneSchema=new mongoose.Schema({
     battery: {
@@ -222,7 +222,7 @@ const headphoneSchema=new mongoose.Schema({
     }
 });
 
-const Headphone = Product.discriminator('Headphone', headphoneSchema);
+const Headphone = Product.discriminator('headphone', headphoneSchema);
 
 const chargerSchema=new mongoose.Schema({
     input: {
@@ -239,7 +239,7 @@ const chargerSchema=new mongoose.Schema({
     }
 });
 
-const Charger = Product.discriminator('Charger', chargerSchema);
+const Charger = Product.discriminator('charger', chargerSchema);
 
 const caseSchema=new mongoose.Schema({
     material: {
@@ -250,13 +250,13 @@ const caseSchema=new mongoose.Schema({
         type: String,
         trim: true
     },
-    typeOfCase: {
+    productSupported: {
         type: String,
         trim: true
     }
 });
 
-const Case = Product.discriminator('Case', caseSchema);
+const Case = Product.discriminator('case', caseSchema);
 
 const mouseSchema=new mongoose.Schema({
     connection: {
@@ -277,7 +277,7 @@ const mouseSchema=new mongoose.Schema({
     }
 });
 
-const Mouse = Product.discriminator('Mouse', mouseSchema);
+const Mouse = Product.discriminator('mouse', mouseSchema);
 
 const keyboardSchema=new mongoose.Schema({
     connection: {
@@ -294,7 +294,6 @@ const keyboardSchema=new mongoose.Schema({
     }
 });
 
-const Keyboard = Product.discriminator('Keyboard', keyboardSchema);
+const Keyboard = Product.discriminator('keyboard', keyboardSchema);
 
 module.exports = { Product, Phone, Laptop, Tablet, SmartWatch, PowerBank, Headphone, Charger, Case, Mouse, Keyboard };
-

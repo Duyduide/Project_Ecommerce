@@ -11,7 +11,7 @@ const orderSchema = new mongoose.Schema({
         required: true,
         trim: true,
         default: 'Processing',
-        enum: ['Delivering', 'Delivered', 'Cancelled']
+        enum: ['Processing', 'Delivering', 'Delivered', 'Cancelled']
     },
     address: {
         type: String,
@@ -23,7 +23,17 @@ const orderSchema = new mongoose.Schema({
         required: true,
         trim: true
     },
-    paymentStatus: {
+    name: {
+        type: String,
+        required: true,
+        trim: true
+    },
+    email: {
+        type: String,
+        required: true,
+        trim: true
+    },
+    phone: {
         type: String,
         required: true,
         trim: true
@@ -37,10 +47,14 @@ const orderSchema = new mongoose.Schema({
         ref: 'User' ,
         required: true
     },
+    payOSOrderId: {
+        type: String,
+        default: ''
+    },
     productList: [{
         productId: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'Product',
+            ref: 'product',
             required: true
         },
         quantity: {

@@ -1,15 +1,12 @@
-import React, {useEffect, useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import Select from './Select'
 import { apiGetPublicProvinces, apiGetPublicDistrict } from '../apis/app'
-import Swal from 'sweetalert2'
 
-const Address = () => {
-
+const Address = ({ onAddressChange }) => {
   const [provinces, setProvinces] = useState([]);
   const [districts, setDistricts] = useState([]);
   const [province, setProvince] = useState();
   const [district, setDistrict] = useState();
-
   const [reset, setReset] = useState(false);
   const [houseNumber, setHouseNumber] = useState('');
 
@@ -18,15 +15,15 @@ const Address = () => {
     if(response.status === 200){
       setProvinces(response?.data?.results)
     }
-      
   }
+
   const fetchPublicDistrict = async () => {
     const response = await apiGetPublicDistrict(province)
     if(response.status === 200) {
       setDistricts(response?.data?.results)
     }
-    
   }
+
   useEffect(() => { 
     fetchPublicProvinces()
   }, [])
@@ -47,64 +44,43 @@ const Address = () => {
       ? provinces?.find((item) => item.province_id === province)?.province_name
       : '',
   ]
-    .filter(Boolean) // Remove empty strings
-    .join(', '); // Join with comma and space
+    .filter(Boolean)
+    .join(', ');
 
-  // hàm trả về giá trị của địa chỉ khi bấm submit
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!houseNumber || !district || !province) {
-      Swal.fire('Thiếu thông tin địa chỉ', 'Vui lòng nhập đầy đủ địa chỉ trước khi xác nhận.', 'error' );
-      return;
-    }
-    console.log(deliveryAddress);
-  };
+  // Update parent component whenever address changes
+  useEffect(() => {
+    onAddressChange && onAddressChange(deliveryAddress);
+  }, [deliveryAddress, onAddressChange]);
 
   return (
-
     <div className="flex gap-8">
       <div className="flex flex-col flex-1 gap-8">
-        {/* Ô chọn tỉnh/thành phố và quận/huyện */}
         <div className="flex items-center gap-4">
           <Select type="province" value={province} setValue={setProvince} label="Tỉnh/Thành phố" options={provinces} />
           <Select reset={reset} type="district" value={district} setValue={setDistrict} label="Quận/Huyện" options={districts} />
         </div>
-        {/* Nhập số nhà, tên đường */}
         <div className="flex flex-col gap-2">
-          <label className="font-medium font-semibold" htmlFor="house-number">Số nhà, tên đường</label>
+          <label className="font-semibold" htmlFor="house-number">Số nhà, tên đường</label>
           <input
-            type="text"
             id="house-number"
             placeholder="Ví dụ: 268 Lý Thường Kiệt, Phường 14"
-            className="border border-gray-200 shadow-inner outline-none rounded-md p-2 w-full"
+            className="w-full p-2 border border-gray-200 rounded-md shadow-inner outline-none"
             value={houseNumber}
             onChange={(e) => setHouseNumber(e.target.value)}
           />
         </div>
-        {/* Hiển thị địa chỉ giao hàng */}
         <div className="flex flex-col gap-2">
-          <label className="font-medium font-semibold" htmlFor="exactly-address">Địa chỉ giao hàng</label>
+          <label className="font-semibold" htmlFor="exactly-address">Địa chỉ giao hàng</label>
           <input
-            type="text"
             id="exactly-address"
             readOnly
-            className="border border-gray-200 bg-gray-300 shadow-inner outline-none rounded-md p-2 w-full"
-            rows={3}
+            className="w-full p-2 bg-gray-300 border border-gray-200 rounded-md shadow-inner outline-none"
             value={deliveryAddress}
           />
         </div>
-        {/* <button
-          type="submit"
-          className="mt-4 bg-main text-white px-4 py-2 rounded-md hover:bg-main-dark w-full" // Thêm class w-full để button có chiều rộng đầy đủ
-          onClick={handleSubmit}
-        >
-          Xác nhận Địa chỉ
-        </button> */}
       </div>
     </div>
   );
 };
 
-
-
-export default Address
+export default Address;

@@ -1,5 +1,4 @@
 const { Product, Phone, Laptop, Tablet, SmartWatch, PowerBank, Headphone, Charger, Case, Mouse, Keyboard } = require('../models/product');
-const asyncHandler = require('express-async-handler');  
 
 const queryAllProducts = async (req, res) => {
     try {
@@ -21,17 +20,21 @@ const queryProductMain = async (req, res) => {
         const { page, sortField, sortOrder, pageSize = 20 } = req.query;
         let sort = {};
         sort[sortField] = sortOrder === 'ascend' ? 1 : -1;
-        if (category==='All') {
+        if (category==='all') {
             const products = await Product.find().sort(sort).skip((page - 1) * pageSize).limit(pageSize);
+            const totalProducts = await Product.countDocuments();
             res.status(200).json({
                 success: products? true: false,
+                totalProducts: totalProducts ? totalProducts : 0,
                 productData: products? products: 'Cannot get products'
             });
         }
         else{
             const products = await Product.find({ __t: category }).sort(sort).skip((page - 1) * pageSize).limit(pageSize);
+            const totalProducts = await Product.countDocuments({ __t: category });
             res.status(200).json({
                 success: products? true: false,
+                totalProducts: totalProducts ? totalProducts : 0,
                 productData: products? products: 'Cannot get products'
             });
         }
@@ -40,40 +43,62 @@ const queryProductMain = async (req, res) => {
     }
 };
 
+const queryProductByName = async (req, res) => {
+    try {
+        const { productName } = req.params;
+        if (!productName) {
+            return res.status(400).json({ success: false, productData: 'Product name is required' });
+        }
+
+        const regex = new RegExp(productName, 'i'); // Case-insensitive search
+        const products = await Product.find({ name: { $regex: regex } });
+
+        // if (products.length > 0) {
+        res.status(200).json({ success: true, productData: products });
+        // } else {
+        //     res.status(404).json({ success: false, productData: 'No products found with the given name' });
+        // }
+    } catch (error) {
+        res.status(500).json({ success: false, productData: error.message });
+    }
+};
+
+module.exports = { queryProductByName };
+
 const queryProductByType = async (req, res) => {
     try {
-        const { productType } = req.body;
+        const { productType } = req.params;
 
         let products;
         switch (productType) {
-            case 'Phone':
+            case 'phone':
                 products = await Phone.find().sort({ createdAt: -1 });
                 break;
-            case 'Laptop':
+            case 'laptop':
                 products = await Laptop.find().sort({ createdAt: -1 });
                 break;
-            case 'Tablet':
+            case 'tablet':
                 products = await Tablet.find().sort({ createdAt: -1 });
                 break;
-            case 'SmartWatch':
+            case 'smartwatch':
                 products = await SmartWatch.find().sort({ createdAt: -1 });
                 break;
-            case 'PowerBank':
+            case 'powerbank':
                 products = await PowerBank.find().sort({ createdAt: -1 });
                 break;
-            case 'Headphone':
+            case 'headphone':
                 products = await Headphone.find().sort({ createdAt: -1 });
                 break;
-            case 'Charger':
+            case 'charger':
                 products = await Charger.find().sort({ createdAt: -1 });
                 break;
-            case 'Case':
+            case 'case':
                 products = await Case.find().sort({ createdAt: -1 });
                 break;
-            case 'Mouse':
+            case 'mouse':
                 products = await Mouse.find().sort({ createdAt: -1 });
                 break;
-            case 'Keyboard':
+            case 'keyboard':
                 products = await Keyboard.find().sort({ createdAt: -1 });
                 break;
             default:
@@ -289,5 +314,6 @@ module.exports = {
     queryProductByManufacturer,
     filterProducts,
     queryProductBySlug,
-    queryProductMain
+    queryProductMain,
+    queryProductByName
 }

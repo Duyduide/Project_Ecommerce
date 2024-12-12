@@ -10,10 +10,13 @@ router.post('/refreshToken', userController.refreshAccessToken)
 router.get('/logout', userController.logOut);  
 router.post('/forgotPassword', userController.forgotPassword);
 router.put('/resetPassword', userController.resetPassword);
-router.get('/', [ verifyAccessToken, isAdmin ], userController.getUsers);
-router.delete('/', [verifyAccessToken, isAdmin], userController.deleteUser)
 router.put('/current', [verifyAccessToken], userController.updateUser)
-router.put('/:uid', [verifyAccessToken, isAdmin], userController.updateUserByAdmin)
+// ADMIN
+router.get('/', [ verifyAccessToken, isAdmin ], userController.getUsers);
+router.delete('/', [verifyAccessToken, isAdmin], userController.deleteUser);
+router.put('/:uid', [verifyAccessToken, isAdmin], userController.updateUserByAdmin);
+// GOOGLE
+router.post('/loginWithGoogle', userController.loginWithGoogle);
 
 module.exports = router;
 

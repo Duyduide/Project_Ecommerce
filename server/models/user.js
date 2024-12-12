@@ -1,15 +1,20 @@
 const mongoose = require('mongoose'); 
 const bcrypt = require('bcrypt');
 const crypto = require('crypto');
+const { type } = require('os');
+const { stringify } = require('querystring');
 // Declare the Schema of the Mongo model
 let userSchema = new mongoose.Schema({
+    googleId: {
+        type: String,
+        unique: true,
+        sparse: true  // Allows null/undefined values
+      },
     firstname:{
         type:String,
-        required:true,
     },
     lastname:{
         type:String,
-        required:true,
     },
     email:{
         type:String,
@@ -17,24 +22,25 @@ let userSchema = new mongoose.Schema({
         unique:true,
     },
     mobile:{
-        type:String,
-        unique:true,
-        required:true,
+        type: String,
+        unique: true,
+        sparse: true  // Allows null/undefined values
     },
     password:{
         type:String,
-        required:true,
+        required: () => { !this.googleId }, // Only required if not OAuth
     },
     role: {
         type: String,
         default: 'user',
     },
     cart: [{
-        productId: { type: mongoose.Types.ObjectId, ref: 'Product' },
+        productId: { type: mongoose.Types.ObjectId, ref: 'product' },
         quantity: { type: Number, required: true }
     }],
-    address: [{ type: mongoose.Types.ObjectId, ref: 'Address'}],
-    wishlist: [{ type: mongoose.Types.ObjectId, ref: 'Product'}],
+    address: {
+        type: String,
+    },
     refreshToken: {
         type: String,
     },

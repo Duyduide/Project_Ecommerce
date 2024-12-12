@@ -2,13 +2,14 @@ const path = {
     PUBLIC: '/',
     HOME: '',
     ALL: '*',
-    LOGIN: '/login',
-    PRODUCT: '/product',
-    DETAIL_PRODUCT: '/product/:productId', 
-    FINAL_REGISTER: '/finalRegister/:status',
-    RESET_PASSWORD: '/reset-password/:token',
+    LOGIN: 'login',
+    PRODUCT: ':category',
+    DETAIL_PRODUCT: 'product/:productId', 
+    FINAL_REGISTER: 'finalRegister/:status',
+    RESET_PASSWORD: 'reset-password/:token',
     DETAIL_CART: '/detail-cart',
     CHECKOUT: '/checkout',
+    PAYMENT_RESULT: '/payment-result/:orderCode',
 
     // ADMIN
     ADMIN: 'admin',
@@ -21,6 +22,8 @@ const path = {
     // MEMBER
     MEMBER: 'member',
     PERSONAL: 'personal',
+    ORDER_HISTORY: 'order-history',
+    ORDER_HISTORY_DETAIL: 'order-history/:orderId',
 }
 
 export default path;

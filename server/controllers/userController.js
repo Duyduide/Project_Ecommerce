@@ -1,6 +1,6 @@
 const User = require('../models/user');
 const asyncHandler = require('express-async-handler');
-const {generateAccessToken, generateRefreshToken} = require('../middlewares/jwt');
+const { generateAccessToken, generateRefreshToken } = require('../middlewares/jwt');
 const jwt = require('jsonwebtoken');
 const sendMail = require('../utils/sendMail');
 const crypto = require('crypto');
@@ -89,7 +89,7 @@ const login = asyncHandler(async (req, res) => {
 // Hàm lấy thông tin user hiện tại (login và xác thực người dùng)
 const getCurrent = asyncHandler(async(req, res) => {
     const { _id } = req.user;
-    const user = await User.findById(_id).select('-password -refreshToken -role ');
+    const user = await User.findById(_id).select('-password -refreshToken');
     return res.status(200).json({
         success: user ? true : false,
         rs: user ? user : 'User not found'
@@ -199,13 +199,53 @@ const resetPassword = asyncHandler(async (req, res) => {
 
 // Hàm lấy thông tin tất cả người dùng [quyền admin]
 const getUsers = asyncHandler(async (req, res) => {
-    const response = await User.find().select('-refreshToken -password -role')
-    return res.status(200).json({
-        success: response ? true : false,
-        users: response
-    })
-})
+    const { page, limit, sortField, sortOrder } = req.query;
+    let sort = {};
+    sort[sortField] = sortOrder === 'ascend' ? 1 : -1;
+    const users = await User.find()
+        .sort(sort)
+        .select('-refreshToken -password')
+        .limit(limit * 1)
+        .skip((page - 1) * limit);
 
+    const totalUsers = await User.countDocuments();
+
+    return res.status(200).json({
+        success: users ? true : false,
+        data: {
+            users,
+            totalUsers
+        }
+    });
+});
+
+const loginWithGoogle = asyncHandler(async (req, res) => {
+    const { id, given_name, family_name, email } = req.body;
+    let user = await User.findOne({ email });
+    if(!user) {
+        user = await User.create({
+            googleId: id,
+            firstname: given_name,
+            lastname: family_name,
+            email
+        })
+    }
+    else {
+        user.googleId = id;
+        user.firstname = given_name;
+        user.lastname = family_name
+        await user.save();
+    }
+    const accessToken = generateAccessToken(user._id, user.role);
+    const refreshToken = generateRefreshToken(user._id);
+    await User.findByIdAndUpdate(user._id, { refreshToken }, { new: true });
+    res.cookie('refreshToken', refreshToken, { httpOnly: true, maxAge: 7*24*60*60*1000 });
+    return res.json({
+        success: true,
+        accessToken,
+        userData: user
+    })
+});
 module.exports = {
     register,
     login,
@@ -218,5 +258,6 @@ module.exports = {
     deleteUser,
     updateUser,
     updateUserByAdmin,
-    finalRegister
+    finalRegister,
+    loginWithGoogle
 }

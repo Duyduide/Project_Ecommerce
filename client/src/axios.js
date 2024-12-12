@@ -32,3 +32,9 @@ instance.interceptors.response.use(function (response) {
   });
 
 export default instance;
+
+export const endpoints = {
+  auth: {
+    getCredentialFromAccessToken: 'https://www.googleapis.com/oauth2/v1/userinfo?access_token=',
+  }
+}
