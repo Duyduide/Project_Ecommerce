@@ -43,6 +43,7 @@ const Login = () => {
       toast.error('Vui lòng nhập email');
       return;
     }
+
     const toastId = toast.loading('Đang gửi email...');
     try {
       const response = await apiForgotPassword({email});

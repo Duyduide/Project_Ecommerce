@@ -1,18 +1,21 @@
 import React, { useState, useEffect } from "react";
-import { Link } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
 import { apiQueryOrderOfUser } from '../../apis/order';
 import { apiQueryOrderById } from '../../apis/order';
-import { apiGetCurrent } from '../../apis/user';
+import { useSelector } from "react-redux";
 
 const OrderHistory = () => {
-  
-  const [currentUser, setCurrentUser] = useState(null);
   const [orders, setOrders] = useState([]);
   const [orderDetails, setOrderDetails] = useState({});  // State để lưu chi tiết đơn hàng
   const [error, setError] = useState(null);
   const navigate = useNavigate();
- 
+  const statusMap = {
+    Processing: { color: 'text-yellow-500', background: 'bg-yellow-100', name: 'Đang xử lý' },
+    Delivering: { color: 'text-blue-500', background: 'bg-purple-100', name: 'Đang giao hàng' },
+    Delivered: { color: 'text-green-500', background: 'bg-green-100', name: 'Đã giao hàng thành công' },
+    Cancelled: { color: 'text-red-500', background: 'bg-red-100', name: 'Đã hủy' },
+    // Add more statuses if needed
+  };
   const handleOrderClick = async (orderId) => {
     try {
       const details = await fetchOrderDetails(orderId);
@@ -23,20 +26,8 @@ const OrderHistory = () => {
     }
   };
 
-  // Lấy thông tin người dùng hiện tại
-  const fetchCurrentUser = async () => {
-    try {
-      const results = await apiGetCurrent();
-      if (results.success) {
-        setCurrentUser(results.rs);
-      } else {
-        setError(results.message);
-      }
-    } catch (err) {
-      setError('Lỗi khi tải thông tin người dùng');
-    }
-  };
-
+  // Lấy thông tin người dùng hiện tại bằng redux toolkit
+  const { current } = useSelector(state => state.user);
   const fetchUserOrders = async (userId) => {
     try {
       const response = await apiQueryOrderOfUser(userId);
@@ -66,16 +57,11 @@ const OrderHistory = () => {
     }
   };
 
-  // Xử lý khi component được render
   useEffect(() => {
-    fetchCurrentUser();
-  }, []);
-
-  useEffect(() => {
-    if (currentUser?._id) {
-      fetchUserOrders(currentUser._id);  // Gọi API lấy đơn hàng của người dùng
+    if (current?._id) {
+      fetchUserOrders(current._id);  // Gọi API lấy đơn hàng của người dùng
     }
-  }, [currentUser]);
+  }, [current]);
 
   useEffect(() => {
     if (orders.length > 0) {
@@ -94,20 +80,23 @@ const OrderHistory = () => {
   return (
     <div className="w-full p-4">
       <h1 className="mb-3 text-3xl font-bold text-center text-gray-800">Lịch sử đơn hàng</h1>
-      <p className="mb-6 text-lg text-center text-gray-600">Đơn hàng của bạn: <span className="font-semibold text-blue-600">{orders.length}</span> đơn hàng</p>
-
-  
+      <p className="mb-6 text-lg text-center text-gray-600">Đơn hàng của bạn: 
+        <span className="font-semibold text-blue-600">
+          {orders.length}
+        </span> đơn hàng
+      </p>
       {orders.map((order) => (
         <div
           key={order._id}
           className="p-4 mb-4 border rounded-lg shadow-md bg-gray-50"
         >
        <div className="flex items-center justify-between p-2 mb-4 text-white bg-blue-300 rounded-md">
-       <span className="ml-2"><strong>Mã đơn hàng: </strong>{order.payOSOrderId}</span>
-  <span className="px-4 py-1 mr-6 font-bold text-green-700 bg-white rounded-full">{order.status}</span>
-</div>
-          <p className="mb-4 ml-4"><strong>Thời điểm tạo đơn hàng:</strong> {new Date(order.createdAt).toLocaleDateString("vi-VN")}</p>
-  
+          <span className="ml-2"><strong>Mã đơn hàng: </strong>{order.payOSOrderId}</span>
+          <span className={`px-4 py-1 mr-6 font-bold rounded-full ${statusMap[order.status]?.color} ${statusMap[order.status]?.background} `}>{statusMap[order.status]?.name}</span>
+        </div>
+          <p className="mb-4 ml-4"><strong>Thời điểm tạo đơn hàng:
+            </strong> {new Date(order.createdAt).toLocaleDateString("vi-VN")}
+          </p>
           {/* Hiển thị sản phẩm từ chi tiết đơn hàng */}
           <div className="p-4 bg-gray-50">
             {orderDetails[order?._id]?.productList?.slice(0, 2).map((product) => (
@@ -124,13 +113,11 @@ const OrderHistory = () => {
                 </div>
               </div>
             ))}
-  
             {/* Nếu có nhiều hơn 2 sản phẩm, hiển thị thông báo */}
             {orderDetails[order?._id]?.productList?.length > 2 && (
               <p>... và {orderDetails[order._id]?.productList.length - 2} sản phẩm khác</p>
             )}
           </div>
-  
           <div className="flex items-center justify-between mt-4">
           <div className="flex">
             {/* Nút "Xem chi tiết" */}
@@ -140,17 +127,13 @@ const OrderHistory = () => {
             >
               Xem chi tiết
             </button>
-
           </div>
-
           <p className="mr-5 font-bold">{order?.totalPrice ? order?.totalPrice?.toLocaleString() : "Chưa có giá"}đ</p>
           </div>
         </div>
       ))} 
     </div>
   );
-  
-  
 };
 
 export default OrderHistory;

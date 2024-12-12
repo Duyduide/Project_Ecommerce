@@ -28,8 +28,7 @@ const ManageOrders = () => {
 
     const fetchOrders = async () => {
         setLoading(true);
-        const response = await apiQueryAllOrders({page: currentPage, limit: pageSize});
-
+        const response = await apiQueryAllOrders(currentPage, pageSize);
         if (response.success) {
             setOrders(response.orderData);
             setTotalPages(Math.ceil(response.totalOrders / pageSize));

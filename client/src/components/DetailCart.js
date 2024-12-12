@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { apiFetchUserCart, apiDeleteProductFromUserCart, apiChangeUserCartProductQuantity } from '../apis/cart';
 import { apiGetCurrent } from '../apis/user'
 import '../css/Cart.css';
-import { AiFillDelete } from 'react-icons/ai'; 
 import { MdOutlineDelete } from "react-icons/md";
 
 const DetailCart = () => {

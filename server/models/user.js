@@ -1,6 +1,8 @@
 const mongoose = require('mongoose'); 
 const bcrypt = require('bcrypt');
 const crypto = require('crypto');
+const { type } = require('os');
+const { stringify } = require('querystring');
 // Declare the Schema of the Mongo model
 let userSchema = new mongoose.Schema({
     googleId: {
@@ -36,7 +38,9 @@ let userSchema = new mongoose.Schema({
         productId: { type: mongoose.Types.ObjectId, ref: 'product' },
         quantity: { type: Number, required: true }
     }],
-    address: [{ type: mongoose.Types.ObjectId, ref: 'Address'}],
+    address: {
+        type: String,
+    },
     refreshToken: {
         type: String,
     },

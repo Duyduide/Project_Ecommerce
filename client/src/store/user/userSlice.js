@@ -44,6 +44,20 @@ const userSlice = createSlice({
             state.token = null;
             state.mes = 'Phiên đăng nhập đã hết hạn. Hãy đăng nhập lại!'
         });
+        // update current
+        builder.addCase(actions.updateCurrent.pending, (state) => {
+            state.isLoading = true;
+            state.mes = '';
+        })
+        builder.addCase(actions.updateCurrent.fulfilled, (state, action) => {
+            state.isLoading = false;
+            state.current = action.payload;
+            state.mes = 'Cập nhật thông tin thành công!';
+        });
+        builder.addCase(actions.updateCurrent.rejected, (state, action) => {
+            state.isLoading = false;
+            state.mes = action.payload?.message || 'Có lỗi xảy ra khi cập nhật thông tin!';
+        });
     },
 });
 

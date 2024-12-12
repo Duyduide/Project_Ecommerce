@@ -21,19 +21,19 @@ import { FaTabletAlt, FaHeadphonesAlt, FaKeyboard } from "react-icons/fa";
 import { IoBatteryCharging } from "react-icons/io5";
 import { AiOutlineUsb } from "react-icons/ai";
 import { BiSolidDevices } from "react-icons/bi";
-  const categories = [
-    { name: 'Điện thoại', path: '/phone', icon: <IoIosPhonePortrait className="text-blue-500"/> },
-    { name: 'Máy tính xách tay', path: '/laptop' ,icon: <MdLaptopWindows className="text-blue-500"/> },
-    { name: 'Máy tính bảng', path: '/tablet', icon: <FaTabletAlt  className="text-blue-500"/> },
-    { name: 'Đồng hồ thông minh', path: '/smartwatch', icon: <MdLaptopWindows className="text-blue-500"/> },
-    { name: 'Pin dự phòng', path: '/powerback', icon: <IoBatteryCharging  className="text-blue-500"/> },
-    { name: 'Tai nghe', path: '/headphone', icon: <FaHeadphonesAlt  className="text-blue-500"/> },
-    { name: 'Bộ sạc', path: '/charger' ,icon: <AiOutlineUsb className="text-blue-500"/> },
-    { name: 'Ốp bảo vệ', path: '/case', icon: <BiSolidDevices className="text-blue-500" /> },
 
-    { name: 'Chuột', path: '/mouse' ,icon: <MdMouse className="text-blue-500"/>},
-    { name: 'Bàn phím', path: '/keyboard', icon: <FaKeyboard className="text-blue-500"/> }
-  ];
+const categories = [
+  { name: 'Điện thoại', path: '/phone', icon: <IoIosPhonePortrait className="text-blue-500"/> },
+  { name: 'Máy tính xách tay', path: '/laptop' ,icon: <MdLaptopWindows className="text-blue-500"/> },
+  { name: 'Máy tính bảng', path: '/tablet', icon: <FaTabletAlt  className="text-blue-500"/> },
+  { name: 'Đồng hồ thông minh', path: '/smartwatch', icon: <MdLaptopWindows className="text-blue-500"/> },
+  { name: 'Pin dự phòng', path: '/powerbank', icon: <IoBatteryCharging  className="text-blue-500"/> },
+  { name: 'Tai nghe', path: '/headphone', icon: <FaHeadphonesAlt  className="text-blue-500"/> },
+  { name: 'Bộ sạc', path: '/charger' ,icon: <AiOutlineUsb className="text-blue-500"/> },
+  { name: 'Ốp bảo vệ', path: '/case', icon: <BiSolidDevices className="text-blue-500" /> },
+  { name: 'Chuột', path: '/mouse' ,icon: <MdMouse className="text-blue-500"/>},
+  { name: 'Bàn phím', path: '/keyboard', icon: <FaKeyboard className="text-blue-500"/> }
+];
 
 const Navigation = () => {
   const [showProducts, setShowProducts] = useState(false);
@@ -43,6 +43,7 @@ const Navigation = () => {
   const menuRef = useRef(null); // Tạo tham chiếu đến menu
   const { isLoggedIn, current }  = useSelector(state => state.user)
   const [searchParams, setSearchParams] = useSearchParams(); // Use searchParams to manage query parameters in URL
+  
   useEffect(() => { 
     const setTimeoutId = setTimeout(() => { 
       if (isLoggedIn) dispatch(getCurrent())
@@ -73,26 +74,21 @@ const Navigation = () => {
 
   const handleCategoryClick = (path) =>  {
     navigate(path);
-  window.location.reload(); // Tải lại trang
-
+    window.location.reload(); // Tải lại trang
     setShowProducts(false); // Đóng menu sau khi chọn
   };
 
   const handleClickOutside = (event) => {
-    // Nếu click xảy ra bên ngoài menu, ẩn menu
     if (menuRef.current && !menuRef.current.contains(event.target)) {
       setShowProducts(false);
     }
   };
-
   useEffect(() => {
     if (showProducts) {
       document.addEventListener('mousedown', handleClickOutside);
     } else {
       document.removeEventListener('mousedown', handleClickOutside);
     }
-
-    // Dọn dẹp sự kiện khi component unmount
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
@@ -111,27 +107,19 @@ const Navigation = () => {
   };
   const handleCartClick = () => {
     if (!isLoggedIn) {
-      // Nếu chưa đăng nhập, điều hướng đến trang đăng nhập
       navigate(path.LOGIN);
     } else {
-      // Nếu đã đăng nhập, điều hướng đến trang giỏ hàng
       navigate('/detail-cart');
     }
   };
-
-  const userButtonClasses = 
-  "flex items-center gap-2 rounded-md bg-slate-500 bg-opacity-20 px-1 py-2 hover:text-gray-200 text-xs";
+  const userButtonClasses = "flex items-center gap-2 rounded-md bg-slate-500 bg-opacity-20 px-1 py-2 hover:text-gray-200 text-xs";
   return (
     <div className="w-full bg-blue-200">
-      {/* Khung giới hạn nội dung thanh điều hướng */}
       <div className="w-main h-[48px] py-2 mx-auto flex items-center justify-between">
         <div className="flex items-center space-x-8">
-           {/* Trang chủ */}
         <Link to={path.HOME} className="hover:text-gray-200">
           Trang chủ
         </Link>
-
-          {/* Products Dropdown */}
           <div className="relative" ref={menuRef}>
             <button
               className="flex items-center space-x-1 hover:text-gray-200"
@@ -140,39 +128,30 @@ const Navigation = () => {
               <span>Sản phẩm</span>
               <ChevronDown size={20} />
             </button>
-
-            {/* Products Menu */}
           {showProducts && (
             <div className="absolute left-0 z-50 w-64 mt-2 bg-white rounded-md shadow-lg">
               {categories.map((category, index) => (
-  <div
-    key={index}
-    className="flex items-center px-4 py-2 space-x-2 text-gray-800 cursor-pointer hover:bg-gray-100"
-    onClick={() => handleCategoryClick(category.path)}
-  >
-    {/* Biểu tượng */}
-    <span className="text-xl">{category.icon}</span> {/* Hiển thị icon */}
-    {/* Tên danh mục */}
-    <span>{category.name}</span>
-  </div>
-))}
+                <div
+                  key={index}
+                  className="flex items-center px-4 py-2 space-x-2 text-gray-800 cursor-pointer hover:bg-gray-100"
+                  onClick={() => handleCategoryClick(category.path)}
+                >
+                  <span className="text-xl">{category.icon}</span> 
+                  <span>{category.name}</span>
+                </div>
+              ))}
             </div>
           )}
           </div>
-  
-          {/* Order Lookup */}
           <div
             className="cursor-pointer hover:text-gray-200"
             onClick={handleOrderLookup}
           >
-            Tra cứu đơn hàng
+            Kiểm tra đơn hàng
           </div>
         </div>
-  
-     {/* Căn giữa Search Bar */}
       <div className="flex items-center justify-center flex-grow">
         <div className="flex items-center p-1 space-x-2 bg-white border border-white rounded-full">
-          {/* Kính lúp và Search Bar */}
             <input
               placeholder="Tìm kiếm sản phẩm"
               className="px-4 py-1 text-gray-800 rounded-full outline-none w-72"
@@ -187,22 +166,17 @@ const Navigation = () => {
             />
         </div>
       </div>
-    
         <div className="flex items-center space-x-8">
-            {/*Chat ngay*/}
           <div className="flex items-center space-x-2 cursor-pointer hover:text-gray-200">
             <IoChatbubbleEllipsesOutline color='red' size={20} className="h-6 text--800" />
             <span className="text-base">Liên hệ</span> {/* Sử dụng text-base thay vì text-sm */}
           </div>
-          {/* Cart */}
           <div className="relative cursor-pointer hover:text-gray-200" onClick={handleCartClick}>
             <IoCartOutline size={25}/>
             <span className="absolute flex items-center justify-center w-4 h-4 text-xs text-white bg-red-600 rounded-full -top-2 -right-2">
               { isLoggedIn ? current?.cart?.reduce((total, item) => total + item.quantity, 0) : 0 }
             </span>
           </div>
-
-          {/* Login/User Info */}
           {isLoggedIn ? (
           <Menu as="div" className="relative z-10 inline-block text-left">
             <MenuButton className={userButtonClasses}>
@@ -218,7 +192,7 @@ const Navigation = () => {
                   <MenuItem>
                     {({ active }) => (
                       <button
-                        onClick={() => { navigate(`${path.ADMIN}/${path.DASHBOARD}`) }}
+                        onClick={() => { navigate(`${path.ADMIN}/${path.MANAGE_USERS}`) }}
                         className={`${
                           active ? 'bg-gray-100 text-gray-900' : 'text-gray-700'
                         } block w-full text-left px-4 py-2 text-sm`}

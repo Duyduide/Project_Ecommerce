@@ -23,3 +23,4 @@ export { default as ProductSmartWatch } from './ProductSmartWatch';
 export { default as ProductPowerBank } from './ProductPowerBank';
 export { default as ProductMouse } from './ProductMouse';
 export { default as ProductKeyboard } from './ProductKeyboard';
+export { default as MemberSidebar } from './sidebars/MemberSidebar';

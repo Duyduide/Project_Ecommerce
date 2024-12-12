@@ -3,24 +3,17 @@ import icons from './icons'
 
 export const navigation = [
 ]
-const { AiOutlineDashboard, MdOutlineGroups, RiProductHuntLine, TbFileInvoice} = icons;
+const { AiOutlineDashboard, MdOutlineGroups, RiProductHuntLine, TbFileInvoice, UserCog, ShoppingBag} = icons;
 export const adminSidebar = [
     {
         id: 1,
-        type: 'SINGLE',
-        text: 'Tổng quan',
-        path: `/${path.ADMIN}/${path.DASHBOARD}`,
-        icon: <AiOutlineDashboard size={20}/>
-    },
-    {
-        id: 2,
         type: 'SINGLE',
         text: 'Quản lý tài khoản',
         path: `/${path.ADMIN}/${path.MANAGE_USERS}`,
         icon: <MdOutlineGroups size={20}/>
     },
     {
-        id: 3,
+        id: 2,
         type: 'PARENT',
         text: 'Quản lý sản phẩm',
         icon: <RiProductHuntLine size={20}/>,
@@ -36,10 +29,26 @@ export const adminSidebar = [
         ]
     },
     {
-        id: 4,
+        id: 3,
         type: 'SINGLE',
         text: 'Quản lý đơn hàng',
         path: `/${path.ADMIN}/${path.MANAGE_ORDERS}`,
         icon: <TbFileInvoice size={20}/> 
     },
+]
+export const memberSidebar = [
+    {
+        id: 1,
+        type: 'SINGLE',
+        text: 'Thông tin cá nhân',
+        icon: <UserCog size={20}/>,
+        path: `/${path.MEMBER}/${path.PERSONAL}`,
+    },
+    {
+        id: 2,
+        type: 'SINGLE',
+        text: 'Lịch sử đơn hàng',
+        icon: <ShoppingBag size={20}/>,
+        path: `/${path.MEMBER}/${path.ORDER_HISTORY}`,
+    }
 ]

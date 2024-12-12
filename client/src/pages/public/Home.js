@@ -4,7 +4,7 @@ import { Sidebar, Banner, RightBanner, ProductPhone, ProductTablet, ProductHeadp
 const Home = () => {
   return (
     <>
-      <div className="w-main flex flex-row">
+      <div className="flex flex-row w-main">
         {/* Sidebar */}
         <div className='flex flex-col w-[20%] flex-auto'>
           <Sidebar />
@@ -18,11 +18,10 @@ const Home = () => {
           <RightBanner />
         </div>
       </div>
-      <div className='w-main flex flex-col py-10'>
+      <div className='py-10 w-main'>
         <YourNeed />
       </div>
-      
-      <div className='w-main flex flex-col py-10 mt-10'>
+      <div className='flex flex-col py-10 mt-10 w-main'>
         <ProductPhone />
         <ProductLaptop />
         <ProductTablet />

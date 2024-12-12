@@ -138,16 +138,16 @@ const ManageUsers = () => {
       }
   };
     return (
-        <div className="w-main flex relative flex-col py-10 container mx-auto p-6">
+        <div className="container relative flex flex-col p-6 py-10 mx-auto w-main">
             <div className="overflow-x-auto bg-white rounded-lg shadow">
                 <table className="min-w-full table-auto">
-                    <thead className="bg-sky-800 text-white">
+                    <thead className="text-white bg-sky-800">
                         <tr>
-                            <th className="px-6 py-3 text-left text-xs font-medium uppercase">STT</th>
-                            <th className="px-6 py-3 text-left text-xs font-medium uppercase">Thông tin</th>
-                            <th className="px-6 py-3 text-left text-xs font-medium uppercase">Vai trò</th>
-                            <th className="px-6 py-3 text-left text-xs font-medium uppercase">Ngày tạo</th>
-                            <th className="px-6 py-3 text-center text-xs font-medium uppercase">Thao tác</th>
+                            <th className="px-6 py-3 text-xs font-medium text-left uppercase">STT</th>
+                            <th className="px-6 py-3 text-xs font-medium text-left uppercase">Thông tin</th>
+                            <th className="px-6 py-3 text-xs font-medium text-left uppercase">Vai trò</th>
+                            <th className="px-6 py-3 text-xs font-medium text-left uppercase">Ngày tạo</th>
+                            <th className="px-6 py-3 text-xs font-medium text-center uppercase">Thao tác</th>
                         </tr>
                     </thead>
                     <tbody className="bg-white divide-y divide-gray-200">
@@ -162,9 +162,9 @@ const ManageUsers = () => {
                                         {(currentPage - 1) * pageSize + index + 1}
                                     </td>
                                     <td className="px-6 py-4">
-                                        <div className="text-sm font-medium text-gray-900">{`${user.lastname} ${user.firstname}`}</div>
-                                        <div className="text-sm">{user.email}</div>
-                                        <div className="text-sm">{user.mobile}</div>
+                                        <div className="text-sm font-medium text-gray-900">{`${user?.lastname} ${user?.firstname}`}</div>
+                                        <div className="text-sm">{user?.email}</div>
+                                        <div className="text-sm">{user?.mobile}</div>
                                     </td>
                                     <td className="px-6 py-4 text-sm">
                                         <select
@@ -180,20 +180,20 @@ const ManageUsers = () => {
                                           <option value="admin">Quản trị viên</option>
                                         </select>
                                     </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm">
+                                    <td className="px-6 py-4 text-sm whitespace-nowrap">
                                         {new Date(user.createdAt).toLocaleDateString('vi-VN')}
                                     </td>
                                     <td className="px-6 py-4 text-center">
                                         <div className="flex flex-col space-y-2">
                                             <button
                                                 onClick={() => handleUpdate(user._id)}
-                                                className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 transition-colors"
+                                                className="px-3 py-1 text-white transition-colors bg-blue-500 rounded hover:bg-blue-600"
                                             >
                                                 Sửa
                                             </button>
                                             <button
                                                 onClick={() => handleDelete(user._id)}
-                                                className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 transition-colors"
+                                                className="px-3 py-1 text-white transition-colors bg-red-500 rounded hover:bg-red-600"
                                             >
                                                 Xóa
                                             </button>
@@ -207,7 +207,7 @@ const ManageUsers = () => {
             </div>
 
             {/* Pagination */}
-            <div className="mt-6 flex justify-center space-x-2">
+            <div className="flex justify-center mt-6 space-x-2">
                 <button
                     className={`px-4 py-2 rounded ${
                         currentPage === 1 ? 'bg-gray-300 cursor-not-allowed' : 'bg-blue-500 text-white hover:bg-blue-600'
