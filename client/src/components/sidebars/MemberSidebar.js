@@ -20,7 +20,7 @@ const AdminSidebar = () => {
             <Link to="/" className="transition-opacity cursor-pointer hover:opacity-80">
                 <img src={logo} alt='logo' className='w-[150px] object-contain'></img>
             </Link>
-            <span className='text-bold'>Trang quản lý của admin</span>
+            <span className='text-bold'>Trang dành cho người dùng</span>
         </div>
         <div className='flex flex-col gap-6 pt-6 justify'>
             {memberSidebar.map(el => (
