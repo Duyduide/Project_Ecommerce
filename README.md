@@ -32,19 +32,47 @@ Admin can:
 Demonstration video for this project: https://youtu.be/j_oTKTwo7lc?si=3pVBISUTsiH6FLqN
 
 ## How to run this app
+### How to Run the Application
 
-To run the server, first we open a new terminal, run these commands
+Follow these steps to set up and run the application on your local machine:
 
+#### Step 1: Clone the Repository
+Clone the project repository or download it as a ZIP file:
+```bash
+git clone this_project_url 
+# Example: git clone https://github.com/Duyduide/Project_Ecommerce.git
 ```
+
+#### Step 2: Install Dependencies
+Navigate to the respective directories and install the required dependencies:
+```bash
+# Install server dependencies
+cd server
+npm install
+
+# Install client dependencies
+cd ../client
+npm install
+```
+
+#### Step 3: Start the Server
+Open a terminal and start the backend server:
+```bash
 cd server
 npm start
 ```
 
-Then we open another terminal, run these commands to run the frontend:
-
-```
+#### Step 4: Start the Frontend
+In a separate terminal, start the frontend application:
+```bash
 cd client
 npm start
 ```
 
-Open your browser and navigate to http://localhost:3000/. Happy coding!
+#### Step 5: Access the Application
+Open your browser and navigate to:
+```
+http://localhost:3000/
+```
+
+You're all set! Enjoy exploring the application.
