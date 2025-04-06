@@ -2,9 +2,9 @@ import React, { memo } from 'react'
 
 const Select = ({ label, options, value, setValue, type, reset }) => {
   return (
-    <div className='flex flex-col gap-2 flex-1'>
+    <div className='flex flex-col flex-1 gap-2'>
       <label className='font-medium font-semibold' htmlFor='selecet-address'>{label}</label>
-      <select value={reset ? '' : value} onChange={(e) => setValue(e.target.value)} id='select-address' className='outline-none rounded-md border shadow-inner cursor-pointer border-grey-300 p-2'>
+      <select value={reset ? '' : value || ''} onChange={(e) => setValue(e.target.value)} id='select-address' className='p-2 border rounded-md shadow-inner outline-none cursor-pointer border-grey-300'>
         <option value=''>{`--Chọn ${label}--`}</option>
         {options?.map(item => {
           return (

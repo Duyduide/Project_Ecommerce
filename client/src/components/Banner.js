@@ -20,62 +20,62 @@ const Banner = () => {
 
   return (
     <div className='flex flex-col flex-auto'>
-      <div className='w-full relative'>
+      <div className='relative w-full'>
         <Slider {...settings} ref={sliderRef}>
           <div>
             <img  
-              src="https://cdn2.cellphones.com.vn/insecure/rs:fill:690:300/q:90/plain/https://dashboard.cellphones.com.vn/storage/sliding-home-iphone-16-pro-km-moi.jpg"
+              src="https://cdn2.cellphones.com.vn/insecure/rs:fill:690:300/q:90/plain/https://dashboard.cellphones.com.vn/storage/iphone-16-pro-max-thu-cu-moi-home.jpg"
               alt="banner 1"
-              className='w-full object-contain object-top'
+              className='object-contain object-top w-full'
             />
           </div>
           <div>
             <img  
-              src="https://cdn2.cellphones.com.vn/insecure/rs:fill:690:300/q:90/plain/https://dashboard.cellphones.com.vn/storage/home-oppo-find-x8-gia-moi-20-11.jpg"
+              src="https://cdn2.cellphones.com.vn/insecure/rs:fill:690:300/q:90/plain/https://dashboard.cellphones.com.vn/storage/oppo-find-n5-dat-truoc-home.jpg"
               alt="banner 2"
-              className='w-full object-contain object-top'
+              className='object-contain object-top w-full'
             />
           </div>
           <div>
             <img  
-              src="https://cdn2.cellphones.com.vn/insecure/rs:fill:690:300/q:90/plain/https://dashboard.cellphones.com.vn/storage/ipad-mini-7-sliding-home-20-11.jpg"
+              src="https://cdn2.cellphones.com.vn/insecure/rs:fill:690:300/q:90/plain/https://dashboard.cellphones.com.vn/storage/dien-thoai-samsung-galaxy-s25-ultra-ho-henie-home-xanh-duong.png"
               alt="banner 3"
-              className='w-full object-contain object-top'
+              className='object-contain object-top w-full'
             />
           </div>
           <div>
             <img  
-              src="https://cdn2.cellphones.com.vn/insecure/rs:fill:690:300/q:90/plain/https://dashboard.cellphones.com.vn/storage/home-huawei-watch-d2-01-11.jpg"
+              src="https://cdn2.cellphones.com.vn/insecure/rs:fill:690:300/q:90/plain/https://dashboard.cellphones.com.vn/storage/vivo-y04-home-2-4.png"
               alt="banner 4"
-              className='w-full object-contain object-top'
+              className='object-contain object-top w-full'
             />
           </div>
         </Slider>
 
-        <div className='w-full overflow-hidden mt-4'>
-          <div className='w-full h-full flex flex-col items-center justify-between rounded-b-md shadow-xl p-4 relative'>
-            <div className='flex flex-row justify-between w-full z-10'>
+        <div className='w-full mt-4 overflow-hidden'>
+          <div className='relative flex flex-col items-center justify-between w-full h-full p-4 shadow-xl rounded-b-md'>
+            <div className='z-10 flex flex-row justify-between w-full'>
               <span 
                 onClick={() => goToSlide(0)} 
-                className="cursor-pointer text-black-500 hover:text-black-700 border-t-2 border-transparent hover:border-blue-500 focus:outline-none focus:border-blue-500 p-2"
+                className="p-2 border-t-2 border-transparent cursor-pointer text-black-500 hover:text-black-700 hover:border-blue-500 focus:outline-none focus:border-blue-500"
               >
                 MỚI NHẤT
               </span>
               <span 
                 onClick={() => goToSlide(1)} 
-                className="cursor-pointer text-black-500 hover:text-black-700 border-t-2 border-transparent hover:border-blue-500 focus:outline-none focus:border-blue-500 p-2"
+                className="p-2 border-t-2 border-transparent cursor-pointer text-black-500 hover:text-black-700 hover:border-blue-500 focus:outline-none focus:border-blue-500"
               >
                 ĐẶT TRƯỚC
               </span>
               <span 
                 onClick={() => goToSlide(2)} 
-                className="cursor-pointer text-black-500 hover:text-black-700 border-t-2 border-transparent hover:border-blue-500 focus:outline-none focus:border-blue-500 p-2"
+                className="p-2 border-t-2 border-transparent cursor-pointer text-black-500 hover:text-black-700 hover:border-blue-500 focus:outline-none focus:border-blue-500"
               >
                 LÊN ĐỜI
               </span>
               <span 
                 onClick={() => goToSlide(3)} 
-                className="cursor-pointer text-black-500 hover:text-black-700 border-t-2 border-transparent hover:border-blue-500 focus:outline-none focus:border-blue-500 p-2"
+                className="p-2 border-t-2 border-transparent cursor-pointer text-black-500 hover:text-black-700 hover:border-blue-500 focus:outline-none focus:border-blue-500"
               >
                 MUA NGAY
               </span>

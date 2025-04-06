@@ -18,7 +18,7 @@ function App() {
   }, [])
 
   return (
-    <div className="font-main relative">
+    <div className="relative font-main">
      <Routes>
         <Route path = {path.PUBLIC} element={<Public />} >
           <Route path = {path.HOME} element={<Home />} />
