@@ -1,4 +1,3 @@
-import { Plane } from 'lucide-react'
 import React from 'react'
 
 const InputField = ({ value, setValue, nameKey, type, invalidFields, setInvalidFields, placeholder }) => {

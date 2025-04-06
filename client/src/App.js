@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { Public, Login, Home, Product, DetailProduct, FinalRegister, ResetPassword, DetailCart, PaymentResult  } from './pages/public';
 import { ManageOrders, ManageUsers, Dashboard, CreateProducts, ManageProducts, AdminLayout } from './pages/admin';
