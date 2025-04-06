@@ -4,18 +4,11 @@ import { Public, Login, Home, Product, DetailProduct, FinalRegister, ResetPasswo
 import { ManageOrders, ManageUsers, Dashboard, CreateProducts, ManageProducts, AdminLayout } from './pages/admin';
 import { CheckOut, Personal, MemberLayout, OrderHistory, OrderHistoryDetail } from './pages/member';
 import path from './utils/path';
-import { getCategories } from './store/app/asyncActions'
-import { useDispatch } from 'react-redux'
 import { ToastContainer } from 'react-toastify';
 import SearchResult from './components/ProductName'; 
 import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
-  const dispatch = useDispatch()
-  
-  useEffect(() => {
-    dispatch(getCategories())
-  }, [])
 
   return (
     <div className="relative font-main">
