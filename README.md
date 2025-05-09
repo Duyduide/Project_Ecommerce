@@ -59,7 +59,7 @@ npm install
 Open a terminal and start the backend server:
 ```bash
 cd server
-npm start
+npm run dev
 ```
 
 #### Step 4: Start the Frontend
